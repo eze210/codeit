@@ -2,11 +2,16 @@ package codeit
 
 class ProgramadorController {
 
-    static allowedMethods = [crearProgramador:['GET'],
-                             guardarNuevoProgramador:['POST']]
+    static allowedMethods = [crearProgramador:['GET']]//,
+                             //guardarNuevoProgramador:['POST']]
 
     def index() {
         redirect action:"crearProgramador"
+    }
+
+    def verProgramadores() {
+        Set<Programador> programadores = Programador.findAll()
+        render programadores
     }
 
     def crearProgramador() {
@@ -14,11 +19,12 @@ class ProgramadorController {
     }
 
     def guardarNuevoProgramador() {
-        render "Bye"
-
-//        Programador nuevoProgramador = Programador(nombre:params["nombre"])
-//        nuevoProgramador.save()
-//        render nuevoProgramador.toString()
+        Programador nuevoProgramador = new Programador(params)
+        if (nuevoProgramador.save()) {
+            render nuevoProgramador.toString()
+        } else {
+            render "No es un nombre válido"
+        }
     }
 
 }
