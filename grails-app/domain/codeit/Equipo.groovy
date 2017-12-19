@@ -1,6 +1,6 @@
 package codeit
 
-class Equipo {
+class Equipo implements Participante {
 
     static hasMany = [programadores: Programador]
 
@@ -32,6 +32,10 @@ class Equipo {
         }
 
         programadores.add(nuevoMiembro)
+    }
+
+    Set<Programador> programadoresInvolucrados() {
+        return programadores
     }
 
 }

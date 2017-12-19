@@ -1,6 +1,6 @@
 package codeit
 
-class Programador {
+class Programador implements Participante {
 
     String nombre
 
@@ -8,5 +8,8 @@ class Programador {
         nombre nullable: false, blank: false, unique: true
     }
 
+    Set<Programador> programadoresInvolucrados() {
+        return [this] as Set<Programador>
+    }
 
 }

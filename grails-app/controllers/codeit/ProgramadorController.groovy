@@ -23,6 +23,7 @@ class ProgramadorController {
         if (nuevoProgramador.save()) {
             render nuevoProgramador.toString()
         } else {
+            // ya existe otro programador registrado con ese nombre
             render "No es un nombre válido"
         }
     }
