@@ -11,8 +11,8 @@ class ProgramadorSpec extends Specification implements DomainUnitTest<Programado
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
+//    void "test something"() {
+//        expect:"fix me"
+//            true == false
+//    }
 }

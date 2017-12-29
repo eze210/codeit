@@ -23,6 +23,10 @@ class Equipo implements Participante {
         nombre nullable: false, blank: false
     }
 
+    Set<Programador> programadoresInvolucrados() {
+        return programadores
+    }
+
     void agregarMiembro(Programador nuevoMiembro) throws ProgramadorYaMiembroException {
         if (programadores.contains(nuevoMiembro)) {
             throw new ProgramadorYaMiembroException()
@@ -42,10 +46,6 @@ class Equipo implements Participante {
         }
 
         programadores.add(nuevoMiembro)
-    }
-
-    Set<Programador> programadoresInvolucrados() {
-        return programadores
     }
 
 }
