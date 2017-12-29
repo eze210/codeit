@@ -15,8 +15,8 @@ class InsigniaAutomatica {
     Integer umbral
     String nombre
 
-    InsigniaAutomatica(String nombre, Integer umbral) {
-        super("Ha superado ${umbral} eventos.")
+    InsigniaAutomatica(Integer umbral, String nombre) {
+        this.origen = "Ha superado ${umbral} eventos."
         this.umbral = umbral
         this.nombre = nombre
     }

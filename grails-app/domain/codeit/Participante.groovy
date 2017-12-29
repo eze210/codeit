@@ -1,10 +1,10 @@
 package codeit
 
-trait Participante {
+interface Participante {
 
-    abstract Set<Programador> programadoresInvolucrados()
+    Set<Programador> programadoresInvolucrados()
 
-    Boolean involucraA(Participante participante) {
+    default Boolean involucraA(Participante participante) {
         return programadoresInvolucrados().contains(participante)
     }
 
