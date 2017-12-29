@@ -1,6 +1,5 @@
 package codeit
 
-import com.intellij.util.containers.OrderedSet
 
 class Desafio {
 
@@ -12,7 +11,7 @@ class Desafio {
     Programador creador
     Range<Date> vigencia
 
-    OrderedSet<Ejercicio> ejercicios
+    LinkedHashSet<Ejercicio> ejercicios
 
     Set<Resultado> resultados
 
@@ -31,11 +30,11 @@ class Desafio {
         if (solucion.resoluciones.count() != ejercicios.count()) {
             resultado.puntaje = 0
             resultado.valido = false
-            return resultado
+        } else {
+            Iterator<Resolucion> iterador = solucion.resoluciones.iterator()
+            resultado.puntaje = ejercicios.inject(0) { ac, el -> ac + el.validarResolucion(iterador++) }
+            resultado.valido = true
         }
-        Iterator<Resolucion> iterador = solucion.resoluciones.iterator()
-        resultado.puntaje = ejercicios.inject(0) { ac, el -> ac + el.validarResolucion(iterador.next()) }
-        resultado.valido = true
         return resultado
     }
 
