@@ -1,9 +1,9 @@
 package codeit
 
-import grails.testing.services.ServiceUnitTest
+import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class EquipoServiceSpec extends Specification implements ServiceUnitTest<EquipoService>{
+class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
     def setup() {
     }

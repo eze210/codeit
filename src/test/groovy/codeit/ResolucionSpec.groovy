@@ -3,7 +3,7 @@ package codeit
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class SoluciónSpec extends Specification implements DomainUnitTest<Solución> {
+class ResolucionSpec extends Specification implements DomainUnitTest<Resolucion> {
 
     def setup() {
     }
