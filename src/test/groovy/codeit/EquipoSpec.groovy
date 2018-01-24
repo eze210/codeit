@@ -11,8 +11,12 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
     def cleanup() {
     }
 
-//    void "test something"() {
-//        expect:"fix me"
-//            true == false
-//    }
+    void "Un equipo nuevo no tiene miembros"() {
+        when:"Un equipo es nuevo"
+        Equipo equipo = new Equipo("Nombre del equipo")
+
+        then:"El equipo no tiene miembros"
+        equipo.programadoresInvolucrados() != null
+        equipo.programadoresInvolucrados().empty
+    }
 }

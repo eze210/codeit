@@ -16,12 +16,8 @@ class Ejercicio {
         this.pruebas = new HashSet<>()
     }
 
-    Ejercicio() {
-        this("")
-    }
-
     Prueba agregarPrueba(String entrada, String salida) {
-        Prueba prueba = new Prueba(ejercicio: this, entrada: entrada, salidaEsperada: salida)
+        Prueba prueba = new Prueba(this, entrada, salida)
         pruebas.add(prueba)
         prueba
     }

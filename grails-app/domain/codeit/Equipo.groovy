@@ -16,11 +16,15 @@ class Equipo extends Participante {
 
     static hasMany = [programadores: Programador]
     Set<Programador> programadores
-
-    private String nombre
+    String nombre
 
     static constraints = {
         nombre nullable: false, blank: false
+    }
+
+    Equipo(String nombre) {
+        this.nombre = nombre
+        this.programadores = new HashSet<>()
     }
 
     Set<Programador> programadoresInvolucrados() {

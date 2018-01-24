@@ -10,6 +10,10 @@ class Programador extends Participante {
         nombre nullable: false, blank: false, unique: true
     }
 
+    Programador(String nombre) {
+        this.nombre = nombre
+    }
+
     Set<Programador> programadoresInvolucrados() {
         [this] as Set<Programador>
     }
@@ -19,9 +23,8 @@ class Programador extends Participante {
     }
 
     Ejercicio proponerEjercicioPara(@NotNull Desafio desafio) {
-        Ejercicio nuevoEjercicio = new Ejercicio()
-        assert nuevoEjercicio != null
-        assert desafio.agregarEjercicio(nuevoEjercicio)
+        Ejercicio nuevoEjercicio = new Ejercicio("El enunciado")
+        desafio.agregarEjercicio(nuevoEjercicio)
         nuevoEjercicio
     }
 

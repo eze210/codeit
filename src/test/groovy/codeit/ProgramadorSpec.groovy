@@ -8,7 +8,7 @@ class ProgramadorSpec extends Specification implements DomainUnitTest<Programado
     Programador programador
 
     def setup() {
-        programador = new Programador(nombre: "Nombre")
+        programador = new Programador("Nombre")
     }
 
     def cleanup() {

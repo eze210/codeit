@@ -11,9 +11,7 @@ class Desafio {
 
     Programador creador
     Range<DateTime> vigencia
-
     Set<Ejercicio> ejercicios
-
     Set<Resultado> resultados
 
     static constraints = {
@@ -21,12 +19,15 @@ class Desafio {
         descripcion nullable: false, blank: false, unique: true
     }
 
-    Desafio(String titulo, String descripcion, Programador programador) {
+    Desafio(String titulo, String descripcion, Programador creador) {
         this.titulo = titulo
         this.descripcion = descripcion
-        this.creador = programador
+        this.creador = creador
+
+        // TODO: Esta vigencia no la está estableciendo el usuario
         this.vigencia = new ObjectRange(new DateTime(), new DateTime());
         this.ejercicios = new LinkedHashSet<>()
+        this.resultados = new LinkedHashSet<>()
     }
 
     Boolean proponerSolucion(Solucion solucion) {
@@ -52,7 +53,7 @@ class Desafio {
     }
 
     Boolean estaVigente() {
-//        def now = new Formatter.DateTime()
+//        def now = new DateTime()
 //        vigencia.containsWithinBounds(now)
         true
     }
