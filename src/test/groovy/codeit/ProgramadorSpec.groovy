@@ -24,7 +24,7 @@ class ProgramadorSpec extends Specification implements DomainUnitTest<Programado
 
     void "El programador que propone un desafio es su creador"() {
         when:"Un programador propone un desafio"
-        Desafio desafio = programador.proponerDesafio()
+        Desafio desafio = programador.proponerDesafio("Un título", "Una descripción")
 
         then:"Ese programador es el creador del desafio"
         desafio.creador == programador

@@ -12,7 +12,7 @@ class Desafio {
     Programador creador
     Range<DateTime> vigencia
 
-    LinkedHashSet<Ejercicio> ejercicios
+    Set<Ejercicio> ejercicios
 
     Set<Resultado> resultados
 
@@ -26,6 +26,7 @@ class Desafio {
         this.descripcion = descripcion
         this.creador = programador
         this.vigencia = new ObjectRange(new DateTime(), new DateTime());
+        this.ejercicios = new LinkedHashSet<>()
     }
 
     Boolean proponerSolucion(Solucion solucion) {

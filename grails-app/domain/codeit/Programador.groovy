@@ -14,8 +14,8 @@ class Programador extends Participante {
         [this] as Set<Programador>
     }
 
-    Desafio proponerDesafio() {
-        new Desafio(creador: this)
+    Desafio proponerDesafio(String titulo, String descripcion) {
+        new Desafio(titulo, descripcion, this)
     }
 
     Ejercicio proponerEjercicioPara(@NotNull Desafio desafio) {

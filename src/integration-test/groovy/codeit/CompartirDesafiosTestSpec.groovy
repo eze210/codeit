@@ -17,7 +17,7 @@ class CompartirDesafiosTestSpec extends Specification {
     void "creacion del desafio"() {
         when:"Existe un programador que propone un desafio"
         Programador unProgramador = new Programador(nombre: "Nombre")
-        Desafio unDesafio = unProgramador.proponerDesafio()
+        Desafio unDesafio = unProgramador.proponerDesafio("El título", "La descripción")
 
         then:"el desafio queda registrado en el sistema como creado por el programador"
         unDesafio.creador == unProgramador
@@ -27,7 +27,7 @@ class CompartirDesafiosTestSpec extends Specification {
         when:"existe un desafio creado por un determinado programador y ese programador intenta subir un nuevo ejercicio"
         Programador elProgramador = new Programador(nombre: "Nombre")
         assert elProgramador != null
-        Desafio elDesafio = elProgramador.proponerDesafio()
+        Desafio elDesafio = elProgramador.proponerDesafio("El título", "La descripción")
         assert elDesafio != null
         assert elDesafio.estaVigente()
         Ejercicio elEjercicio = elProgramador.proponerEjercicioPara(elDesafio)
