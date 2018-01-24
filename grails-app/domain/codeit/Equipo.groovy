@@ -15,6 +15,7 @@ class Equipo extends Participante {
     }
 
     static hasMany = [programadores: Programador]
+    Set<Programador> programadores
 
     private String nombre
 

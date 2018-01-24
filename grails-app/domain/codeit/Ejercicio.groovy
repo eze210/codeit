@@ -11,12 +11,23 @@ class Ejercicio {
         enunciado nullable: false, blank: false, unique: true
     }
 
-    Boolean agregarPrueba(Prueba prueba) {
-        return pruebas.add(prueba)
+    Ejercicio(String enunciado) {
+        this.enunciado = enunciado
+        this.pruebas = new HashSet<>()
+    }
+
+    Ejercicio() {
+        this("")
+    }
+
+    Prueba agregarPrueba(String entrada, String salida) {
+        Prueba prueba = new Prueba(ejercicio: this, entrada: entrada, salidaEsperada: salida)
+        pruebas.add(prueba)
+        prueba
     }
 
     Boolean validarResolucion(Resolucion resolucion) {
-        return !pruebas.find { !it.validarResolucion(resolucion) }
+        !pruebas.find { !it.validarResolucion(resolucion) }
     }
 
 }

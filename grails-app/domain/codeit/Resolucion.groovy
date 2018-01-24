@@ -11,6 +11,12 @@ class Resolucion {
         codigo nullable: false
     }
 
+    Resolucion(Ejercicio ejercicio, String codigo) {
+        this.ejercicio = ejercicio
+        GroovyShell shell = new GroovyShell()
+        this.codigo = shell.evaluate(codigo)
+    }
+
     String ejecutar(String entrada) {
         codigo(entrada)
     }

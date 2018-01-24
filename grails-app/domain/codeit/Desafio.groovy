@@ -1,28 +1,36 @@
 package codeit
 
+import org.joda.time.DateTime
 
 class Desafio {
 
     static hasMany = [ejercicios: Ejercicio, resultados: Resultado]
 
-    String título
+    String titulo
     String descripcion
 
     Programador creador
-    Range<Date> vigencia
+    Range<DateTime> vigencia
 
     LinkedHashSet<Ejercicio> ejercicios
 
     Set<Resultado> resultados
 
     static constraints = {
-        título nullable: false, blank: false, unique: true
+        titulo nullable: false, blank: false, unique: true
         descripcion nullable: false, blank: false, unique: true
+    }
+
+    Desafio(String titulo, String descripcion, Programador programador) {
+        this.titulo = titulo
+        this.descripcion = descripcion
+        this.creador = programador
+        this.vigencia = new ObjectRange(new DateTime(), new DateTime());
     }
 
     Boolean proponerSolucion(Solucion solucion) {
         Resultado resultado = Resultado(solucion: solucion)
-        return resultados.add(resultado)
+        resultados.add(resultado)
     }
 
     Resultado validarSolucion(Solucion solucion) {
@@ -35,11 +43,22 @@ class Desafio {
             resultado.puntaje = ejercicios.inject(0) { ac, el -> ac + el.validarResolucion(iterador++) }
             resultado.valido = true
         }
-        return resultado
+        resultado
     }
 
     Boolean puedeParticipar(Participante participante) {
-        return !resultados.find { it.solucion.participante.involucraA(participante) }
+        !resultados.find { it.solucion.participante.involucraA(participante) }
+    }
+
+    Boolean estaVigente() {
+//        def now = new Formatter.DateTime()
+//        vigencia.containsWithinBounds(now)
+        true
+    }
+
+    Boolean agregarEjercicio(Ejercicio ejercicio) {
+        assert ejercicios != null
+        ejercicios.add(ejercicio)
     }
 
 }

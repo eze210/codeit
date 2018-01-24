@@ -13,7 +13,7 @@ class Solucion {
     }
 
     Boolean agregarResolucion(Resolucion resolucion) {
-        return resoluciones.add(resolucion)
+        resoluciones.add(resolucion)
     }
 
 }

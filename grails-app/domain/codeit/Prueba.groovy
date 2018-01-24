@@ -13,7 +13,7 @@ class Prueba {
     }
 
     Boolean validarResolucion(Resolucion resolucion) {
-        return resolucion.ejecutar(entrada) == salidaEsperada
+        resolucion.ejecutar(entrada) == salidaEsperada
     }
 
 }

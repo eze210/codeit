@@ -11,8 +11,4 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
     def cleanup() {
     }
 
-//    void "test something"() {
-//        expect:"fix me"
-//            true == false
-//    }
 }
