@@ -1,5 +1,7 @@
 package codeit
 
+import org.joda.time.DateTime
+
 import javax.validation.constraints.NotNull
 
 class Programador extends Participante {
@@ -18,8 +20,8 @@ class Programador extends Participante {
         [this] as Set<Programador>
     }
 
-    Desafio proponerDesafio(String titulo, String descripcion) {
-        new Desafio(titulo, descripcion, this)
+    Desafio proponerDesafio(String titulo, String descripcion, DateTime fechaDesde, DateTime fechaHasta) {
+        new Desafio(titulo, descripcion, this, fechaDesde, fechaHasta)
     }
 
     Ejercicio proponerEjercicioPara(@NotNull Desafio desafio) {

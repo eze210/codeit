@@ -2,6 +2,8 @@ package codeit
 
 import org.joda.time.DateTime
 
+import java.time.DateTimeException
+
 class Desafio {
 
     static hasMany = [ejercicios: Ejercicio, resultados: Resultado]
@@ -19,13 +21,11 @@ class Desafio {
         descripcion nullable: false, blank: false, unique: true
     }
 
-    Desafio(String titulo, String descripcion, Programador creador) {
+    Desafio(String titulo, String descripcion, Programador creador, DateTime fechaDesde, DateTime fechaHasta) {
         this.titulo = titulo
         this.descripcion = descripcion
         this.creador = creador
-
-        // TODO: Esta vigencia no la está estableciendo el usuario
-        this.vigencia = new ObjectRange(new DateTime(), new DateTime());
+        this.vigencia = new ObjectRange(fechaDesde, fechaHasta);
         this.ejercicios = new LinkedHashSet<>()
         this.resultados = new LinkedHashSet<>()
     }
@@ -53,9 +53,8 @@ class Desafio {
     }
 
     Boolean estaVigente() {
-//        def now = new DateTime()
-//        vigencia.containsWithinBounds(now)
-        true
+        assert vigencia != null
+        vigencia.containsWithinBounds(DateTime.now())
     }
 
     Boolean agregarEjercicio(Ejercicio ejercicio) {

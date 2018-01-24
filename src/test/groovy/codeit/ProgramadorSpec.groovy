@@ -1,6 +1,7 @@
 package codeit
 
 import grails.testing.gorm.DomainUnitTest
+import org.joda.time.DateTime
 import spock.lang.Specification
 
 class ProgramadorSpec extends Specification implements DomainUnitTest<Programador> {
@@ -24,7 +25,11 @@ class ProgramadorSpec extends Specification implements DomainUnitTest<Programado
 
     void "El programador que propone un desafio es su creador"() {
         when:"Un programador propone un desafio"
-        Desafio desafio = programador.proponerDesafio("Un título", "Una descripción")
+        Desafio desafio = programador.proponerDesafio(
+                "Un título",
+                "Una descripción",
+                DateTime.now(),
+                DateTime.now())
 
         then:"Ese programador es el creador del desafio"
         desafio.creador == programador
