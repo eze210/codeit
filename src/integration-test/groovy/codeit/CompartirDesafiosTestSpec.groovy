@@ -29,7 +29,7 @@ class CompartirDesafiosTestSpec extends Specification {
     }
 
     void "agregar ejercicios"() {
-        when:"existe un desafio creado por un determinado programador y ese programador intenta subir un nuevo ejercicio"
+        when:"existe un desafio creado por un determinado programador, está vigente, y ese programador intenta subir un nuevo ejercicio"
         Programador elProgramador = new Programador("Nombre")
         DateTime ahora = DateTime.now()
         DateTime maniana = ahora.plusDays(1)
@@ -38,6 +38,8 @@ class CompartirDesafiosTestSpec extends Specification {
                 "La descripción",
                 ahora,
                 maniana)
+        assert elDesafio.estaVigente()
+
         Ejercicio elEjercicio = elProgramador.proponerEjercicioPara(elDesafio)
 
         then:"el ejercicio queda agregado al desafio"

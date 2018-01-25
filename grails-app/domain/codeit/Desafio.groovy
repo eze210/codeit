@@ -3,6 +3,7 @@ package codeit
 import org.joda.time.DateTime
 
 class Desafio {
+    // TODO: agregar requisitos para participar
 
     static hasMany = [ejercicios: Ejercicio, resultados: Resultado]
 

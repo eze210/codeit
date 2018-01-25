@@ -90,13 +90,14 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Programador programador = new Programador("El nombre")
 
         DateTime ahora = DateTime.now()
-        DateTime ayer = ahora.minusDays(1)
+        DateTime ayer = ahora.minusDays(1).minusMillis(1)
+        DateTime haceUnMilisegundo = ahora.minusMillis(1)
         Desafio desafioNuevo = new Desafio(
                 "El título",
                 "La descripción",
                 programador,
                 ayer,
-                ahora)
+                haceUnMilisegundo)
 
         then:"El desafío no está vigente después de pasar el tiempo de ejecución de la prueba"
         !desafioNuevo.estaVigente()
