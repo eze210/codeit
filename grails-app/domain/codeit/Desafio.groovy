@@ -9,10 +9,9 @@ class Desafio {
 
     String titulo
     String descripcion
-
     Programador creador
-
     Vigencia vigencia
+
     Set<Ejercicio> ejercicios
     Set<Resultado> resultados
 
@@ -33,21 +32,12 @@ class Desafio {
     }
 
     Boolean proponerSolucion(Solucion solucion) {
-        Resultado resultado = Resultado(solucion: solucion)
+        Resultado resultado = validarSolucion(solucion)
         resultados.add(resultado)
     }
 
     Resultado validarSolucion(Solucion solucion) {
-        Resultado resultado = resultados.find { it.solucion == solucion } ?: Resultado(solucion: solucion)
-        if (solucion.resoluciones.count() != ejercicios.count()) {
-            resultado.puntaje = 0
-            resultado.valido = false
-        } else {
-            Iterator<Resolucion> iterador = solucion.resoluciones.iterator()
-            resultado.puntaje = ejercicios.inject(0) { ac, el -> ac + el.validarResolucion(iterador++) }
-            resultado.valido = true
-        }
-        resultado
+        resultados.find { it.solucion == solucion } ?: solucion.validar(ejercicios)
     }
 
     Boolean puedeParticipar(Participante participante) {
