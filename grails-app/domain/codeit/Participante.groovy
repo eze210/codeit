@@ -8,4 +8,8 @@ public abstract class Participante {
         programadoresInvolucrados().contains(participante)
     }
 
+    Boolean involucraA(Participante[] participantes) {
+        programadoresInvolucrados().containsAll(participantes)
+    }
+
 }
