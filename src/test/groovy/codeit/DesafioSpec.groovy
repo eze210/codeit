@@ -29,7 +29,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
         desafio.ejercicios.size() == 0
         desafio.resultados.size() == 0
-        desafio.vigencia.to >= desafio.vigencia.from
+        desafio.vigencia.rangoDeFechas.to >= desafio.vigencia.rangoDeFechas.from
     }
 
     void "Agregar un ejercicio"() {

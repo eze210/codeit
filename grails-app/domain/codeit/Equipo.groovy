@@ -50,6 +50,7 @@ class Equipo extends Participante {
 //        }
 
         programadores.add(nuevoMiembro)
+        nuevoMiembro.equipos.add(this)
     }
 
 }
