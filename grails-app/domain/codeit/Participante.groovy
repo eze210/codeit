@@ -13,7 +13,7 @@ public abstract class Participante {
     }
 
     Solucion proponerSolucionPara(Desafio desafio, String descripcionDeLaSolucion) {
-        Solucion solucion = new Solucion(this, descripcionDeLaSolucion)
+        Solucion solucion = new Solucion(this, descripcionDeLaSolucion, desafio)
         desafio.proponerSolucion(solucion)
         solucion
     }

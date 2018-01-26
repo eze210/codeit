@@ -117,7 +117,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 maniana)
 
         Programador resolvedor = new Programador("Otro nombre")
-        Solucion solucion = new Solucion(resolvedor, "Descripción")
+        Solucion solucion = new Solucion(resolvedor, "Descripción", desafioNuevo)
 
         then:"la solución resuelve el desafío"
         desafioNuevo.validarSolucion(solucion)
@@ -139,7 +139,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
         /* era resuelta */
         Programador resolvedor = new Programador("Otro nombre")
-        Solucion solucion = new Solucion(resolvedor, "Descripción")
+        Solucion solucion = new Solucion(resolvedor, "Descripción", desafioNuevo)
         assert desafioNuevo.proponerSolucion(solucion)
 
         /* y se agrega el nuevo ejercicio */
@@ -164,7 +164,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
         /* era resuelta */
         Programador resolvedor = new Programador("Otro nombre")
-        Solucion solucion = new Solucion(resolvedor, "Descripción")
+        Solucion solucion = new Solucion(resolvedor, "Descripción", desafio)
         assert desafio.proponerSolucion(solucion)
 
         /* y se agrega el nuevo ejercicio */

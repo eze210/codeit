@@ -34,6 +34,9 @@ class Desafio {
     }
 
     Resultado proponerSolucion(Solucion solucion) {
+        resultados.removeIf({it.solucion == solucion})
+        soluciones.remove(solucion)
+
         Resultado resultado = validarSolucion(solucion)
         resultados.add(resultado)
         soluciones.add(solucion)

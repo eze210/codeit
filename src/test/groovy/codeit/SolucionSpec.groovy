@@ -31,7 +31,7 @@ class SolucionSpec extends Specification implements DomainUnitTest<Solucion> {
 
         then:"Una solución nueva no lo resuelve"
         Participante participante = new Programador("Resolvedor")
-        Solucion solucion = new Solucion(participante, "Solución equivocada")
+        Solucion solucion = new Solucion(participante, "Solución equivocada", desafio)
         Resultado resultado = desafio.proponerSolucion(solucion)
         !resultado.valido
     }
@@ -44,7 +44,7 @@ class SolucionSpec extends Specification implements DomainUnitTest<Solucion> {
 
         then:"Una solución que tiene esa resolución resuelve el desafío"
         Participante participante = new Programador("Resolvedor")
-        Solucion solucion = new Solucion(participante, "Solución correcta")
+        Solucion solucion = new Solucion(participante, "Solución correcta", desafio)
         solucion.agregarResolucion(resolucion)
         desafio.validarSolucion(solucion)
     }

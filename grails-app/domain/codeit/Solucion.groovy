@@ -4,6 +4,7 @@ class Solucion {
 
     Participante participante
     String descripcion
+    Desafio desafio
     Set<Resolucion> resoluciones
 
     static hasMany = [resoluciones: Resolucion]
@@ -11,11 +12,13 @@ class Solucion {
     static constraints = {
         participante nullable: false, blank: false
         descripcion nullable: false, blank: false
+        desafio nullable: false, blank: false
     }
 
-    Solucion(Participante participante, String descripcion) {
+    Solucion(Participante participante, String descripcion, Desafio desafio) {
         this.participante = participante
         this.descripcion = descripcion
+        this.desafio = desafio
         this.resoluciones = new LinkedHashSet<>()
     }
 
@@ -23,6 +26,9 @@ class Solucion {
         /* no puede haber dos resoluciones para el mismo ejercicio */
         resoluciones.removeIf({res -> res.ejercicio == resolucion.ejercicio})
         resoluciones.add(resolucion)
+
+        /* se vuelve a proponer para que se valide nuevamente */
+        desafio.proponerSolucion(this)
     }
 
     Resultado validar(Set<Ejercicio> todosLosEjercicios) {

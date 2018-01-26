@@ -77,6 +77,17 @@ class CompartirDesafiosTestSpec extends Specification {
 
         then:"la solución que antes era válida ya no lo es"
         !elDesafio.validarSolucion(solucion)
+
+        when:"pero cuando se agrega una resolución válida para el ejercicio a la solución"
+        Resolucion resolucion = new Resolucion(elEjercicio, "{x -> x}")
+
+        /* la resolución es válida para el ejercicio */
+        assert elEjercicio.validarResolucion(resolucion)
+
+        solucion.agregarResolucion(resolucion)
+
+        then:"la solución vuelve a ser válida"
+        elDesafio.validarSolucion(solucion)
     }
 
 }
