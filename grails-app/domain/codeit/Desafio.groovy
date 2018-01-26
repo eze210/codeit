@@ -24,10 +24,24 @@ class Desafio {
     }
 
     Desafio(String titulo, String descripcion, Programador creador, DateTime fechaDesde, DateTime fechaHasta) {
+        init(titulo, descripcion, creador)
+        this.vigencia = new Vigencia(fechaDesde, fechaHasta);
+    }
+
+    Desafio(String titulo, String descripcion, Programador creador, DateTime fechaHasta) {
+        init(titulo, descripcion, creador)
+        this.vigencia = new Vigencia(fechaHasta);
+    }
+
+    Desafio(String titulo, String descripcion, Programador creador) {
+        init(titulo, descripcion, creador)
+        this.vigencia = new Vigencia();
+    }
+
+    private void init(String titulo, String descripcion, Programador creador) {
         this.titulo = titulo
         this.descripcion = descripcion
         this.creador = creador
-        this.vigencia = new Vigencia(fechaDesde, fechaHasta);
         this.ejercicios = new LinkedHashSet<>()
         this.soluciones = new LinkedHashSet<>()
         this.resultados = new LinkedHashSet<>()

@@ -28,8 +28,16 @@ class Programador extends Participante {
         new Desafio(titulo, descripcion, this, fechaDesde, fechaHasta)
     }
 
+    Desafio proponerDesafio(String titulo, String descripcion, DateTime fechaHasta) {
+        new Desafio(titulo, descripcion, this, fechaHasta)
+    }
+
+    Desafio proponerDesafio(String titulo, String descripcion) {
+        new Desafio(titulo, descripcion, this)
+    }
+
     Ejercicio proponerEjercicioPara(@NotNull Desafio desafio, String enunciado) {
-        Ejercicio nuevoEjercicio = new Ejercicio(enunciado)
+        Ejercicio nuevoEjercicio = new Ejercicio(desafio, enunciado)
         desafio.agregarEjercicio(nuevoEjercicio)
         nuevoEjercicio
     }

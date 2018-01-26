@@ -32,13 +32,17 @@ class Solucion {
     }
 
     Resultado validar(Set<Ejercicio> todosLosEjercicios) {
-        /* como no hay dos resoluciones que resuelvan el mismo ejercicio, que los tamaños sean iguales
-         * significa que todos los ejercicios están resueltos */
+        /* como no hay dos resoluciones que resuelvan el mismo ejercicio, si los tamaños son iguales
+         * entonces todos los ejercicios están resueltos */
         Boolean todosLosEjerciciosEstanResueltos = todosLosEjercicios.size() == resoluciones.size()
 
         Integer puntos = resoluciones.count { resolucion -> resolucion.ejercicio.validarResolucion(resolucion) }
 
-        new Resultado(solucion: this, valido: todosLosEjerciciosEstanResueltos, puntaje: puntos)
+        new Resultado(
+                solucion: this,
+                valido: todosLosEjerciciosEstanResueltos,
+                puntaje: puntos,
+                correcto: puntos == todosLosEjercicios.size())
     }
 
 }

@@ -41,7 +41,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 programador,
                 DateTime.now(),
                 DateTime.now())
-        Ejercicio ejercicio = new Ejercicio("El enunciado")
+        Ejercicio ejercicio = new Ejercicio(desafioNuevo, "El enunciado")
         desafioNuevo.agregarEjercicio(ejercicio)
 
         then:"El desafío tiene ese ejercicio"
@@ -60,7 +60,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 DateTime.now())
         Integer numeroDeEjercicios = 10
         for (Integer i = 0; i < numeroDeEjercicios; ++i) {
-            Ejercicio ejercicio = new Ejercicio("El enunciado " + i)
+            Ejercicio ejercicio = new Ejercicio(desafioNuevo, "El enunciado " + i)
             desafioNuevo.agregarEjercicio(ejercicio)
         }
 
@@ -143,7 +143,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         assert desafioNuevo.proponerSolucion(solucion)
 
         /* y se agrega el nuevo ejercicio */
-        Ejercicio ejercicio = new Ejercicio("Ejercicio nuevo")
+        Ejercicio ejercicio = new Ejercicio(desafioNuevo, "Ejercicio nuevo")
         assert desafioNuevo.agregarEjercicio(ejercicio)
 
         then:"la solución ya no resuelve el desafío"
@@ -168,7 +168,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         assert desafio.proponerSolucion(solucion)
 
         /* y se agrega el nuevo ejercicio */
-        Ejercicio ejercicio = new Ejercicio("Ejercicio nuevo")
+        Ejercicio ejercicio = new Ejercicio(desafio, "Ejercicio nuevo")
         assert desafio.agregarEjercicio(ejercicio)
 
         /* "la solución ya no resuelve el desafío */
