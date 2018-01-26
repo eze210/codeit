@@ -23,4 +23,5 @@ class ResolucionSpec extends Specification implements DomainUnitTest<Resolucion>
         then:"la resolución con el código que devuelve su entrada resuelve el ejercicio"
         resolucion.resuelveElEjercicio()
     }
+
 }

@@ -15,8 +15,8 @@ class CompartirDesafiosTestSpec extends Specification {
     def cleanup() {
     }
 
-    void "creacion del desafio"() {
-        when:"Existe un programador que propone un desafio"
+    void "Creación del desafío"() {
+        when:"Existe un programador que propone un desafío"
         Programador unProgramador = new Programador("Nombre")
         Desafio unDesafio = unProgramador.proponerDesafio(
                 "El título",
@@ -24,12 +24,12 @@ class CompartirDesafiosTestSpec extends Specification {
                 DateTime.now(),
                 DateTime.now())
 
-        then:"el desafio queda registrado en el sistema como creado por el programador"
+        then:"el desafío queda registrado en el sistema como creado por el programador"
         unDesafio.creador == unProgramador
     }
 
-    void "agregar ejercicios"() {
-        when:"existe un desafio creado por un determinado programador, está vigente, y ese programador intenta subir un nuevo ejercicio"
+    void "Agregar ejercicios - sin soluciones previas"() {
+        when:"Existe un desafio creado por un determinado programador, está vigente, y ese programador intenta subir un nuevo ejercicio"
         Programador elProgramador = new Programador("Nombre")
         DateTime ahora = DateTime.now()
         DateTime maniana = ahora.plusDays(1)
@@ -38,12 +38,45 @@ class CompartirDesafiosTestSpec extends Specification {
                 "La descripción",
                 ahora,
                 maniana)
+        assert elDesafio != null
         assert elDesafio.estaVigente()
 
         Ejercicio elEjercicio = elProgramador.proponerEjercicioPara(elDesafio, "Un enunciado")
 
         then:"el ejercicio queda agregado al desafio"
         elDesafio.ejercicios.contains(elEjercicio)
+    }
+
+    void "Agregar ejercicios - con soluciones previas"() {
+        when:   "Existe un desafio creado por un determinado programador, " +
+                "está vigente, " +
+                "tiene una solución válida subida, " +
+                "y ese programador intenta subir un nuevo ejercicio"
+        Programador programadorCreador = new Programador("Nombre")
+        DateTime ahora = DateTime.now()
+        DateTime maniana = ahora.plusDays(1)
+        Desafio elDesafio = programadorCreador.proponerDesafio(
+                "El título",
+                "La descripción",
+                ahora,
+                maniana)
+
+        /* existe el desafio */
+        assert elDesafio != null
+
+        /* está vigente */
+        assert elDesafio.estaVigente()
+
+        /* tiene una solución subida */
+        Programador programadorQueResuelve = new Programador("Otro nombre")
+        Solucion solucion = programadorQueResuelve.proponerSolucionPara(elDesafio, "Solución que consiste en... nada")
+        assert elDesafio.validarSolucion(solucion)
+
+        /* el creador propone un ejercicio nuevo para el desafío */
+        Ejercicio elEjercicio = programadorCreador.proponerEjercicioPara(elDesafio, "Un enunciado")
+
+        then:"la solución que antes era válida ya no lo es"
+        !elDesafio.validarSolucion(solucion)
     }
 
 }

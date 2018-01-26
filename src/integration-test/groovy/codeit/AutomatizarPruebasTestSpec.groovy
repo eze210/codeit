@@ -14,5 +14,4 @@ class AutomatizarPruebasTestSpec extends Specification {
     def cleanup() {
     }
 
-
 }

@@ -12,4 +12,10 @@ public abstract class Participante {
         programadoresInvolucrados().containsAll(participantes)
     }
 
+    Solucion proponerSolucionPara(Desafio desafio, String descripcionDeLaSolucion) {
+        Solucion solucion = new Solucion(this, descripcionDeLaSolucion)
+        desafio.proponerSolucion(solucion)
+        solucion
+    }
+
 }

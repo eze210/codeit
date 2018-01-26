@@ -14,4 +14,8 @@ class Resultado {
         solucion nullable: false
     }
 
+    boolean asBoolean() {
+        return valido
+    }
+
 }

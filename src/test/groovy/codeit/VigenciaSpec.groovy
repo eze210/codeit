@@ -73,4 +73,5 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
         !vigencia.contiene(diaAnteriorAlAnterior)
         !vigencia.contiene(diaSiguienteAlSiguiente)
     }
+
 }
