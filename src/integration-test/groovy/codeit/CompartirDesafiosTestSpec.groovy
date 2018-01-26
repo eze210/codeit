@@ -40,7 +40,7 @@ class CompartirDesafiosTestSpec extends Specification {
                 maniana)
         assert elDesafio.estaVigente()
 
-        Ejercicio elEjercicio = elProgramador.proponerEjercicioPara(elDesafio)
+        Ejercicio elEjercicio = elProgramador.proponerEjercicioPara(elDesafio, "Un enunciado")
 
         then:"el ejercicio queda agregado al desafio"
         elDesafio.ejercicios.contains(elEjercicio)

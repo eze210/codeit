@@ -12,7 +12,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
     def cleanup() {
     }
 
-    void "Una vigencia creada sin parametros es infinita"() {
+    void "Una vigencia creada sin parámetros es infinita"() {
         when:"Se crea una vigencia sin parámetros"
         Vigencia vigencia = new Vigencia()
 
@@ -29,7 +29,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
         vigencia.contiene(DateTime.now())
     }
 
-    void "Una fecha creada con un solo parametro es un vencimiento"() {
+    void "Una fecha creada con un solo parámetro es un vencimiento"() {
         when:"Una vigencia es creada con un solo parámetro"
         Vigencia vigencia = new Vigencia(DateTime.now())
 
@@ -45,7 +45,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
         Vigencia vigencia = new Vigencia(ahora)
         assert vigencia.tipo == Vigencia.Tipo.Vencimiento
 
-        then:"contiene una fecha del mes pasado pero no una del dia siguiente"
+        then:"contiene una fecha del mes pasado pero no una del día siguiente"
         vigencia.contiene(mesPasado)
         !vigencia.contiene(diaSiguiente)
     }

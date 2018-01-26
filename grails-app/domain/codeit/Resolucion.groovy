@@ -21,4 +21,8 @@ class Resolucion {
         codigo(entrada)
     }
 
+    Boolean resuelveElEjercicio() {
+        ejercicio.validarResolucion(this)
+    }
+
 }

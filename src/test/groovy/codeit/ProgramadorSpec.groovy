@@ -23,15 +23,15 @@ class ProgramadorSpec extends Specification implements DomainUnitTest<Programado
         involucrados.contains(programador) && involucrados.size() == 1
     }
 
-    void "El programador que propone un desafio es su creador"() {
-        when:"Un programador propone un desafio"
+    void "El programador que propone un desafío es su creador"() {
+        when:"Un programador propone un desafío"
         Desafio desafio = programador.proponerDesafio(
                 "Un título",
                 "Una descripción",
                 DateTime.now(),
                 DateTime.now())
 
-        then:"Ese programador es el creador del desafio"
+        then:"Ese programador es el creador del desafío"
         desafio.creador == programador
     }
 

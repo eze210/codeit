@@ -12,8 +12,8 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
     def cleanup() {
     }
 
-    void "Creacion del desafio"() {
-        when:"Se crea un desafio con ciertos parámetros"
+    void "Creación del desafío"() {
+        when:"Se crea un desafío con ciertos parámetros"
         Programador programador = new Programador("El nombre")
         Desafio desafio = new Desafio(
                 "El título",
@@ -64,12 +64,12 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
             desafioNuevo.agregarEjercicio(ejercicio)
         }
 
-        then:"El desafío tiene esa cantidaad de ejercicios"
+        then:"El desafío tiene esa cantidad de ejercicios"
         desafioNuevo.ejercicios.size() == numeroDeEjercicios
     }
 
-    void "Desafio vigente"() {
-        when:"Se crea un desafio valido desde ahora y por un dia"
+    void "Desafío vigente"() {
+        when:"Se crea un desafío valido desde ahora y por un día"
         Programador programador = new Programador("El nombre")
 
         DateTime ahora = DateTime.now()
@@ -85,8 +85,8 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         desafioNuevo.estaVigente()
     }
 
-    void "Desafio no vigente"() {
-        when:"Se crea un desafio valido desde ayer y por un dia"
+    void "Desafío no vigente"() {
+        when:"Se crea un desafío valido desde ayer y por un día"
         Programador programador = new Programador("El nombre")
 
         DateTime ahora = DateTime.now()

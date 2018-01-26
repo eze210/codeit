@@ -19,12 +19,12 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
         ejercicio.pruebas.size() == 0
     }
 
-    void "Un ejercicio nuevo se resuelve con una resolucion nueva"() {
-        when:"Un ejercicio es nuevo y una resolucion es nueva"
+    void "Un ejercicio nuevo se resuelve con una resolución nueva"() {
+        when:"Un ejercicio es nuevo y una resolución es nueva"
         Ejercicio ejercicio = new Ejercicio("Un título")
         Resolucion resolucion = new Resolucion(ejercicio, "{ entrada -> null }")
 
-        then:"La resolucion resuelve al desafio"
+        then:"La resolución resuelve al desafío"
         ejercicio.validarResolucion(resolucion)
     }
 
@@ -46,7 +46,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
         Resolucion resolucionQuePasa = new Resolucion(ejercicio, "{entrada -> \"Entrada\"}")
         Resolucion resolucionInorrecta = new Resolucion(ejercicio, "{entrada -> \"Cadena incorrecta\"}")
 
-        then:"Es resuelto con una resolucion simple"
+        then:"Es resuelto con una resolución simple"
         ejercicio.validarResolucion(resolucionCorrecta)
         ejercicio.validarResolucion(resolucionQuePasa)
         !ejercicio.validarResolucion(resolucionInorrecta)
@@ -61,7 +61,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
         Resolucion resolucionQueYaNoPasa = new Resolucion(ejercicio, "{entrada -> \"Entrada\"}")
         Resolucion resolucionInorrecta = new Resolucion(ejercicio, "{entrada -> \"Cadena incorrecta\"}")
 
-        then:"Es resuelto con una resolucion simple"
+        then:"Es resuelto con una resolución simple"
         ejercicio.validarResolucion(resolucionCorrecta)
         !ejercicio.validarResolucion(resolucionQueYaNoPasa)
         !ejercicio.validarResolucion(resolucionInorrecta)

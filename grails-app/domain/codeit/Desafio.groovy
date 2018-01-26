@@ -31,9 +31,10 @@ class Desafio {
         this.resultados = new LinkedHashSet<>()
     }
 
-    Boolean proponerSolucion(Solucion solucion) {
+    Resultado proponerSolucion(Solucion solucion) {
         Resultado resultado = validarSolucion(solucion)
         resultados.add(resultado)
+        resultado
     }
 
     Resultado validarSolucion(Solucion solucion) {
