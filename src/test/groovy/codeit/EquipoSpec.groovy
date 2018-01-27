@@ -14,20 +14,22 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
     }
 
     void "Un equipo nuevo no tiene miembros"() {
-        when:"Un equipo es nuevo"
+        given:"Un equipo nuevo"
         Equipo equipo = new Equipo("Nombre del equipo")
 
-        then:"El equipo no tiene miembros"
+        expect:"El equipo no tiene miembros"
         equipo.programadoresInvolucrados() != null
         equipo.programadoresInvolucrados().empty
     }
 
     void "Al agregar varios miembros, esos miembros pertenecen al equipo"() {
+        given:"Un equipo"
+        Equipo equipo = new Equipo("Nombre del equipo")
+
         when:"Se agregan algunos miembros a un equipo"
         Programador miembro1 = new Programador("Nombre 1")
         Programador miembro2 = new Programador("Nombre 2")
         Programador miembro3 = new Programador("Nombre 3")
-        Equipo equipo = new Equipo("Nombre del equipo")
         equipo.agregarMiembro(miembro1)
         equipo.agregarMiembro(miembro2)
         equipo.agregarMiembro(miembro3)
@@ -37,12 +39,14 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
     }
 
     void "No se puede agregar dos veces el mismo programador al mismo equipo"() {
-        when:"Un programador está agregado a un equipo"
+        given:"Un programador y un equipo"
         Programador programador = new Programador("Nombre")
         Equipo equipo = new Equipo("Equipo")
+
+        when:"el programador es agregado al equipo"
         equipo.agregarMiembro(programador)
 
-        then:"El programador no puede ser agregado otra vez"
+        then:"el programador no puede ser agregado otra vez"
         shouldFail(Equipo.ProgramadorYaMiembroException) {
             equipo.agregarMiembro(programador)
         }

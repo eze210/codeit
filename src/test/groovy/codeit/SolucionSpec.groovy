@@ -26,26 +26,34 @@ class SolucionSpec extends Specification implements DomainUnitTest<Solucion> {
     }
 
     void "Cuando un desafío tiene un ejercicio, una solución nueva no lo resuelve"() {
-        when:"Un desafío tiene un ejercicio"
+        given:"Un desafío que tiene un ejercicio"
         assert desafio.ejercicios.size() == 1
 
-        then:"Una solución nueva no lo resuelve"
+        and: "una solución nueva"
         Participante participante = new Programador("Resolvedor")
         Solucion solucion = new Solucion(participante, "Solución equivocada", desafio)
+
+        when:"se propone dicha solución"
         Resultado resultado = desafio.proponerSolucion(solucion)
+
+        then:"la solución no resuelve el desafío"
         !resultado.valido
     }
 
     void "Solución correcta"() {
-        when:"Un desafío tiene un ejercicio, se tiene la resolución correcta a ese ejercicio"
+        given:"Un desafío que tiene un ejercicio"
         assert desafio.ejercicios.size() == 1
+
+        and:"la resolución correcta a ese ejercicio"
         Resolucion resolucion = new Resolucion(ejercicio, "{ x -> x }")
         assert ejercicio.validarResolucion(resolucion)
 
-        then:"Una solución que tiene esa resolución resuelve el desafío"
+        when:"se propone una solución que tiene esa resolución"
         Participante participante = new Programador("Resolvedor")
         Solucion solucion = new Solucion(participante, "Solución correcta", desafio)
         solucion.agregarResolucion(resolucion)
+
+        then:"la solución resuelve el desafío"
         desafio.validarSolucion(solucion)
     }
 

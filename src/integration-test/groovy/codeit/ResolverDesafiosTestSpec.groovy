@@ -16,7 +16,7 @@ class ResolverDesafiosTestSpec extends Specification {
 
     // TODO: escribir el código, agregar insignias y reglas para participar
     void "Requisitos para participar"() {
-        when:"un desafío requiere un nivel de insignias para participar"
+        given:"un desafío requiere un nivel de insignias para participar"
 
         and:"un programador posee ese nivel de insignias"
 
@@ -26,7 +26,7 @@ class ResolverDesafiosTestSpec extends Specification {
 
         and:"no pertenece a un equipo que ya subió una solución"
 
-        and:"el programador quiere subir una solución al desafío"
+        when:"el programador quiere subir una solución al desafío"
 
         then:"es aceptada y validada"
     }
@@ -35,11 +35,11 @@ class ResolverDesafiosTestSpec extends Specification {
 
     // TODO: agregar insignias combinadas
     void "Combinación de insignias"() {
-        when:"un desafío requiere dos niveles de insignia distintos A y B"
+        given:"un desafío requiere dos niveles de insignia distintos A y B"
 
         and:"un equipo X tiene miembros de forma que ellos en conjunto alcanzan el nivel de insignia A y B"
 
-        and:"cualquier miembro sube una solución al desafío"
+        when:"cualquier miembro sube una solución al desafío"
 
         then:"la solución es recibida y probada"
     }

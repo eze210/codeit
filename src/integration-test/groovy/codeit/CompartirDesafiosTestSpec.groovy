@@ -16,8 +16,10 @@ class CompartirDesafiosTestSpec extends Specification {
     }
 
     void "Creación del desafío"() {
-        when:"Existe un programador que propone un desafío"
+        given:"Un programador"
         Programador unProgramador = new Programador("Nombre")
+
+        when:"propone un desafío"
         Desafio unDesafio = unProgramador.proponerDesafio(
                 "El título",
                 "La descripción",
@@ -29,7 +31,7 @@ class CompartirDesafiosTestSpec extends Specification {
     }
 
     void "Agregar ejercicios - sin soluciones previas"() {
-        when:"Existe un desafio creado por un determinado programador, está vigente, y ese programador intenta subir un nuevo ejercicio"
+        given:"Un desafio creado por un determinado programador"
         Programador elProgramador = new Programador("Nombre")
         DateTime ahora = DateTime.now()
         DateTime maniana = ahora.plusDays(1)
@@ -39,8 +41,11 @@ class CompartirDesafiosTestSpec extends Specification {
                 ahora,
                 maniana)
         assert elDesafio != null
+
+        and:"está vigente"
         assert elDesafio.estaVigente()
 
+        when:"ese programador intenta subir un nuevo ejercicio"
         Ejercicio elEjercicio = elProgramador.proponerEjercicioPara(elDesafio, "Un enunciado")
 
         then:"el ejercicio queda agregado al desafio"
@@ -48,10 +53,7 @@ class CompartirDesafiosTestSpec extends Specification {
     }
 
     void "Agregar ejercicios - con soluciones previas"() {
-        when:   "Existe un desafio creado por un determinado programador, " +
-                "está vigente, " +
-                "tiene una solución válida subida, " +
-                "y ese programador intenta subir un nuevo ejercicio"
+        given:"Un desafio creado por un determinado programador"
         Programador programadorCreador = new Programador("Nombre")
         DateTime ahora = DateTime.now()
         DateTime maniana = ahora.plusDays(1)
@@ -61,18 +63,17 @@ class CompartirDesafiosTestSpec extends Specification {
                 ahora,
                 maniana)
 
-        /* existe el desafio */
         assert elDesafio != null
 
-        /* está vigente */
+        and:"está vigente"
         assert elDesafio.estaVigente()
 
-        /* tiene una solución subida */
+        and:"tiene una solución válida subida"
         Programador programadorQueResuelve = new Programador("Otro nombre")
         Solucion solucion = programadorQueResuelve.proponerSolucionPara(elDesafio, "Solución que consiste en... nada")
         assert elDesafio.validarSolucion(solucion)
 
-        /* el creador propone un ejercicio nuevo para el desafío */
+        when:"ese programador intenta subir un nuevo ejercicio"
         Ejercicio elEjercicio = programadorCreador.proponerEjercicioPara(elDesafio, "Un enunciado")
 
         then:"la solución que antes era válida ya no lo es"
@@ -80,10 +81,7 @@ class CompartirDesafiosTestSpec extends Specification {
 
         when:"pero cuando se agrega una resolución válida para el ejercicio a la solución"
         Resolucion resolucion = new Resolucion(elEjercicio, "{x -> x}")
-
-        /* la resolución es válida para el ejercicio */
         assert elEjercicio.validarResolucion(resolucion)
-
         solucion.agregarResolucion(resolucion)
 
         then:"la solución vuelve a ser válida"

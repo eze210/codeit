@@ -21,11 +21,11 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
     }
 
     void "Una vigencia infinita contiene la fecha actual"() {
-        when:"Una vigencia es infinita"
+        given:"Una vigencia infinita"
         Vigencia vigencia = new Vigencia()
         assert vigencia.tipo == Vigencia.Tipo.Infinita
 
-        then:"Contiene la fecha actual"
+        expect:"Contiene la fecha actual"
         vigencia.contiene(DateTime.now())
     }
 
@@ -38,15 +38,17 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
     }
 
     void "Un vencimiento creado con la fecha actual contiene una fecha del mes pasado pero no una del dia siguiente"() {
-        when:"Una vigencia es creada como un vencimiento en la fecha actual"
+        given:"Una vigencia que es creada como un vencimiento en la fecha actual"
         DateTime ahora = DateTime.now()
         DateTime mesPasado = ahora.minusMonths(1)
         DateTime diaSiguiente = ahora.plusDays(1)
         Vigencia vigencia = new Vigencia(ahora)
         assert vigencia.tipo == Vigencia.Tipo.Vencimiento
 
-        then:"contiene una fecha del mes pasado pero no una del día siguiente"
+        expect:"contiene una fecha del mes pasado"
         vigencia.contiene(mesPasado)
+
+        and:"pero no una del día siguiente"
         !vigencia.contiene(diaSiguiente)
     }
 
@@ -59,7 +61,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
     }
 
     void "Un plazo es valido dentro del plazo y no antes ni después"() {
-        when:"Una vigencia es un plazo entre el dia anterior y el siguiente a la fecha actual"
+        given:"Una vigencia que es un plazo entre el dia anterior y el siguiente a la fecha actual"
         DateTime ahora = DateTime.now()
         DateTime diaAnterior = ahora.minusDays(1)
         DateTime diaAnteriorAlAnterior = ahora.minusDays(2)
@@ -68,9 +70,13 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
         Vigencia vigencia = new Vigencia(diaAnterior, diaSiguiente)
         assert vigencia.tipo == Vigencia.Tipo.Plazo
 
-        then:"contiene la fecha actual, no contiene anteayer, ni la fecha dentro de dos días"
+        expect:"contiene la fecha actual"
         vigencia.contiene(ahora)
+
+        and:"no contiene anteayer"
         !vigencia.contiene(diaAnteriorAlAnterior)
+
+        and:"tampoco la fecha dentro de dos días"
         !vigencia.contiene(diaSiguienteAlSiguiente)
     }
 

@@ -16,14 +16,18 @@ class AutomatizarPruebasTestSpec extends Specification {
     }
 
     void "Agregado de pruebas - sin soluciones previas"() {
-        when:   "Existe un desafío creado por un determinado programador," +
-                "el desafío está vigente," +
-                "y ese programador agrega una prueba para un ejercicio de dicho desafío"
+        given:"Un desafío creado por un determinado programador"
         Programador programador = new Programador("Creador")
         Desafio desafio = programador.proponerDesafio("Un título", "Descripción")
-        assert desafio.estaVigente()
+
+        and:"el desafío tiene un ejercicio"
         Ejercicio ejercicio = programador.proponerEjercicioPara(desafio, "Identidad")
         assert desafio.ejercicios.contains(ejercicio)
+
+        and:"el desafío está vigente"
+        assert desafio.estaVigente()
+
+        when:"y ese programador agrega una prueba para un ejercicio de dicho desafío"
         Prueba prueba = ejercicio.agregarPrueba("Cadena", "Cadena")
 
         then:"la prueba queda agregada al ejercicio"
@@ -31,7 +35,7 @@ class AutomatizarPruebasTestSpec extends Specification {
     }
 
     void "Agregado de pruebas - con soluciones previas"() {
-        when: "Existe un desafío creado por un determinado programador"
+        given: "Un desafío creado por un determinado programador"
         Programador programador = new Programador("Creador")
         Desafio desafio = programador.proponerDesafio("Un título", "Descripción")
         Ejercicio ejercicio = programador.proponerEjercicioPara(desafio, "Identidad")
@@ -47,7 +51,7 @@ class AutomatizarPruebasTestSpec extends Specification {
         assert desafio.validarSolucion(solucion)
 
 
-        and:    "el programador creador agrega una prueba que no falsea las soluciones previas " +
+        when:   "el programador creador agrega una prueba que no falsea las soluciones previas " +
                 "para un ejercicio de dicho desafío"
         ejercicio.agregarPrueba("x", "x")
         assert ejercicio.validarResolucion(resolucion)
@@ -64,7 +68,7 @@ class AutomatizarPruebasTestSpec extends Specification {
     }
 
     void "Agregado de solución"() {
-        when:"Existe un desafío en el sistema"
+        given:"Un desafío en el sistema"
         Programador creador = new Programador("Creador")
         Desafio desafio = creador.proponerDesafio("Título", "Descripción")
         assert desafio != null
@@ -72,7 +76,7 @@ class AutomatizarPruebasTestSpec extends Specification {
         // TODO: and:"sus insignias requeridas cierto programador posee"
         Programador solucionador = new Programador("Solucionador")
 
-        and:"ese programador sube una solución"
+        when:"ese programador sube una solución"
         Solucion solucion = solucionador.proponerSolucionPara(desafio, "Mi solución")
 
         then:"se corren las pruebas"

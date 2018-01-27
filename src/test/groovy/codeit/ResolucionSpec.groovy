@@ -15,8 +15,10 @@ class ResolucionSpec extends Specification implements DomainUnitTest<Resolucion>
     }
 
     void "Resolución del ejercicio identidad"() {
-        when:"Un ejercicio tiene varias pruebas con igual entrada y salida"
+        given:"Un ejercicio"
         Ejercicio ejercicio = new Ejercicio(desafio, "Identidad")
+
+        when:"Se le agregan varias pruebas con igual entrada y salida"
         for (Integer i = 0; i < 10; ++i) {
             String entradaYSalida = "Cadena " + i
             ejercicio.agregarPrueba(entradaYSalida, entradaYSalida)
