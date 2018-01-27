@@ -61,7 +61,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 DateTime.now(),
                 DateTime.now())
 
-        when:"Se agregan N ejercicio ese desafío"
+        when:"Se agregan N ejercicios ese desafío"
         Integer numeroDeEjercicios = 10
         for (Integer i = 0; i < numeroDeEjercicios; ++i) {
             Ejercicio ejercicio = new Ejercicio(desafioNuevo, "El enunciado " + i)
@@ -77,13 +77,13 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Programador programador = new Programador("El nombre")
 
         DateTime ahora = DateTime.now()
-        DateTime maniana = ahora.plusDays(1)
+        DateTime unDiaDespues = ahora.plusDays(1)
         Desafio desafioNuevo = new Desafio(
                 "El título",
                 "La descripción",
                 programador,
                 ahora,
-                maniana)
+                unDiaDespues)
 
         then:"El desafío sigue vigente después de pasar el tiempo de ejecución de la prueba"
         desafioNuevo.estaVigente()
@@ -112,21 +112,19 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Programador programador = new Programador("El nombre")
 
         DateTime ahora = DateTime.now()
-        DateTime maniana = ahora.plusDays(1)
+        DateTime unDiaDespues = ahora.plusDays(1)
         Desafio desafioNuevo = new Desafio(
                 "El título",
                 "La descripción",
                 programador,
                 ahora,
-                maniana)
+                unDiaDespues)
 
         Programador resolvedor = new Programador("Otro nombre")
         Solucion solucion = new Solucion(resolvedor, "Descripción", desafioNuevo)
 
         then:"la solución resuelve el desafío"
-        desafioNuevo.validarSolucion(solucion)
         desafioNuevo.proponerSolucion(solucion)
-        desafioNuevo.validarSolucion(solucion)
     }
 
     void "Solución se invalida cuando se agrega un nuevo ejercicio"() {
@@ -178,10 +176,10 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         then:"la solución ya no resuelve el desafío"
         !desafio.validarSolucion(solucion)
 
-        when:"se agrega una resolución para el nuevo ejercicio a la solución"
+        when:"se agrega una resolución para el nuevo ejercicio"
         solucion.agregarResolucion(new Resolucion(ejercicio, "{x -> x}"))
 
-        then:"la solución ahora es válida de nuevo"
+        then:"la solución es válida de nuevo"
         desafio.validarSolucion(solucion)
     }
 
