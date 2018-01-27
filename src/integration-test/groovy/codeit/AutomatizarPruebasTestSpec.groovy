@@ -1,6 +1,7 @@
 package codeit
 
 import grails.testing.mixin.integration.Integration
+import grails.test.mixin.*
 import grails.transaction.*
 import spock.lang.Specification
 
@@ -60,6 +61,23 @@ class AutomatizarPruebasTestSpec extends Specification {
 
         then:"La solución deja de valer"
         !desafio.validarSolucion(solucion)
+    }
+
+    void "Agregado de solución"() {
+        when:"Existe un desafío en el sistema"
+        Programador creador = new Programador("Creador")
+        Desafio desafio = creador.proponerDesafio("Título", "Descripción")
+        assert desafio != null
+
+        // TODO: and:"sus insignias requeridas cierto programador posee"
+        Programador solucionador = new Programador("Solucionador")
+
+        and:"ese programador sube una solución"
+        Solucion solucion = solucionador.proponerSolucionPara(desafio, "Mi solución")
+
+        then:"se corren las pruebas"
+        // TODO: hacer un mock de Prueba para verificar la invocación del método
+        true
     }
 
 }

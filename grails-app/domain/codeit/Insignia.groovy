@@ -10,7 +10,7 @@ abstract class Insignia {
 
 }
 
-class InsigniaAutomatica {
+class InsigniaAutomatica extends Insignia {
 
     Integer umbral
     String nombre
@@ -28,4 +28,4 @@ class InsigniaAutomatica {
 
 }
 
-class InsigniaEspecial {}
+class InsigniaEspecial extends Insignia {}

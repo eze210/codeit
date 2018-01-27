@@ -14,4 +14,34 @@ class PuntuarDesafiosTestSpec extends Specification {
     def cleanup() {
     }
 
+    void "Puntuaciones sólo de los participantes - Vota un participante"() {
+        when:"Un programador ha subido alguna resolución a algún ejercicio de un desafío"
+
+        and:"intenta asignar un punto al desafío"
+
+        then:"al puntaje total del desafío se le sumará una unidad"
+
+        and:"se asignará un punto en la faceta desafiante del creador"
+    }
+
+    void "Puntuaciones sólo de los participantes - Vota un no-participante"() {
+        when:"Un programador no ha subido ninguna resolución a ningún ejercicio de un desafío"
+
+        and:"intenta asignar un punto al desafío"
+
+        then:"el punto asignado es rechazado"
+
+        and:"el puntaje total del desafío se mantiene igual"
+    }
+
+    void "Puntuaciones sólo de los participantes - Vota el creador"() {
+        when:"Un programador creó un desafío"
+
+        and:"dicho programador intenta asignar un punto a su propio desafío"
+
+        then:"el punto asignado es rechazado"
+
+        and:"el puntaje del desafío se mantiene igual"
+    }
+
 }
