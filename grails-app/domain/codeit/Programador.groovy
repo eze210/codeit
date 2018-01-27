@@ -8,8 +8,9 @@ class Programador extends Participante {
 
     String nombre
     Set<Equipo> equipos
+    Set<Invitacion> invitaciones
 
-    static hasMany = [equipos: Equipo]
+    static hasMany = [equipos: Equipo, invitaciones: Invitacion]
 
     static constraints = {
         nombre nullable: false, blank: false, unique: true
@@ -18,6 +19,7 @@ class Programador extends Participante {
     Programador(String nombre) {
         this.nombre = nombre
         this.equipos = new HashSet<>()
+        this.invitaciones = new HashSet<>()
     }
 
     Set<Programador> programadoresInvolucrados() {

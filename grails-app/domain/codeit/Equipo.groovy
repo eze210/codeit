@@ -2,13 +2,13 @@ package codeit
 
 class Equipo extends Participante {
 
-    class ProgramadorYaMiembro extends IllegalArgumentException {
+    static class ProgramadorYaMiembro extends IllegalArgumentException {
         ProgramadorYaMiembro() {
             super("El programador ya está en el grupo")
         }
     }
 
-    class EquipoYaExistente extends IllegalArgumentException {
+    static class EquipoYaExistente extends IllegalArgumentException {
         EquipoYaExistente() {
             super("Ya existe otro grupo con estos miembros")
         }
@@ -51,6 +51,18 @@ class Equipo extends Participante {
 
         programadores.add(nuevoMiembro)
         nuevoMiembro.equipos.add(this)
+    }
+
+    static Boolean formanEquipoValido(Participante parte1, Participante parte2) {
+        Set<Programador> programadores = new HashSet<>()
+        programadores.addAll(parte1.programadoresInvolucrados())
+        programadores.addAll(parte2.programadoresInvolucrados())
+
+//        if (Equipo.findResult({ programadores == it.programadoresInvolucrados() })) {
+//            return false
+//        }
+
+        return true
     }
 
 }

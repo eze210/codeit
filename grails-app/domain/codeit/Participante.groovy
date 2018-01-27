@@ -39,4 +39,9 @@ public abstract class Participante {
     Boolean participaDe(Desafio desafio) {
         desafio.esParticipante(this)
     }
+
+    Invitacion invitar(Programador programador) {
+        new Invitacion(this, programador)
+    }
+
 }
