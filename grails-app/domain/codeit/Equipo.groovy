@@ -2,8 +2,8 @@ package codeit
 
 class Equipo extends Participante {
 
-    class ProgramadorYaMiembroException extends IllegalArgumentException {
-        ProgramadorYaMiembroException() {
+    class ProgramadorYaMiembro extends IllegalArgumentException {
+        ProgramadorYaMiembro() {
             super("El programador ya está en el grupo")
         }
     }
@@ -31,9 +31,9 @@ class Equipo extends Participante {
         programadores
     }
 
-    void agregarMiembro(Programador nuevoMiembro) throws ProgramadorYaMiembroException {
+    void agregarMiembro(Programador nuevoMiembro) throws ProgramadorYaMiembro {
         if (programadores.contains(nuevoMiembro)) {
-            throw new ProgramadorYaMiembroException()
+            throw new ProgramadorYaMiembro()
         }
 
         // todo: check if it's a list when there is only one result

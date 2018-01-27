@@ -47,7 +47,7 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
         equipo.agregarMiembro(programador)
 
         then:"el programador no puede ser agregado otra vez"
-        shouldFail(Equipo.ProgramadorYaMiembroException) {
+        shouldFail(Equipo.ProgramadorYaMiembro) {
             equipo.agregarMiembro(programador)
         }
     }

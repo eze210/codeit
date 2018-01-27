@@ -15,13 +15,16 @@ class Desafio {
     Set<Ejercicio> ejercicios
     Set<Solucion> soluciones
     Set<Resultado> resultados
+    Integer puntajeTotal
 
     static constraints = {
         titulo nullable: false, blank: false, unique: true
         descripcion nullable: false, blank: false, unique: true
         creador nullable: false
         vigencia nullable: false, blank: false
+        puntajeTotal nullable: false
     }
+
 
     Desafio(String titulo, String descripcion, Programador creador, DateTime fechaDesde, DateTime fechaHasta) {
         init(titulo, descripcion, creador)
@@ -42,6 +45,7 @@ class Desafio {
         this.titulo = titulo
         this.descripcion = descripcion
         this.creador = creador
+        this.puntajeTotal = 0
         this.ejercicios = new LinkedHashSet<>()
         this.soluciones = new LinkedHashSet<>()
         this.resultados = new LinkedHashSet<>()
@@ -81,4 +85,11 @@ class Desafio {
         resultados.addAll(soluciones.collect({solucion -> solucion.validar(ejercicios)}))
     }
 
+    Boolean esParticipante(Participante participante) {
+        soluciones.collect({it.participante}).contains(participante)
+    }
+
+    Integer asignarPunto() {
+        puntajeTotal += 1
+    }
 }

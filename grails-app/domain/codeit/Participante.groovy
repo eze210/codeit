@@ -2,6 +2,12 @@ package codeit
 
 public abstract class Participante {
 
+    class NoParticipaDelDesafio extends Exception {
+    }
+
+    class InvolucraAlCreador extends Exception {
+    }
+
     abstract Set<Programador> programadoresInvolucrados()
 
     Boolean involucraA(Participante participante) {
@@ -18,4 +24,19 @@ public abstract class Participante {
         solucion
     }
 
+    Integer asignarPuntoA(Desafio desafio) {
+        if (involucraA(desafio.creador)) {
+            throw new InvolucraAlCreador()
+        }
+
+        if (!participaDe(desafio)) {
+            throw new NoParticipaDelDesafio()
+        }
+
+        desafio.asignarPunto()
+    }
+
+    Boolean participaDe(Desafio desafio) {
+        desafio.esParticipante(this)
+    }
 }
