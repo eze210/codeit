@@ -28,17 +28,17 @@ class Desafio {
 
     Desafio(String titulo, String descripcion, Programador creador, DateTime fechaDesde, DateTime fechaHasta) {
         init(titulo, descripcion, creador)
-        this.vigencia = new Vigencia(fechaDesde, fechaHasta);
+        this.vigencia = new Vigencia(fechaDesde, fechaHasta)
     }
 
     Desafio(String titulo, String descripcion, Programador creador, DateTime fechaHasta) {
         init(titulo, descripcion, creador)
-        this.vigencia = new Vigencia(fechaHasta);
+        this.vigencia = new Vigencia(fechaHasta)
     }
 
     Desafio(String titulo, String descripcion, Programador creador) {
         init(titulo, descripcion, creador)
-        this.vigencia = new Vigencia();
+        this.vigencia = new Vigencia()
     }
 
     private void init(String titulo, String descripcion, Programador creador) {

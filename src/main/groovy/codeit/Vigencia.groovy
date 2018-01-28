@@ -1,6 +1,7 @@
 package codeit
 
 import org.joda.time.DateTime
+import com.google.common.collect.Range
 
 public class Vigencia implements Serializable {
 
@@ -11,38 +12,25 @@ public class Vigencia implements Serializable {
     }
 
     Tipo tipo
-    DateTime vencimiento
     Range<DateTime> rangoDeFechas
 
     Vigencia(DateTime fechaHasta) {
         this.tipo = Tipo.Vencimiento
-        this.vencimiento = fechaHasta
-        this.rangoDeFechas = null
+        this.rangoDeFechas = Range.lessThan(fechaHasta)
     }
 
     Vigencia(DateTime fechaDesde, DateTime fechaHasta) {
         this.tipo = Tipo.Plazo
-        this.vencimiento = fechaHasta
-        this.rangoDeFechas = new ObjectRange(fechaDesde, fechaHasta)
+        this.rangoDeFechas = Range.closed(fechaDesde, fechaHasta)
     }
 
     Vigencia() {
         this.tipo = Tipo.Infinita
-        this.vencimiento = null
-        this.rangoDeFechas = null
+        this.rangoDeFechas = Range.all()
     }
 
     Boolean contiene(DateTime fecha) {
-        switch (this.tipo) {
-            case Tipo.Infinita:
-                return true
-            case Tipo.Plazo:
-                return rangoDeFechas.containsWithinBounds(fecha)
-            case Tipo.Vencimiento:
-                return fecha.isBefore(vencimiento)
-            default:
-                return false
-        }
+        this.rangoDeFechas.contains(fecha)
     }
 
 }
