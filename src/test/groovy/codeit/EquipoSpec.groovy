@@ -47,7 +47,7 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
         equipo.agregarMiembro(programador)
 
         then:"el programador no puede ser agregado otra vez"
-        shouldFail(Equipo.ProgramadorYaMiembro) {
+        shouldFail(ProgramadorYaMiembro) {
             equipo.agregarMiembro(programador)
         }
     }
@@ -75,7 +75,7 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
 
         when:"se intenta agregar el miembro faltante al nuevo equipo"
         then:"el miembro faltante no puede ser agregado al nuevo equipo"
-        shouldFail(Equipo.EquipoYaExistente) {
+        shouldFail(EquipoYaExistente) {
             equipo2.agregarMiembro(programador2)
         }
 //        equipo2.involucraA(programador2)

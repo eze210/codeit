@@ -18,8 +18,10 @@ class TrabajarEnEquipoTestSpec extends Specification {
     // TODO: Agregar invitaciones
     void "Conformación de equipos - Invitación programador a programador"() {
         given:"Dos programadores que quieren participar juntos en futuros desafíos"
-        Programador programadorQueInvita = new Programador("Invita").save()
-        Programador programadorInvitado = new Programador("Invitado").save()
+        Programador programadorQueInvita = new Programador("Invita")
+        Programador programadorInvitado = new Programador("Invitado")
+        programadorQueInvita.save(flush: true, failOnError:true)
+        programadorInvitado.save(flush: true, failOnError:true)
 
         and:"juntos forman un equipo válido"
         assert Equipo.formanEquipoValido(programadorQueInvita, programadorInvitado)

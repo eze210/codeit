@@ -51,7 +51,7 @@ class PuntuarDesafiosTestSpec extends Specification {
 
         when:"intenta asignar un punto al desafío"
         then:"el punto asignado es rechazado"
-        shouldFail(Participante.NoParticipaDelDesafio) {
+        shouldFail(NoParticipaDelDesafio) {
             programador.asignarPuntoA(desafio)
         }
 
@@ -64,7 +64,7 @@ class PuntuarDesafiosTestSpec extends Specification {
 
         when:"El creador de un desafío intenta asignar un punto a su propio desafío"
         then:"el punto asignado es rechazado"
-        shouldFail(Participante.InvolucraAlCreador) {
+        shouldFail(InvolucraAlCreador) {
             creador.asignarPuntoA(desafio)
         }
 
