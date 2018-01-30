@@ -44,6 +44,15 @@ class Equipo extends Participante {
             return false
         }
         return true
+
+        // todo: improve with database direct access
+//        List<Equipo> otrosEquipos = Equipo.findAll()
+//        for (Equipo equipo: otrosEquipos) {
+//            if (equipo.programadores.collect { it.id }.intersect(programadores.collect { it.id }).size() == programadores.size()) {
+//                return false
+//            }
+//        }
+//        return true
     }
 
 }
