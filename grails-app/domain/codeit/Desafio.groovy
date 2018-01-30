@@ -64,6 +64,7 @@ class Desafio {
         }
         resultados.removeIf({it.solucion == solucion})
         Resultado resultado = new Resultado(solucion)
+        assert resultado != null
         resultados.add(resultado)
     }
 
@@ -73,14 +74,16 @@ class Desafio {
         if (~index && !resultados[index].estaProcesado()) {
             resultados.removeIf({ it.solucion == solucion })
             Resultado resultado = solucion.validar(ejercicios)
+            assert resultado != null
             resultados.add(resultado)
             resultado
         } else {
+            assert resultados[index] != null
             resultados[index]
         }
     }
 
-    Resultado obtenerResultadoActualDe(Solucion solucion) {
+    Resultado obtenerResultadoActualDeSolucion(Solucion solucion) {
         resultados.find { it.solucion == solucion }
     }
 
@@ -113,11 +116,12 @@ class Desafio {
         ejercicios.add(ejercicio)
 
         resultados.clear()
-        resultados.addAll(soluciones.collect { new Resultado(it) })
+        assert resultados.addAll(soluciones.collect { new Resultado(it) })
     }
 
     void revalidarSoluciones() {
-        resultados.addAll(soluciones.collect { solucion -> solucion.validar(ejercicios) })
+        resultados.clear()
+        resultados.addAll(soluciones.collect { it.validar(ejercicios) })
     }
 
     Integer asignarPunto() {

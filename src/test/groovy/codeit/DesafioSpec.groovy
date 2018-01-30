@@ -145,6 +145,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Programador resolvedor = new Programador("Otro nombre")
         Solucion solucion = new Solucion(resolvedor, "Descripción", desafioNuevo)
         Resolucion resolucion = new Resolucion(ejercicio1, "")
+        solucion.agregarResolucion(resolucion)
         desafioNuevo.proponerSolucion(solucion)
         assert desafioNuevo.validarSolucion(solucion).valido
 
@@ -154,10 +155,10 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
         then:"la solución debe reprocesarse"
         and:"la solución ya no resuelve el desafío"
-        !desafioNuevo.obtenerResultadoActualDe(solucion).estaProcesado() &&
-            !desafioNuevo.validarSolucion(solucion).valido
-
-
+        assert desafioNuevo.resultados.count() == 1
+        assert desafioNuevo.obtenerResultadoActualDeSolucion(solucion) != null
+        !desafioNuevo.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
+                !desafioNuevo.validarSolucion(solucion).valido
     }
 
     void "Solución vuelve a ser válida cuando se agrega una resolución para el ejercicio nuevo"() {
@@ -185,7 +186,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         desafio.agregarEjercicio(ejercicio2)
 
         then:"la solución ya no resuelve el desafío"
-        assert !desafio.obtenerResultadoActualDe(solucion).estaProcesado() &&
+        assert !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
                 !desafio.validarSolucion(solucion).valido
 
         when:"se agrega una resolución para el nuevo ejercicio"
@@ -193,7 +194,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
         then:"la solución debe reprocesarse"
         and:"la solución vuelve a ser válida"
-        !desafio.obtenerResultadoActualDe(solucion).estaProcesado() &&
+        !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
                 !desafio.validarSolucion(solucion).valido
     }
 
