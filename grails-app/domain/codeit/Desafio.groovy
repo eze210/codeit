@@ -51,22 +51,52 @@ class Desafio {
         this.resultados = new LinkedHashSet<>()
     }
 
-    Resultado proponerSolucion(Solucion solucion) {
+    // Función para agregar la nueva solución del usuario
+    void proponerSolucion(Solucion solucion) throws InvolucraAlCreador, YaParticipaDelDesafio, DesafioNoVigente {
+        if (!estaVigente()) {
+            throw new DesafioNoVigente()
+        }
+        if (esCreador(solucion.participante)) {
+            throw new InvolucraAlCreador()
+        }
+        if (!puedeParticipar(solucion.participante)) {
+            throw new YaParticipaDelDesafio()
+        }
         resultados.removeIf({it.solucion == solucion})
-        soluciones.remove(solucion)
-
-        Resultado resultado = validarSolucion(solucion)
+        Resultado resultado = new Resultado(solucion)
         resultados.add(resultado)
-        soluciones.add(solucion)
-        resultado
     }
 
+    // Función para procesar la solución del usuario
     Resultado validarSolucion(Solucion solucion) {
-        resultados.find { it.solucion == solucion } ?: solucion.validar(ejercicios)
+        int index = resultados.findIndexOf { it.solucion == solucion }
+        if (~index && !resultados[index].estaProcesado()) {
+            resultados.removeIf({ it.solucion == solucion })
+            Resultado resultado = solucion.validar(ejercicios)
+            resultados.add(resultado)
+            resultado
+        } else {
+            resultados[index]
+        }
     }
 
-    Boolean puedeParticipar(Participante participante) {
-        !resultados.find { it.solucion.participante.involucraA(participante) }
+    Resultado obtenerResultadoActualDe(Solucion solucion) {
+        resultados.find { it.solucion == solucion }
+    }
+
+    private Boolean esCreador(Participante participante) {
+        creador.involucraA(participante)
+    }
+
+    private Boolean puedeParticipar(Participante participante) {
+        estaVigente() &&
+                ((!esCreador(participante)) ||
+                esParticipante(participante) ||
+                !resultados.find { it.solucion.participante.involucraA(participante) })
+    }
+
+    private Boolean esParticipante(Participante participante) {
+        soluciones.find { it.participante == participante }
     }
 
     Boolean estaVigente() {
@@ -74,19 +104,20 @@ class Desafio {
         vigencia.contiene(DateTime.now())
     }
 
-    Boolean agregarEjercicio(Ejercicio ejercicio) {
+    void agregarEjercicio(Ejercicio ejercicio) throws DesafioNoVigente {
+        if (!estaVigente()) {
+            throw DesafioNoVigente()
+        }
+
         assert ejercicios != null
         ejercicios.add(ejercicio)
-        revalidarSoluciones()
-    }
 
-    Boolean revalidarSoluciones() {
         resultados.clear()
-        resultados.addAll(soluciones.collect({solucion -> solucion.validar(ejercicios)}))
+        resultados.addAll(soluciones.collect { new Resultado(it) })
     }
 
-    Boolean esParticipante(Participante participante) {
-        soluciones.collect({it.participante}).contains(participante)
+    void revalidarSoluciones() {
+        resultados.addAll(soluciones.collect { solucion -> solucion.validar(ejercicios) })
     }
 
     Integer asignarPunto() {

@@ -38,11 +38,10 @@ class Solucion {
 
         Integer puntos = resoluciones.count { resolucion -> resolucion.ejercicio.validarResolucion(resolucion) }
 
-        new Resultado(
-                solucion: this,
-                valido: todosLosEjerciciosEstanResueltos,
-                puntaje: puntos,
-                correcto: puntos == todosLosEjercicios.size())
+        new Resultado(this,
+                todosLosEjerciciosEstanResueltos,
+                puntos == todosLosEjercicios.size(),
+                puntos)
     }
 
 }

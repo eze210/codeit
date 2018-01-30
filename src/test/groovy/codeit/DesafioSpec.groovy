@@ -20,7 +20,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 "La descripción",
                 programador,
                 DateTime.now(),
-                DateTime.now())
+                DateTime.now().plusDays(1))
 
         then:"el desafío tiene esos parámetros y es válido"
         desafio.creador == programador
@@ -40,7 +40,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 "La descripción",
                 programador,
                 DateTime.now(),
-                DateTime.now())
+                DateTime.now().plusDays(1))
 
         when:"se agrega un ejercicio a ese desafío"
         Ejercicio ejercicio = new Ejercicio(desafioNuevo, "El enunciado")
@@ -59,7 +59,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 "La descripción",
                 programador,
                 DateTime.now(),
-                DateTime.now())
+                DateTime.now().plusDays(1))
 
         when:"Se agregan N ejercicios ese desafío"
         Integer numeroDeEjercicios = 10
@@ -128,7 +128,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
     }
 
     void "Solución se invalida cuando se agrega un nuevo ejercicio"() {
-        given:"Un desafío nuevo"
+        given:"Un desafío con un ejercicio"
         Programador programador = new Programador("El nombre")
         DateTime ahora = DateTime.now()
         DateTime maniana = ahora.plusDays(1)
@@ -138,22 +138,30 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 programador,
                 ahora,
                 maniana)
+        Ejercicio ejercicio1 = new Ejercicio(desafioNuevo, "Ejercicio viejo")
+        desafioNuevo.agregarEjercicio(ejercicio1)
 
-        and:"que era resuelto por una solución"
+        and:"que tenía una solución válida"
         Programador resolvedor = new Programador("Otro nombre")
         Solucion solucion = new Solucion(resolvedor, "Descripción", desafioNuevo)
-        assert desafioNuevo.proponerSolucion(solucion)
+        Resolucion resolucion = new Resolucion(ejercicio1, "")
+        desafioNuevo.proponerSolucion(solucion)
+        assert desafioNuevo.validarSolucion(solucion).valido
 
         when:"se agrega un nuevo ejercicio al desafío"
-        Ejercicio ejercicio = new Ejercicio(desafioNuevo, "Ejercicio nuevo")
-        assert desafioNuevo.agregarEjercicio(ejercicio)
+        Ejercicio ejercicio2 = new Ejercicio(desafioNuevo, "Ejercicio nuevo")
+        desafioNuevo.agregarEjercicio(ejercicio2)
 
-        then:"la solución ya no resuelve el desafío"
-        !desafioNuevo.validarSolucion(solucion)
+        then:"la solución debe reprocesarse"
+        and:"la solución ya no resuelve el desafío"
+        !desafioNuevo.obtenerResultadoActualDe(solucion).estaProcesado() &&
+            !desafioNuevo.validarSolucion(solucion).valido
+
+
     }
 
     void "Solución vuelve a ser válida cuando se agrega una resolución para el ejercicio nuevo"() {
-        given:"Un desafío"
+        given:"Un desafío con un ejercicio"
         Programador programador = new Programador("El nombre")
         DateTime ahora = DateTime.now()
         DateTime maniana = ahora.plusDays(1)
@@ -163,24 +171,30 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 programador,
                 ahora,
                 maniana)
+        Ejercicio ejercicio1 = new Ejercicio(desafio, "Ejercicio viejo")
+        desafio.agregarEjercicio(ejercicio1)
 
         and:"que era resuelto por una solución"
         Programador resolvedor = new Programador("Otro nombre")
         Solucion solucion = new Solucion(resolvedor, "Descripción", desafio)
-        assert desafio.proponerSolucion(solucion)
+        desafio.proponerSolucion(solucion)
+        assert desafio.validarSolucion(solucion).valido
 
         when:"se agrega un ejercicio"
-        Ejercicio ejercicio = new Ejercicio(desafio, "Ejercicio nuevo")
-        assert desafio.agregarEjercicio(ejercicio)
+        Ejercicio ejercicio2 = new Ejercicio(desafio, "Ejercicio nuevo")
+        desafio.agregarEjercicio(ejercicio2)
 
         then:"la solución ya no resuelve el desafío"
-        !desafio.validarSolucion(solucion)
+        assert !desafio.obtenerResultadoActualDe(solucion).estaProcesado() &&
+                !desafio.validarSolucion(solucion).valido
 
         when:"se agrega una resolución para el nuevo ejercicio"
-        solucion.agregarResolucion(new Resolucion(ejercicio, "{x -> x}"))
+        solucion.agregarResolucion(new Resolucion(ejercicio2, "{x -> x}"))
 
-        then:"la solución es válida de nuevo"
-        desafio.validarSolucion(solucion)
+        then:"la solución debe reprocesarse"
+        and:"la solución vuelve a ser válida"
+        !desafio.obtenerResultadoActualDe(solucion).estaProcesado() &&
+                !desafio.validarSolucion(solucion).valido
     }
 
 }
