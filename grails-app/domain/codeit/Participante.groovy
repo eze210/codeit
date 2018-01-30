@@ -2,12 +2,6 @@ package codeit
 
 public abstract class Participante {
 
-    class NoParticipaDelDesafio extends Exception {
-    }
-
-    class InvolucraAlCreador extends Exception {
-    }
-
     abstract Set<Programador> programadoresInvolucrados()
 
     Boolean involucraA(Participante participante) {

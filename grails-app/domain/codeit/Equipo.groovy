@@ -2,25 +2,15 @@ package codeit
 
 class Equipo extends Participante {
 
-    static class ProgramadorYaMiembro extends IllegalArgumentException {
-        ProgramadorYaMiembro() {
-            super("El programador ya está en el grupo")
-        }
-    }
-
-    static class EquipoYaExistente extends IllegalArgumentException {
-        EquipoYaExistente() {
-            super("Ya existe otro grupo con estos miembros")
-        }
-    }
-
-    static hasMany = [programadores: Programador]
     Set<Programador> programadores
     String nombre
 
     static constraints = {
-        nombre nullable: false, blank: false
+        nombre(nullable: false, blank: false)
     }
+
+    static belongsTo = Programador
+    static hasMany = [programadores: Programador]
 
     Equipo(String nombre) {
         this.nombre = nombre
@@ -40,6 +30,20 @@ class Equipo extends Participante {
         nuevoMiembro.equipos.add(this)
     }
 
+    static Boolean formanEquipoValido(Participante parte1, Participante parte2) {
+        Set<Programador> miembros = new HashSet<>(parte1.programadoresInvolucrados())
+        miembros.addAll(parte2.programadoresInvolucrados())
 
+        if (Equipo.count() == 0) {
+            return true;
+        }
+
+//        Equipo.find {programadores == miembros}
+        if (findByProgramadores(miembros)) {
+            return false
+        }
+
+        return true
+    }
 
 }
