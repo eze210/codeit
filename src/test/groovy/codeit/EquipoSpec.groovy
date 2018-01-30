@@ -52,4 +52,34 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
         }
     }
 
+    void "No se puede armar un equipo con los mismos miembros que otro equipo existente"() {
+        given:"Un equipo guardado en la base de datos"
+        Equipo equipo1 = new Equipo("Equipo1")
+        Programador programador1 = new Programador("Programador1")
+        Programador programador2 = new Programador("Programador2")
+        equipo1.agregarMiembro(programador1)
+        equipo1.agregarMiembro(programador2)
+        assert programador1.id == null
+        assert programador2.id == null
+        assert equipo1.id == null
+        programador1.save()
+        programador2.save()
+        equipo1.save()
+        assert programador1.id != null
+        assert programador2.id != null
+        assert equipo1.id != null
+
+        and:"Un equipo con todos menos 1 de esos miembros"
+        Equipo equipo2 = new Equipo("Equipo2")
+        equipo2.agregarMiembro(programador1)
+
+        when:"se intenta agregar el miembro faltante al nuevo equipo"
+        then:"el miembro faltante no puede ser agregado al nuevo equipo"
+        shouldFail(Equipo.EquipoYaExistente) {
+            equipo2.agregarMiembro(programador2)
+        }
+//        equipo2.involucraA(programador2)
+    }
+
+
 }

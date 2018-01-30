@@ -2,14 +2,12 @@ package codeit
 
 import grails.testing.mixin.integration.Integration
 import grails.transaction.*
-import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Specification
+
 
 @Integration
 @Rollback
 class TrabajarEnEquipoTestSpec extends Specification {
-
-    @Autowired EquipoService service
 
     def setup() {
     }
@@ -24,9 +22,7 @@ class TrabajarEnEquipoTestSpec extends Specification {
         Programador programadorInvitado = new Programador("Invitado").save()
 
         and:"juntos forman un equipo válido"
-        print(service)
-
-        assert service.formanEquipoValido(programadorQueInvita, programadorInvitado)
+        assert Equipo.formanEquipoValido(programadorQueInvita, programadorInvitado)
 
         when:"un programador invita al otro a formar un equipo"
         Invitacion invitacion = programadorQueInvita.invitar(programadorInvitado)
