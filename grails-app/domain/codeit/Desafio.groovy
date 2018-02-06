@@ -116,7 +116,7 @@ class Desafio {
         ejercicios.add(ejercicio)
 
         resultados.clear()
-        assert resultados.addAll(soluciones.collect { new Resultado(it) })
+        resultados.addAll(soluciones.collect { new Resultado(it) })
     }
 
     void revalidarSoluciones() {
