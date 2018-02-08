@@ -36,23 +36,16 @@ class Equipo extends Participante {
         Set<Programador> miembros = new HashSet<>(parte1.programadoresInvolucrados())
         miembros.addAll(parte2.programadoresInvolucrados())
 
-        if (count() == 0) {
-            return true
-        }
-
-        if (findByProgramadores(miembros)) {
-            return false
+        // todo: improve with database direct access
+        // findByProgramadores no funciona
+        List<Equipo> otrosEquipos = Equipo.findAll()
+        for (Equipo equipo: otrosEquipos) {
+            if ((equipo.programadores.size() == miembros.size()) &&
+                    (equipo.programadores.collect { it.nombre }.intersect(miembros.collect { it.nombre }).size() == miembros.size())) {
+                return false
+            }
         }
         return true
-
-        // todo: improve with database direct access
-//        List<Equipo> otrosEquipos = Equipo.findAll()
-//        for (Equipo equipo: otrosEquipos) {
-//            if (equipo.programadores.collect { it.id }.intersect(programadores.collect { it.id }).size() == programadores.size()) {
-//                return false
-//            }
-//        }
-//        return true
     }
 
 }

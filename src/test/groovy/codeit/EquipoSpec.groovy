@@ -78,7 +78,6 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
         shouldFail(EquipoYaExistente) {
             equipo2.agregarMiembro(programador2)
         }
-//        equipo2.involucraA(programador2)
     }
 
 
