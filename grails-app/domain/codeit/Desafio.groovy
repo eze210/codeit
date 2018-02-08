@@ -62,6 +62,8 @@ class Desafio {
         if (!puedeParticipar(solucion.participante)) {
             throw new YaParticipaDelDesafio()
         }
+        soluciones.remove(solucion)
+        soluciones.add(solucion)
         resultados.removeIf({it.solucion == solucion})
         Resultado resultado = new Resultado(solucion)
         assert resultado != null
@@ -72,6 +74,8 @@ class Desafio {
     Resultado validarSolucion(Solucion solucion) {
         int index = resultados.findIndexOf { it.solucion == solucion }
         if (~index && !resultados[index].estaProcesado()) {
+            soluciones.remove(solucion)
+            soluciones.add(solucion)
             resultados.removeIf({ it.solucion == solucion })
             Resultado resultado = solucion.validar(ejercicios)
             assert resultado != null

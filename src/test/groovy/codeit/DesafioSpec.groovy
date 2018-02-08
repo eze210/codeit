@@ -146,7 +146,11 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Solucion solucion = new Solucion(resolvedor, "Descripción", desafioNuevo)
         Resolucion resolucion = new Resolucion(ejercicio1, "")
         solucion.agregarResolucion(resolucion)
+        assert desafioNuevo.soluciones.size() == 1
+        assert desafioNuevo.resultados.size() == 1
         desafioNuevo.proponerSolucion(solucion)
+        assert desafioNuevo.soluciones.size() == 1
+        assert desafioNuevo.resultados.size() == 1
         assert desafioNuevo.validarSolucion(solucion).valido
 
         when:"se agrega un nuevo ejercicio al desafío"
@@ -155,7 +159,8 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
         then:"la solución debe reprocesarse"
         and:"la solución ya no resuelve el desafío"
-        assert desafioNuevo.resultados.count() == 1
+        assert desafioNuevo.soluciones.size() == 1
+        assert desafioNuevo.resultados.size() == 1
         assert desafioNuevo.obtenerResultadoActualDeSolucion(solucion) != null
         !desafioNuevo.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
                 !desafioNuevo.validarSolucion(solucion).valido
@@ -178,7 +183,13 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         and:"que era resuelto por una solución"
         Programador resolvedor = new Programador("Otro nombre")
         Solucion solucion = new Solucion(resolvedor, "Descripción", desafio)
+        Resolucion resolucion = new Resolucion(ejercicio1, "")
+        solucion.agregarResolucion(resolucion)
+        assert desafio.soluciones.size() == 1
+        assert desafio.resultados.size() == 1
         desafio.proponerSolucion(solucion)
+        assert desafio.soluciones.size() == 1
+        assert desafio.resultados.size() == 1
         assert desafio.validarSolucion(solucion).valido
 
         when:"se agrega un ejercicio"
@@ -195,7 +206,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         then:"la solución debe reprocesarse"
         and:"la solución vuelve a ser válida"
         !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
-                !desafio.validarSolucion(solucion).valido
+                desafio.validarSolucion(solucion).valido
     }
 
 }
