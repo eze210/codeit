@@ -15,7 +15,7 @@ class ProgramadorSpec extends Specification implements DomainUnitTest<Programado
     def cleanup() {
     }
 
-    void "Como participante el programador se involucra solamente a si mismo"() {
+    void comoParticipanteElProgramadorSeInvolucraSolamenteASiMismo() {
         when:"le pido los programadores involucrados a un programador"
         Set<Programador> involucrados = programador.programadoresInvolucrados()
 
@@ -23,7 +23,7 @@ class ProgramadorSpec extends Specification implements DomainUnitTest<Programado
         involucrados.contains(programador) && involucrados.size() == 1
     }
 
-    void "El programador que propone un desafío es su creador"() {
+    void elProgramadorQueProponeUnDesafioEsSuCreador() {
         when:"Un programador propone un desafío"
         Desafio desafio = programador.proponerDesafio(
                 "Un título",

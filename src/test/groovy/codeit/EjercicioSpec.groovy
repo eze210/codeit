@@ -14,7 +14,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
     def cleanup() {
     }
 
-    void "Un ejercicio nuevo no tiene pruebas"() {
+    void unEjercicioNuevoNoTienePruebas() {
         given:"Un ejercicio nuevo"
         Ejercicio ejercicio = new Ejercicio(desafio, "Un título")
 
@@ -22,7 +22,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
         ejercicio.pruebas.size() == 0
     }
 
-    void "Un ejercicio nuevo se resuelve con una resolución nueva"() {
+    void unEjercicioNuevoSeResuelveConUnaResolucionNueva() {
         given:"Un ejercicio nuevo"
         Ejercicio ejercicio = new Ejercicio(desafio, "Un título")
 
@@ -33,7 +33,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
         ejercicio.validarResolucion(resolucion)
     }
 
-    void "Un ejercicio con una prueba agregada tiene una prueba asociada a si mismo"() {
+    void unEjercicioConUnaPruebaAgregadaTieneUnaPruebaAsociadaASiMismo() {
         given:"Un ejercicio"
         Ejercicio ejercicio = new Ejercicio(desafio, "Un título")
 
@@ -47,7 +47,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
         prueba.ejercicio == ejercicio
     }
 
-    void "Ejercicio simple"() {
+    void ejercicioSimple() {
         given:"Un ejercicio"
         Ejercicio ejercicio = new Ejercicio(desafio, "Un título")
 
@@ -63,7 +63,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
         !ejercicio.validarResolucion(resolucionInorrecta)
     }
 
-    void "Ejercicio con varias pruebas"() {
+    void ejercicioConVariasPruebas() {
         given:"Un ejercicio"
         Ejercicio ejercicio = new Ejercicio(desafio, "Un título")
 

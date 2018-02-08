@@ -14,7 +14,7 @@ class ResolucionSpec extends Specification implements DomainUnitTest<Resolucion>
     def cleanup() {
     }
 
-    void "Resolución del ejercicio identidad"() {
+    void resolucionDelEjercicioIdentidad() {
         given:"Un ejercicio"
         Ejercicio ejercicio = new Ejercicio(desafio, "Identidad")
 

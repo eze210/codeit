@@ -25,7 +25,7 @@ class SolucionSpec extends Specification implements DomainUnitTest<Solucion> {
     def cleanup() {
     }
 
-    void "Cuando un desafío tiene un ejercicio, una solución nueva no lo resuelve"() {
+    void cuandoUnDesafioTieneUnEjercicioUnaSolucionNuevaNoLoResuelve() {
         given:"Un desafío que tiene un ejercicio"
         assert desafio.ejercicios.size() == 1
 
@@ -40,7 +40,7 @@ class SolucionSpec extends Specification implements DomainUnitTest<Solucion> {
         !solucion.validar(desafio.ejercicios).valido
     }
 
-    void "Solución correcta"() {
+    void solucionCorrecta() {
         given:"Un desafío que tiene un ejercicio"
         assert desafio.ejercicios.size() == 1
 

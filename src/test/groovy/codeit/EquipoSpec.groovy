@@ -13,7 +13,7 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
     def cleanup() {
     }
 
-    void "Un equipo nuevo no tiene miembros"() {
+    void unEquipoNuevoNoTieneMiembros() {
         given:"Un equipo nuevo"
         Equipo equipo = new Equipo("Nombre del equipo")
 
@@ -22,7 +22,7 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
         equipo.programadoresInvolucrados().empty
     }
 
-    void "Al agregar varios miembros, esos miembros pertenecen al equipo"() {
+    void alAgregarVariosMiembrosEsosMiembrosPertenecenAlEquipo() {
         given:"Un equipo"
         Equipo equipo = new Equipo("Nombre del equipo")
 
@@ -38,7 +38,7 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
         equipo.involucraA(miembro1) && equipo.involucraA(miembro2) && equipo.involucraA(miembro3)
     }
 
-    void "No se puede agregar dos veces el mismo programador al mismo equipo"() {
+    void noSePuedeAgregarDosVecesElMismoProgramadorAlMismoEquipo() {
         given:"Un programador y un equipo"
         Programador programador = new Programador("Nombre")
         Equipo equipo = new Equipo("Equipo")
@@ -52,7 +52,7 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
         }
     }
 
-    void "No se puede armar un equipo con los mismos miembros que otro equipo existente"() {
+    void noSePuedeArmarUnEquipoConLosMismosMiembrosQueOtroEquipoExistente() {
         given:"Un equipo guardado en la base de datos"
         Equipo equipo1 = new Equipo("Equipo1")
         Programador programador1 = new Programador("Programador1")

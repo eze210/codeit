@@ -12,7 +12,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
     def cleanup() {
     }
 
-    void "Una vigencia creada sin parámetros es infinita"() {
+    void unaVigenciaCreadaSinParametrosEsInfinita() {
         when:"Se crea una vigencia sin parámetros"
         Vigencia vigencia = new Vigencia()
 
@@ -20,7 +20,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
         vigencia.tipo == Vigencia.Tipo.Infinita
     }
 
-    void "Una vigencia infinita contiene la fecha actual"() {
+    void unaVigenciaInfinitaContieneLaFechaActual() {
         given:"Una vigencia infinita"
         Vigencia vigencia = new Vigencia()
         assert vigencia.tipo == Vigencia.Tipo.Infinita
@@ -29,7 +29,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
         vigencia.contiene(DateTime.now())
     }
 
-    void "Una fecha creada con un solo parámetro es un vencimiento"() {
+    void unaFechaCreadaConUnSoloParametroEsUnVencimiento() {
         when:"Una vigencia es creada con un solo parámetro"
         Vigencia vigencia = new Vigencia(DateTime.now())
 
@@ -37,7 +37,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
         vigencia.tipo == Vigencia.Tipo.Vencimiento
     }
 
-    void "Un vencimiento creado con la fecha actual contiene una fecha del mes pasado pero no una del dia siguiente"() {
+    void unVencimientoCreadoConLaFechaActualContieneUnaFechaDelMesPasadoPeroNoUnaDelDiaSiguiente() {
         given:"Una vigencia que es creada como un vencimiento en la fecha actual"
         DateTime ahora = DateTime.now()
         DateTime mesPasado = ahora.minusMonths(1)
@@ -52,7 +52,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
         !vigencia.contiene(diaSiguiente)
     }
 
-    void "Una vigencia creada con dos parámetros es un plazo"() {
+    void UnaVigenciaCreadaConDosParametrosEsUnPlazo() {
         when:"Una vigencia es creada con dos parámetros"
         Vigencia vigencia = new Vigencia(DateTime.now(), DateTime.now())
 

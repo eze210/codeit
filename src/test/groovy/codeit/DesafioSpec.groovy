@@ -12,7 +12,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
     def cleanup() {
     }
 
-    void "Creación del desafío"() {
+    void creacionDelDesafio() {
         when:"Se crea un desafío con ciertos parámetros"
         Programador programador = new Programador("El nombre")
         Desafio desafio = new Desafio(
@@ -32,7 +32,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         desafio.vigencia.rangoDeFechas.upperEndpoint() >= desafio.vigencia.rangoDeFechas.lowerEndpoint()
     }
 
-    void "Agregar un ejercicio"() {
+    void agregarUnEjercicio() {
         given:"Un desafío"
         Programador programador = new Programador("El nombre")
         Desafio desafioNuevo = new Desafio(
@@ -51,7 +51,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         desafioNuevo.ejercicios.contains(ejercicio)
     }
 
-    void "Agregar ejercicios"() {
+    void agregarEjercicios() {
         given:"Un desafío nuevo"
         Programador programador = new Programador("El nombre")
         Desafio desafioNuevo = new Desafio(
@@ -72,7 +72,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         desafioNuevo.ejercicios.size() == numeroDeEjercicios
     }
 
-    void "Desafío vigente"() {
+    void desafioVigente() {
         when:"Se crea un desafío valido desde ahora y por un día"
         Programador programador = new Programador("El nombre")
 
@@ -89,7 +89,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         desafioNuevo.estaVigente()
     }
 
-    void "Desafío no vigente"() {
+    void desafioNoVigente() {
         when:"Se crea un desafío valido desde ayer y por un día"
         Programador programador = new Programador("El nombre")
 
@@ -107,7 +107,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         !desafioNuevo.estaVigente()
     }
 
-    void "Solución nueva para desafío nuevo"() {
+    void solucionNuevaParaDsafioNuevo() {
         when:"Un desafío es nuevo y una solución es nueva"
         Programador programador = new Programador("El nombre")
 
@@ -127,7 +127,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         desafioNuevo.proponerSolucion(solucion)
     }
 
-    void "Solución se invalida cuando se agrega un nuevo ejercicio"() {
+    void solucionSeInvalidaCuandoSeAgregaUnNuevoEjercicio() {
         given:"Un desafío con un ejercicio"
         Programador programador = new Programador("El nombre")
         DateTime ahora = DateTime.now()
@@ -161,7 +161,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 !desafioNuevo.validarSolucion(solucion).valido
     }
 
-    void "Solución vuelve a ser válida cuando se agrega una resolución para el ejercicio nuevo"() {
+    void solucionVuelveASerValidaCuandoSeAgregaUnaResolucionParaElEjercicioNuevo() {
         given:"Un desafío con un ejercicio"
         Programador programador = new Programador("El nombre")
         DateTime ahora = DateTime.now()

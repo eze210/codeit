@@ -24,7 +24,7 @@ class PuntuarDesafiosTestSpec extends Specification {
     def cleanup() {
     }
 
-    void "Puntuaciones sólo de los participantes - Vota un participante"() {
+    void puntuacionesSoloDeLosParticipantesvotaUnParticipante() {
         Integer puntajeInicialDelDesafio = desafio.puntajeTotal
         //Integer puntajeInicialDeLaFacetaDesafiante = creador.blah
 
@@ -43,7 +43,7 @@ class PuntuarDesafiosTestSpec extends Specification {
         //creador.blah == puntajeInicialDeLaFacetaDesafiante + 1
     }
 
-    void "Puntuaciones sólo de los participantes - Vota un no-participante"() {
+    void puntuacionesSoloDeLosParticipantesVotaUnNoParticipante() {
         Integer puntajeInicialDelDesafio = desafio.puntajeTotal
 
         given:"Un programador no ha subido ninguna resolución a ningún ejercicio de un desafío"
@@ -59,7 +59,7 @@ class PuntuarDesafiosTestSpec extends Specification {
         desafio.puntajeTotal == puntajeInicialDelDesafio
     }
 
-    void "Puntuaciones sólo de los participantes - Vota el creador"() {
+    void puntuacionesSoloDeLosParticipantesVotaElCreador() {
         Integer puntajeInicialDelDesafio = desafio.puntajeTotal
 
         when:"El creador de un desafío intenta asignar un punto a su propio desafío"

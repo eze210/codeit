@@ -16,7 +16,7 @@ class TrabajarEnEquipoTestSpec extends Specification {
     }
 
     // TODO: Agregar invitaciones
-    void "Conformación de equipos - Invitación programador a programador"() {
+    void conformacionDeEquiposInvitacionProgramadorAProgramador() {
         given:"Dos programadores que quieren participar juntos en futuros desafíos"
         Programador programadorQueInvita = new Programador("Invita")
         Programador programadorInvitado = new Programador("Invitado")
@@ -36,7 +36,7 @@ class TrabajarEnEquipoTestSpec extends Specification {
         invitacion.estado == Invitacion.Estado.Pendiente
     }
 
-    void "Conformación de equipos - Invitación equipo a programador"() {
+    void conformacionDeEquiposInvitacionEquipoAProgramador() {
         given:"Un equipo creado"
 
         and:"es válido que invite a un programador"
@@ -46,7 +46,7 @@ class TrabajarEnEquipoTestSpec extends Specification {
         then:"el programador recibe la invitación"
     }
 
-    void "Conformación de equipos - Aceptar invitaciones"() {
+    void conformacionDeRquiposAceptarInvitaciones() {
         given:"Un programador recibió una invitación"
 
         when:"la acepta"
@@ -54,7 +54,7 @@ class TrabajarEnEquipoTestSpec extends Specification {
         then:"queda agregado al equipo y se vuelven a validar todas las invitaciones que haya recibido"
     }
 
-    void "Logros conjuntos"() {
+    void logrosConjuntos() {
         given:"un equipo ya ha conseguido logros en un desafío"
 
         when:"un programador nuevo se suma al equipo"
@@ -66,7 +66,7 @@ class TrabajarEnEquipoTestSpec extends Specification {
         and:"sí gana la habilidad de conseguirlos para toda acción del equipo"
     }
 
-    void "Desintegración de equipos"() {
+    void desintegracionDeEquipos() {
         given:"Un equipo"
 
         and:"sin un determinado programador el equipo sigue siendo válido"

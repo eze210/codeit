@@ -14,7 +14,7 @@ class PuntuarSolucionesTestSpec extends Specification {
     def cleanup() {
     }
 
-    void "Otorgar insignias requiere alcanzar un puntaje"() {
+    void otorgarInsigniasRequiereAlcanzarUnPuntaje() {
         given:"Un desafío alcanzó un puntaje P establecido"
 
         when:"el creador del desafío intenta asignar una insignia E habilitada a una solución"
@@ -22,7 +22,7 @@ class PuntuarSolucionesTestSpec extends Specification {
         then:"la insignia será otorgada a cada programador involucrado en el participante que creó la solución"
     }
 
-    void "Mejor solución"() {
+    void mejorsolucion() {
         given:"Existen soluciones que resuelven la totalidad de un desafío"
 
         when:"el creador del desafío elige entre esas soluciones la mejor"
@@ -30,7 +30,7 @@ class PuntuarSolucionesTestSpec extends Specification {
         then:"al participante que la propuso se le otorga un punto en la faceta de ganador"
     }
 
-    void "Puntajes de la comunidad"() {
+    void puntajesDeLaComunidad() {
         given:"Un programador tiene determinada cantidad de puntos en una faceta"
 
         when:"otro programador le asigna un punto"

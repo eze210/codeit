@@ -15,7 +15,7 @@ class CompartirDesafiosTestSpec extends Specification {
     def cleanup() {
     }
 
-    void "Creación del desafío"() {
+    void creacionDelDesafio() {
         given:"Un programador"
         Programador unProgramador = new Programador("Nombre")
 
@@ -30,7 +30,7 @@ class CompartirDesafiosTestSpec extends Specification {
         unDesafio.creador == unProgramador
     }
 
-    void "Agregar ejercicios - sin soluciones previas"() {
+    void agregarEjerciciosSinSolucionesPrevias() {
         given:"Un desafio creado por un determinado programador"
         Programador elProgramador = new Programador("Nombre")
         DateTime ahora = DateTime.now()
@@ -52,7 +52,7 @@ class CompartirDesafiosTestSpec extends Specification {
         elDesafio.ejercicios.contains(elEjercicio)
     }
 
-    void "Agregar ejercicios - con soluciones previas"() {
+    void agregarEjerciciosConSolucionesPrevias() {
         given:"Un desafio creado por un determinado programador"
         Programador programadorCreador = new Programador("Nombre")
         DateTime ahora = DateTime.now()

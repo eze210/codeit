@@ -15,7 +15,7 @@ class AutomatizarPruebasTestSpec extends Specification {
     def cleanup() {
     }
 
-    void "Agregado de pruebas - sin soluciones previas"() {
+    void agregadoDePruebasSinSolucionesPrevias() {
         given:"Un desafío creado por un determinado programador"
         Programador programador = new Programador("Creador")
         Desafio desafio = programador.proponerDesafio("Un título", "Descripción")
@@ -34,7 +34,7 @@ class AutomatizarPruebasTestSpec extends Specification {
         ejercicio.pruebas.contains(prueba)
     }
 
-    void "Agregado de pruebas - con soluciones previas"() {
+    void agregadoDePruebasConSolucionesPrevias() {
         given: "Un desafío creado por un determinado programador"
         Programador programador = new Programador("Creador")
         Desafio desafio = programador.proponerDesafio("Un título", "Descripción")
@@ -67,7 +67,7 @@ class AutomatizarPruebasTestSpec extends Specification {
         !desafio.validarSolucion(solucion)
     }
 
-    void "Agregado de solución"() {
+    void agregadoDeSolucion() {
         given:"Un desafío en el sistema"
         Programador creador = new Programador("Creador")
         Desafio desafio = creador.proponerDesafio("Título", "Descripción")
