@@ -20,6 +20,7 @@ class Solucion {
         this.descripcion = descripcion
         this.desafio = desafio
         this.resoluciones = new LinkedHashSet<>()
+        desafio.proponerSolucion(this)
     }
 
     Boolean agregarResolucion(Resolucion resolucion) {

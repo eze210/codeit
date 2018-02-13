@@ -124,7 +124,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Solucion solucion = new Solucion(resolvedor, "Descripción", desafioNuevo)
 
         then:"la solución resuelve el desafío"
-        desafioNuevo.proponerSolucion(solucion)
+        desafioNuevo.soluciones.contains(solucion)
     }
 
     void solucionSeInvalidaCuandoSeAgregaUnNuevoEjercicio() {
@@ -148,9 +148,6 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         solucion.agregarResolucion(resolucion)
         assert desafioNuevo.soluciones.size() == 1
         assert desafioNuevo.resultados.size() == 1
-        desafioNuevo.proponerSolucion(solucion)
-        assert desafioNuevo.soluciones.size() == 1
-        assert desafioNuevo.resultados.size() == 1
         assert desafioNuevo.validarSolucion(solucion).valido
 
         when:"se agrega un nuevo ejercicio al desafío"
@@ -159,9 +156,9 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
         then:"la solución debe reprocesarse"
         and:"la solución ya no resuelve el desafío"
-        assert desafioNuevo.soluciones.size() == 1
-        assert desafioNuevo.resultados.size() == 1
-        assert desafioNuevo.obtenerResultadoActualDeSolucion(solucion) != null
+        desafioNuevo.soluciones.size() == 1
+        desafioNuevo.resultados.size() == 1
+        desafioNuevo.obtenerResultadoActualDeSolucion(solucion) != null
         !desafioNuevo.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
                 !desafioNuevo.validarSolucion(solucion).valido
     }
@@ -187,9 +184,6 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         solucion.agregarResolucion(resolucion)
         assert desafio.soluciones.size() == 1
         assert desafio.resultados.size() == 1
-        desafio.proponerSolucion(solucion)
-        assert desafio.soluciones.size() == 1
-        assert desafio.resultados.size() == 1
         assert desafio.validarSolucion(solucion).valido
 
         when:"se agrega un ejercicio"
@@ -197,7 +191,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         desafio.agregarEjercicio(ejercicio2)
 
         then:"la solución ya no resuelve el desafío"
-        assert !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
+        !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
                 !desafio.validarSolucion(solucion).valido
 
         when:"se agrega una resolución para el nuevo ejercicio"
