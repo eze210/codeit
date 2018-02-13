@@ -1,6 +1,8 @@
 package codeit
 
-public abstract class Participante {
+abstract class Participante {
+
+    abstract String nombre
 
     abstract Set<Programador> programadoresInvolucrados()
 

@@ -2,8 +2,7 @@ package codeit
 
 class ProgramadorController {
 
-    static allowedMethods = [crearProgramador:['GET']]//,
-                             //guardarNuevoProgramador:['POST']]
+    static allowedMethods = [verProgramadores:['GET'], crearProgramador:['POST']]
 
     def index() {
         redirect action:"crearProgramador"

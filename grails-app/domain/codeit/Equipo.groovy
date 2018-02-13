@@ -5,12 +5,12 @@ class Equipo extends Participante {
     Set<Programador> programadores
     String nombre
 
+    static belongsTo = Programador
+    static hasMany = [programadores: Programador]
+
     static constraints = {
         nombre(nullable: false, blank: false)
     }
-
-    static belongsTo = Programador
-    static hasMany = [programadores: Programador]
 
     Equipo(String nombre) {
         this.nombre = nombre
