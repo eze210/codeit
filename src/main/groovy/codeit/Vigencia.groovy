@@ -1,8 +1,10 @@
 package codeit
 
+import org.hibernate.annotations.Immutable
 import org.joda.time.DateTime
 import com.google.common.collect.Range
 
+@Immutable
 public class Vigencia implements Serializable {
 
     static enum Tipo {
