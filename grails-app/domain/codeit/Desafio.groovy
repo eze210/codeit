@@ -1,102 +1,11 @@
 package codeit
 
-import org.hibernate.HibernateException
-import org.hibernate.engine.spi.SessionImplementor
-import org.hibernate.type.DateType
-import org.hibernate.usertype.UserType
 import org.joda.time.DateTime
-
-import java.sql.PreparedStatement
-import java.sql.ResultSet
-import java.sql.SQLException
-
-class VigenciaUserType implements UserType {
-
-    @Override
-    int[] sqlTypes() {
-        [DateType.INSTANCE.sqlType(), DateType.INSTANCE.sqlType()] as int[]
-    }
-
-    @Override
-    Class<Vigencia> returnedClass() {
-        Vigencia.class
-    }
-
-    @Override
-    boolean equals(Object x, Object y) throws HibernateException {
-        Vigencia xVigencia = x.asType(Vigencia)
-        Vigencia yVigencia = y.asType(Vigencia)
-        assert xVigencia != null && yVigencia != null
-        (xVigencia.rangoDeFechas.lowerEndpoint() == yVigencia.rangoDeFechas.lowerEndpoint()) &&
-                (xVigencia.rangoDeFechas.upperEndpoint() == yVigencia.rangoDeFechas.upperEndpoint())
-    }
-
-    @Override
-    int hashCode(Object x) throws HibernateException {
-        return x.hashCode()
-    }
-
-    @Override
-    Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner) throws HibernateException, SQLException {
-        assert names.length == 2
-        log.debug(">>mullSafeGet(name=${names}")
-
-        Date fechaDesde = (Date) DateType.INSTANCE.nullSafeGet(rs, names[0], session)
-        Date fechaHasta = DateType.INSTANCE.nullSafeGet(rs, names[1], session)
-        DateTime desde = fechaDesde ? new DateTime(fechaDesde) : null
-        DateTime hasta = fechaHasta ? new DateTime(fechaHasta) : null
-        if (desde && hasta) {
-            new Vigencia(hasta, desde)
-        } else if (hasta) {
-            new Vigencia(hasta)
-        } else {
-            new Vigencia()
-        }
-    }
-
-    @Override
-    void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session) throws HibernateException, SQLException {
-        if (value == null) {
-            DateType.INSTANCE.nullSafeSet(st, null, index, session)
-            DateType.INSTANCE.nullSafeSet(st, null, index+1, session)
-        } else {
-            final Vigencia vig = (Vigencia) value
-            DateType.INSTANCE.nullSafeSet(st, vig.rangoDeFechas.lowerEndpoint().toDate(), index, session)
-            DateType.INSTANCE.nullSafeSet(st, vig.rangoDeFechas.upperEndpoint().toDate(), index+1, session)
-        }
-    }
-
-    @Override
-    Object deepCopy(Object value) throws HibernateException {
-        Vigencia vig = value.asType(Vigencia)
-        if (!vig) return vig
-        new Vigencia(vig.rangoDeFechas.lowerEndpoint(), vig.rangoDeFechas.upperEndpoint())
-    }
-
-    @Override
-    boolean isMutable() {
-        false
-    }
-
-    @Override
-    Serializable disassemble(Object value) throws HibernateException {
-        (Serializable) value
-    }
-
-    @Override
-    Object assemble(Serializable cached, Object owner) throws HibernateException {
-        cached
-    }
-
-    @Override
-    Object replace(Object original, Object target, Object owner) throws HibernateException {
-        original
-    }
-}
 
 class Desafio {
     // TODO: agregar requisitos para participar
 
+    static belongsTo = Programador
     static hasMany = [ejercicios: Ejercicio, soluciones: Solucion, resultados: Resultado]
 
     String titulo
@@ -113,7 +22,6 @@ class Desafio {
         titulo nullable: false, blank: false, unique: true
         descripcion nullable: false, blank: false, unique: true
         creador nullable: false
-        vigencia nullable: false, blank: false
         puntajeTotal nullable: false
     }
 
