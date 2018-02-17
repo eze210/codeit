@@ -114,7 +114,7 @@ class Desafio {
 
     Boolean estaVigente() {
         assert vigencia != null
-        vigencia.contiene(DateTime.now())
+        vigencia.estaVigente()
     }
 
     void agregarEjercicio(Ejercicio ejercicio) throws DesafioNoVigente {

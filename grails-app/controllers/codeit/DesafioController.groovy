@@ -9,7 +9,7 @@ class DesafioController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 2, 100)
+        params.max = Math.min(max ?: 10, 100)
         respond desafioList: Desafio.list(params), desafioCount: Desafio.count()
     }
 

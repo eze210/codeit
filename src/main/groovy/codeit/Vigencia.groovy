@@ -35,4 +35,8 @@ public class Vigencia implements Serializable {
         this.rangoDeFechas.contains(fecha)
     }
 
+    Boolean estaVigente() {
+        this.contiene(DateTime.now())
+    }
+
 }
