@@ -25,16 +25,30 @@
                 <g:each var="ejercicio" status="i" in="${desafio.ejercicios}">
                     <tmpl:ejercicioDisplay ejercicio="${ejercicio}" numero="${i+1}"/>
                 </g:each>
-            </div>
 
-            <%-- TODO: CUANDO AGREGUEMOS EDICIÓN PARA QUIEN SEA EL CREADOR
-            <g:form resource="${this.desafio}" method="DELETE">
-                <fieldset class="buttons">
-                    <g:link class="edit" action="edit" resource="${this.desafio}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-                    <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                </fieldset>
-            </g:form>
-            --%>
+                <h2>Soluciones</h2>
+                <p>
+                    <%-- TODO: AGREGAR LINKS CUANDO SE PUEDAN VER LAS SOLUCIONES DE UN DESAFÍO --%>
+                            <g:quantityOf number="${desafio.soluciones.size()}" word="solución" plural="soluciones" /> por ahora,
+                            <g:quantityOf number="${desafio.resultados.findAll { it.correcto }.size()}" word="correcta" />,
+                            <g:quantityOf number="${desafio.resultados.findAll { it.valido }.size()}" word="valida" />
+
+                        </p>
+                        <div class="nav" role="navigation">
+                            <ul>
+                                <li><g:link class="create" action="create" controller="solucion">Proponer Solución</g:link></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <%-- TODO: CUANDO AGREGUEMOS EDICIÓN PARA QUIEN SEA EL CREADOR
+                    <g:form resource="${this.desafio}" method="DELETE">
+                        <fieldset class="buttons">
+                            <g:link class="edit" action="edit" resource="${this.desafio}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                            <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                        </fieldset>
+                    </g:form>
+                    --%>
         </div>
     </body>
 </html>
