@@ -1,12 +1,12 @@
 <%@ page import="codeit.Vigencia" %>
 <g:if test="${!vigencia.estaVigente()}">
-    <div>Cerrado</div>
+    <p>Cerrado</p>
 </g:if>
 <g:else>
     <g:if test="${vigencia.tipo == codeit.Vigencia.Tipo.Infinita}">
-        <div>Abierto</div>
+        <p>Abierto</p>
     </g:if>
     <g:else>
-        <div>Abierto hasta <g:formatDate date="${vigencia.rangoDeFechas.upperEndpoint().toDate()}" type="date" style="SHORT"/></div>
+        <p>Abierto hasta <g:formatDate date="${vigencia.rangoDeFechas.upperEndpoint().toDate()}" type="date" style="SHORT"/></p>
     </g:else>
 </g:else>

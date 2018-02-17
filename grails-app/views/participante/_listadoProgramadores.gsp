@@ -6,3 +6,6 @@
         <util:remotePaginate controller="participante" action="listadoProgramadores" total="${programadoresCount}" update="programadores" />
     </div>
 </g:if>
+<g:else>
+    <div>No hay programadores por el momento. ¡Sé el primero!</div>
+</g:else>
