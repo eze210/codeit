@@ -17,6 +17,7 @@ class Ejercicio {
         this.desafio = desafio
         this.enunciado = enunciado
         this.pruebas = new HashSet<>()
+        desafio.agregarEjercicio(this)
     }
 
     Prueba agregarPrueba(String entrada, String salida) {
