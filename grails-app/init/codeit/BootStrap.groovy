@@ -15,6 +15,8 @@ class BootStrap {
             prog3.save flush: true
             Programador prog4 = new Programador("Susana Horia")
             prog4.save flush: true
+            Programador prog5 = new Programador("Oompa Loompa")
+            prog5.save flush: true
 
             // Equipos
             Equipo eq1 = new Equipo("Los mejores !")

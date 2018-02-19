@@ -4,6 +4,10 @@ abstract class Participante {
 
     abstract String nombre
 
+    static constraints = {
+        nombre nullable: false, blank: false, unique: true
+    }
+
     abstract Set<Programador> programadoresInvolucrados()
 
     Boolean involucraA(Participante participante) {

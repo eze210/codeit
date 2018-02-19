@@ -36,7 +36,7 @@
                         </p>
                         <div class="nav" role="navigation">
                             <ul>
-                                <li><g:link class="create" action="create" controller="solucion">Proponer Solución</g:link></li>
+                                <li><g:link class="create" action="create" controller="solucion" params="[to: desafio.id]">Proponer Solución</g:link></li>
                             </ul>
                         </div>
                     </div>

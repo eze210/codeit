@@ -6,6 +6,8 @@ import grails.gorm.transactions.Transactional
 @Transactional(readOnly = true)
 class ParticipanteController {
 
+    static allowedMethods = [listadoProgramadores: 'POST', listadoEquipos: 'POST']
+
     def index() {
         params.max = Math.min(params.max ? params.int('max') : 1, 100)
         params.offset = params.offset ? params.int('offset') : 0
