@@ -61,6 +61,14 @@ class BootStrap {
             Resolucion sol2_1_3 = new Resolucion(ej2_3, "x + 2")
             sol2_1.agregarResolucion(sol2_1_3)
 
+            Solucion sol2_2 = prog2.proponerSolucionPara(des2, "Esto fue super fácil, soy súper crack de Groovy y más de Grails y su magia.")
+            Resolucion sol2_2_1 = new Resolucion(ej2_1, "\"lala\"")
+            sol2_2.agregarResolucion(sol2_2_1)
+            Resolucion sol2_2_2 = new Resolucion(ej2_2, "x + y")
+            sol2_2.agregarResolucion(sol2_2_2)
+            Resolucion sol2_2_3 = new Resolucion(ej2_3, "def scaffold = true")
+            sol2_2.agregarResolucion(sol2_2_3)
+
             des2.save flush: true
         }
     }

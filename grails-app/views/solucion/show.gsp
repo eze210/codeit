@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <title>${solucion.desafio.titulo} - Solución de ${solucion.desafio.creador.nombre}</title>
+        <title>Solución para ${solucion.desafio.titulo} - Solución de ${solucion.desafio.creador.nombre}</title>
     </head>
     <body>
         <div class="breadcrumble">
@@ -21,15 +21,19 @@
             <h1>${solucion.desafio.titulo}</h1>
             <div class="padded_container">
                 <em>por <g:link controller="participante" action="show" id="${solucion.desafio.creador.id}">${solucion.desafio.creador.nombre}</g:link></em>
+                <br/><br/>
+                <span style="color: ${solucion.resultado.valido != null ? (solucion.resultado.valido ? "black" : "red") : "gray"};">
+                    ${solucion.resultado.valido != null ? (solucion.resultado.valido ? "Puntaje: " + String.valueOf(solucion.resultado.puntaje) : "No es válida") : "Procesando solución ..."}
+                </span>
+                <br/><br/>
+                <p>${solucion.descripcion}</p>
             </div>
 
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
 
-            <div style="padding: 10px 20px;">
-                <p>${solucion.descripcion}</p>
-
+            <div class="padded_container">
                 <g:each var="resolucion" status="i" in="${solucion.resoluciones.toSorted()}">
                     <div class="card_container">
                         <g:render template="/shared/ejercicioDisplay" model="[ejercicio: resolucion.ejercicio, numero: i+1]" />
