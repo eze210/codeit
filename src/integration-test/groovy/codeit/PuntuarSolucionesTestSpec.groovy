@@ -16,10 +16,21 @@ class PuntuarSolucionesTestSpec extends Specification {
 
     void otorgarInsigniasRequiereAlcanzarUnPuntaje() {
         given:"Un desafío alcanzó un puntaje P establecido"
+        int P = 10
+        Programador programadorCreador = new Programador("Nombre")
+        Desafio desafio = programadorCreador.proponerDesafio("Desafío", "Descripción")
+        desafio.puntajeTotal = P
+
+        and: "tiene alguna solución propuesta"
+        Programador programadorResolvedor = new Programador("Otro Nombre")
+        Solucion solucion = programadorResolvedor.proponerSolucionPara(desafio, "Una solución")
 
         when:"el creador del desafío intenta asignar una insignia E habilitada a una solución"
+        Insignia E = desafio.obtenerInsigniasHabilitadas()[0]
+        //programadorCreador.asignarInsigniaASolucion(E, solucion)
 
         then:"la insignia será otorgada a cada programador involucrado en el participante que creó la solución"
+        //programadorResolvedor.tieneInsignia(E)
     }
 
     void mejorsolucion() {

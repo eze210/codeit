@@ -6,6 +6,8 @@ import javax.validation.constraints.NotNull
 
 class Programador extends Participante {
 
+    Set<Insignia> insignias
+
     static hasMany = [equipos: Equipo, invitaciones: Invitacion, desafiosCreados: Desafio]
 
     static constraints = {
@@ -41,6 +43,10 @@ class Programador extends Participante {
         Ejercicio nuevoEjercicio = new Ejercicio(desafio, enunciado)
         desafio.agregarEjercicio(nuevoEjercicio)
         nuevoEjercicio
+    }
+
+    Boolean tieneInsignia(Insignia insignia) {
+        insignias.contains(insignia)
     }
 
 }

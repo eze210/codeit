@@ -38,12 +38,20 @@ class TrabajarEnEquipoTestSpec extends Specification {
 
     void conformacionDeEquiposInvitacionEquipoAProgramador() {
         given:"Un equipo creado"
+        Equipo equipo = new Equipo("Equipo")
+        equipo.agregarMiembro(new Programador("Un programador"))
+
+        and:"un programador"
+        Programador nuevoProgramador = new Programador("Nuevo")
 
         and:"es válido que invite a un programador"
+        assert Equipo.formanEquipoValido(equipo, nuevoProgramador)
 
         when:"el equipo invita a ese programador"
+        Invitacion invitacion = equipo.invitar(nuevoProgramador)
 
         then:"el programador recibe la invitación"
+        nuevoProgramador.invitaciones.contains(invitacion)
     }
 
     void conformacionDeRquiposAceptarInvitaciones() {
