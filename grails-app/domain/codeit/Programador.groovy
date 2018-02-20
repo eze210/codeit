@@ -63,4 +63,5 @@ class Programador extends Participante {
     Invitacion invitar(Programador otroProgramador, Equipo equipo) {
         equipo.invitar(otroProgramador)
     }
+
 }
