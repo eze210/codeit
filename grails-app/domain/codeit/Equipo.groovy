@@ -19,7 +19,7 @@ class Equipo extends Participante {
         programadores.findAll() //para crear una copia
     }
 
-    void agregarMiembro(Programador nuevoMiembro) throws ProgramadorYaMiembro, EquipoYaExistente {
+    Equipo agregarMiembro(Programador nuevoMiembro) throws ProgramadorYaMiembro, EquipoYaExistente {
         if (programadores.contains(nuevoMiembro)) {
             throw new ProgramadorYaMiembro()
         }
@@ -28,6 +28,11 @@ class Equipo extends Participante {
         }
         programadores.add(nuevoMiembro)
         nuevoMiembro.equipos.add(this)
+        this
+    }
+
+    Invitacion invitar(Programador programador) {
+        new Invitacion(this, programador)
     }
 
     static Boolean formanEquipoValido(Participante parte1, Participante parte2) {

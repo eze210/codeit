@@ -36,8 +36,4 @@ abstract class Participante {
         desafio.esParticipante(this)
     }
 
-    Invitacion invitar(Programador programador) {
-        new Invitacion(this, programador)
-    }
-
 }

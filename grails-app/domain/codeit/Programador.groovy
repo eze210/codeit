@@ -21,6 +21,7 @@ class Programador extends Participante {
         this.equipos = new HashSet<>()
         this.invitaciones = new HashSet<>()
         this.desafiosCreados = new HashSet<>()
+        this.insignias = new HashSet<>()
     }
 
     Set<Programador> programadoresInvolucrados() {
@@ -49,4 +50,17 @@ class Programador extends Participante {
         insignias.contains(insignia)
     }
 
+    Equipo aceptarInvitacion(Invitacion invitacion) {
+        invitacion.aceptar()
+    }
+
+    Equipo crearEquipo(String nombreDelEquipo) {
+        Equipo equipo = new Equipo(nombreDelEquipo)
+        equipos.add(equipo)
+        equipo
+    }
+
+    Invitacion invitar(Programador otroProgramador, Equipo equipo) {
+        equipo.invitar(otroProgramador)
+    }
 }
