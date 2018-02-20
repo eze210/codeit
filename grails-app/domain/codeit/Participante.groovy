@@ -2,7 +2,7 @@ package codeit
 
 abstract class Participante {
 
-    abstract String nombre
+    String nombre
 
     static hasMany = [soluciones: Solucion]
 
@@ -11,6 +11,10 @@ abstract class Participante {
     }
 
     abstract Set<Programador> programadoresInvolucrados()
+
+    Participante(String nombre) {
+        this.nombre = nombre
+    }
 
     Boolean involucraA(Participante participante) {
         programadoresInvolucrados().containsAll(participante.programadoresInvolucrados())

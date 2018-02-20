@@ -10,7 +10,7 @@ class Equipo extends Participante {
     }
 
     Equipo(String nombre) {
-        this.nombre = nombre
+        super(nombre)
         this.programadores = new HashSet<>()
         this.soluciones = new HashSet<>()
     }
