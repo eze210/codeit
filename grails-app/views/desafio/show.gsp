@@ -17,13 +17,13 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <div style="padding: 10px 10px;">
+            <div class="padded_container">
                 <tmpl:vigenciaDisplay vigencia="${desafio.vigencia}" />
                 <p><em>${desafio.descripcion}</em></p>
 
                 <h2>Ejercicios</h2>
-                <g:each var="ejercicio" status="i" in="${desafio.ejercicios}">
-                    <tmpl:ejercicioDisplay ejercicio="${ejercicio}" numero="${i+1}"/>
+                <g:each var="ejercicio" status="i" in="${desafio.ejercicios.toSorted()}">
+                    <g:render template="/shared/ejercicioDisplay" model="[ejercicio: ejercicio, numero: i+1]" />
                 </g:each>
 
                 <h2>Soluciones</h2>

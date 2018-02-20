@@ -30,4 +30,9 @@ class ParticipanteController {
         render template:"listadoEquipos", model: [equiposList: equipos, equiposCount: Equipo.count()]
     }
 
+    def show() {
+        // No puede recibir clases abstractas. Buscar por id.
+        // TODO: Ver si se redirige a Programador o Equipo o si se reusa la misma
+    }
+
 }

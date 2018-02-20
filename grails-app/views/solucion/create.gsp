@@ -17,20 +17,27 @@
             <div class="message" role="status">${flash.message}</div>
             </g:if>
 
-            <g:hasErrors bean="${this.solucion}">
+            <g:if test="${errors}">
             <ul class="errors" role="alert">
-                <g:eachError bean="${this.solucion}" var="error">
+                <g:each var="error" in="${errors}">
                 <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
+                </g:each>
             </ul>
-            </g:hasErrors>
+            </g:if>
 
             <g:form name="atributos_solucion" controller="solucion" action="save">
                 <fieldset class="form">
-                    <label>Descripción</label> <br/>
-                    <g:textArea name="descripcion"/>
+                    <label>Descripción</label> * <br/>
+                    %{--TODO: Add login and use participante from there--}%
                     <g:hiddenField name="participante_id" value="5" />
                     <g:hiddenField name="desafio_id" value="${desafio.id}" />
+                    <g:textArea name="descripcion"/>
+                    <g:each var="ejercicio" status="i" in="${desafio.ejercicios.toSorted()}">
+                        <g:render template="/shared/ejercicioDisplay" model="[ejercicio: ejercicio, numero: i+1]" />
+                        <label>Resolución</label> (Ponga aquí su código) <br/>
+                        <g:textArea name="codigo"/>
+                        <g:hiddenField name="ejercicio_id" value="${ejercicio.id}" />
+                    </g:each>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="Crear" />

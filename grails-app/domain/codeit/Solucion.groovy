@@ -12,6 +12,8 @@ class Solucion {
         participante nullable: false, blank: false
         descripcion nullable: false, blank: false
         desafio nullable: false, blank: false
+        resoluciones nullable: false
+        resultado nullable: false
     }
 
     Solucion(Participante participante, String descripcion, Desafio desafio) {
@@ -22,10 +24,11 @@ class Solucion {
         desafio.proponerSolucion(this)
     }
 
-    Boolean agregarResolucion(Resolucion resolucion) {
+    void agregarResolucion(Resolucion resolucion) {
         /* no puede haber dos resoluciones para el mismo ejercicio */
         resoluciones.removeIf({res -> res.ejercicio == resolucion.ejercicio})
         resoluciones.add(resolucion)
+        resolucion.solucion = this
 
         /* se vuelve a proponer para que se valide nuevamente */
         desafio.proponerSolucion(this)

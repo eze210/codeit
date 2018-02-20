@@ -1,5 +1,8 @@
 package codeit
 
+import groovy.transform.Sortable
+
+@Sortable(includes = ['id'])
 class Ejercicio {
 
     String enunciado

@@ -5,3 +5,17 @@
     background-color: #edbb74;
     padding: 10px 10px;
 }
+
+.soft-card {
+    background-color: #edd8c1;
+}
+
+.card_container {
+    border-style: solid;
+    border-width: thin;
+    border-color: #edad57;
+}
+
+.padded_container {
+    padding: 10px 20px;
+}

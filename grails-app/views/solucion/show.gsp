@@ -2,30 +2,51 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'solucion.label', default: 'Solucion')}" />
-        <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <title>${solucion.desafio.titulo} - Solución de ${solucion.desafio.creador.nombre}</title>
     </head>
     <body>
-        <a href="#show-solucion" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+        <div class="breadcrumble">
+            <g:link controller="desafio" action="index">Desafios</g:link>
+            > <g:link controller="desafio" action="show" id="${solucion.desafio.id}">${solucion.desafio.titulo}</g:link>
+            > Solución de <g:link controller="participante" action="show" id="${solucion.desafio.creador.id}">${solucion.desafio.creador.nombre}</g:link></div>
         <div class="nav" role="navigation">
+            %{--TODO: Habilitar o deshabilitar depende de si puede o no crear--}%
             <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="list" action="index">Ver mis soluciones</g:link></li>
+                <li><g:link class="create" action="create">Crear mi propia solución al desafío</g:link></li>
             </ul>
         </div>
+
         <div id="show-solucion" class="content scaffold-show" role="main">
-            <h1><g:message code="default.show.label" args="[entityName]" /></h1>
+            <h1>${solucion.desafio.titulo}</h1>
+            <div class="padded_container">
+                <em>por <g:link controller="participante" action="show" id="${solucion.desafio.creador.id}">${solucion.desafio.creador.nombre}</g:link></em>
+            </div>
+
             <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
+                <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:display bean="solucion" />
-            <g:form resource="${this.solucion}" method="DELETE">
-                <fieldset class="buttons">
-                    <g:link class="edit" action="edit" resource="${this.solucion}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-                    <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                </fieldset>
-            </g:form>
+
+            <div style="padding: 10px 20px;">
+                <p>${solucion.descripcion}</p>
+
+                <g:each var="resolucion" status="i" in="${solucion.resoluciones.toSorted()}">
+                    <div class="card_container">
+                        <g:render template="/shared/ejercicioDisplay" model="[ejercicio: resolucion.ejercicio, numero: i+1]" />
+                        <div class="card_wrapper">
+                            <div class="card soft-card">
+                                <label>${resolucion.codigo}</label>
+                            </div>
+                        </div>
+                    </div>
+                </g:each>
+            </div>
+            %{--TODO: Cuando se pueda editar--}%
+            %{--<g:form resource="${this.solucion}" method="DELETE">--}%
+                %{--<fieldset class="buttons">--}%
+                    %{--<g:link class="edit" action="edit" resource="${this.solucion}"><g:message code="default.button.edit.label" default="Edit" /></g:link>--}%
+                %{--</fieldset>--}%
+            %{--</g:form>--}%
         </div>
     </body>
 </html>

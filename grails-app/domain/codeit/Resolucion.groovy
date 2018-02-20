@@ -1,9 +1,11 @@
 package codeit
 
+import groovy.transform.Sortable
+
+@Sortable(includes = ['ejercicio'])
 class Resolucion {
 
-    // Recibe un String y devuelve un String
-    Closure<String> codigo
+    String codigo
 
     static belongsTo = [ejercicio: Ejercicio, solucion: Solucion]
 
@@ -15,12 +17,11 @@ class Resolucion {
 
     Resolucion(Ejercicio ejercicio, String codigo) {
         this.ejercicio = ejercicio
-        GroovyShell shell = new GroovyShell()
-        this.codigo = shell.evaluate(codigo)
+        this.codigo = codigo
     }
 
     String ejecutar(String entrada) {
-        codigo(entrada)
+        Eval.me(entrada + "\n" + codigo)
     }
 
     Boolean resuelveElEjercicio() {

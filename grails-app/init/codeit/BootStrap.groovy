@@ -42,7 +42,7 @@ class BootStrap {
             ej2_1.save flush: true
             Prueba pr2_1_1 = ej2_1.agregarPrueba("", "")
             pr2_1_1.save flush: true
-            Prueba pr2_1_2 = ej2_1.agregarPrueba("2", "2")
+            Prueba pr2_1_2 = ej2_1.agregarPrueba("2", "")
             pr2_1_2.save flush: true
             ej2_1.save flush: true
             Ejercicio ej2_2 = prog4.proponerEjercicioPara(des2, "Después entrar a ver el detalle de un desafío")
@@ -52,6 +52,15 @@ class BootStrap {
             ej2_2.save flush: true
             Ejercicio ej2_3 = prog4.proponerEjercicioPara(des2, "Finalmente proponer una solución a él")
             ej2_3.save flush: true
+
+            Solucion sol2_1 = prog1.proponerSolucionPara(des2, "Esto no fue nada fácil. Pero de a poquito pude ir pasando todos los ejercicios. Obviamente el más difícil fue el último.")
+            Resolucion sol2_1_1 = new Resolucion(ej2_1, "")
+            sol2_1.agregarResolucion(sol2_1_1)
+            Resolucion sol2_1_2 = new Resolucion(ej2_2, "return \"\"")
+            sol2_1.agregarResolucion(sol2_1_2)
+            Resolucion sol2_1_3 = new Resolucion(ej2_3, "x + 2")
+            sol2_1.agregarResolucion(sol2_1_3)
+
             des2.save flush: true
         }
     }
