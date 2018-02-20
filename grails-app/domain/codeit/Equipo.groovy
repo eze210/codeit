@@ -20,12 +20,12 @@ class Equipo extends Participante {
     }
 
     Equipo agregarMiembro(Programador nuevoMiembro) throws ProgramadorYaMiembro, EquipoYaExistente {
-        if (programadores.contains(nuevoMiembro)) {
+        if (programadores.contains(nuevoMiembro))
             throw new ProgramadorYaMiembro()
-        }
-        if (!Equipo.formanEquipoValido(this, nuevoMiembro)) {
+
+        if (!Equipo.formanEquipoValido(this, nuevoMiembro))
             throw new EquipoYaExistente()
-        }
+
         programadores.add(nuevoMiembro)
         nuevoMiembro.equipos.add(this)
         this

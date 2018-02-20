@@ -19,7 +19,9 @@ class PuntuarSolucionesTestSpec extends Specification {
         int P = 10
         Programador programadorCreador = new Programador("Nombre")
         Desafio desafio = programadorCreador.proponerDesafio("Desafío", "Descripción")
-        desafio.puntajeTotal = P
+        for (Integer i = 0; i < P; ++i) {
+            desafio.asignarPunto()
+        }
 
         and: "tiene alguna solución propuesta"
         Programador programadorResolvedor = new Programador("Otro Nombre")

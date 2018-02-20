@@ -12,12 +12,17 @@ abstract class Participante {
 
     abstract Set<Programador> programadoresInvolucrados()
 
+    Set<Insignia> obtenerInsignias() {
+        programadoresInvolucrados().collect({it.insignias}).flatten()
+    }
+
     Participante(String nombre) {
         this.nombre = nombre
     }
 
-    Boolean involucraA(Participante participante) {
-        programadoresInvolucrados().containsAll(participante.programadoresInvolucrados())
+    Boolean comparteMiembrosCon(Participante participante) {
+        Set<Programador> otros = participante.programadoresInvolucrados()
+        programadoresInvolucrados().intersect(otros)
     }
 
     Solucion proponerSolucionPara(Desafio desafio, String descripcionDeLaSolucion) {
@@ -25,7 +30,7 @@ abstract class Participante {
     }
 
     Integer asignarPuntoA(Desafio desafio) {
-        if (involucraA(desafio.creador)) {
+        if (comparteMiembrosCon(desafio.creador)) {
             throw new InvolucraAlCreador()
         }
 

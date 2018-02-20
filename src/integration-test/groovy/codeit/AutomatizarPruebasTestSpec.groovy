@@ -15,6 +15,7 @@ class AutomatizarPruebasTestSpec extends Specification {
     def cleanup() {
     }
 
+
     void agregadoDePruebasSinSolucionesPrevias() {
         given:"Un desafío creado por un determinado programador"
         Programador programador = new Programador("Creador")
@@ -34,6 +35,7 @@ class AutomatizarPruebasTestSpec extends Specification {
         ejercicio.pruebas.contains(prueba)
     }
 
+
     void agregadoDePruebasConSolucionesPrevias() {
         given: "Un desafío creado por un determinado programador"
         Programador programador = new Programador("Creador")
@@ -49,7 +51,6 @@ class AutomatizarPruebasTestSpec extends Specification {
         Resolucion resolucion = new Resolucion(ejercicio, "{x -> \"x\"}")
         solucion.agregarResolucion(resolucion)
         assert desafio.validarSolucion(solucion)
-
 
         when:   "el programador creador agrega una prueba que no falsea las soluciones previas " +
                 "para un ejercicio de dicho desafío"
@@ -67,14 +68,18 @@ class AutomatizarPruebasTestSpec extends Specification {
         !desafio.validarSolucion(solucion)
     }
 
+
     void agregadoDeSolucion() {
         given:"Un desafío en el sistema"
         Programador creador = new Programador("Creador")
         Desafio desafio = creador.proponerDesafio("Título", "Descripción")
         assert desafio != null
 
-        // TODO: and:"sus insignias requeridas cierto programador posee"
+        //TODO: Agregar alguna insignia al desafío y al programador
+
+        and:"sus insignias requeridas cierto programador posee"
         Programador solucionador = new Programador("Solucionador")
+        assert solucionador.obtenerInsignias().containsAll(desafio.obtenerInsigniasRequeridas())
 
         when:"ese programador sube una solución"
         Solucion solucion = solucionador.proponerSolucionPara(desafio, "Mi solución")

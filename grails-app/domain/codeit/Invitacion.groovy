@@ -8,14 +8,18 @@ class Invitacion {
         Aceptada
     }
 
+
     Estado estado
+
 
     static constraints = {
         equipo nullable: false, blank: false
         invitado nullable: false, blank: false
     }
 
+
     static belongsTo = [equipo: Equipo, invitado: Programador]
+
 
     Invitacion(Equipo equipo, Programador invitado) {
         this.equipo = equipo
@@ -23,6 +27,7 @@ class Invitacion {
         this.estado = Estado.Pendiente
         invitado.invitaciones.add(this)
     }
+
 
     Equipo aceptar() {
         this.estado = Estado.Aceptada
