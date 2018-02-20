@@ -9,6 +9,7 @@ class Programador extends Participante {
     String nombre
     Set<Equipo> equipos
     Set<Invitacion> invitaciones
+    Set<Insignia> insignias
 
     static hasMany = [equipos: Equipo, invitaciones: Invitacion]
 
@@ -42,6 +43,10 @@ class Programador extends Participante {
         Ejercicio nuevoEjercicio = new Ejercicio(desafio, enunciado)
         desafio.agregarEjercicio(nuevoEjercicio)
         nuevoEjercicio
+    }
+
+    Boolean tieneInsignia(Insignia insignia) {
+        insignias.contains(insignia)
     }
 
 }

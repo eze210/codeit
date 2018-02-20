@@ -137,4 +137,8 @@ class Desafio {
     Integer asignarPunto() {
         puntajeTotal += 1
     }
+
+    Set<Insignia> obtenerInsigniasHabilitadas() {
+        return new HashSet<Insignia>();
+    }
 }

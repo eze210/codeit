@@ -11,8 +11,4 @@ class ParticipanteControllerSpec extends Specification implements ControllerUnit
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
 }
