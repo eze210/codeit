@@ -6,20 +6,19 @@ import javax.validation.constraints.NotNull
 
 class Programador extends Participante {
 
-    String nombre
-    Set<Equipo> equipos
-    Set<Invitacion> invitaciones
-
-    static hasMany = [equipos: Equipo, invitaciones: Invitacion]
+    static hasMany = [equipos: Equipo, invitaciones: Invitacion, desafiosCreados: Desafio]
 
     static constraints = {
-        nombre nullable: false, blank: false, unique: true
+        equipos nullable: false
+        invitaciones nullable: false
     }
 
     Programador(String nombre) {
         this.nombre = nombre
+        this.soluciones = new HashSet<>()
         this.equipos = new HashSet<>()
         this.invitaciones = new HashSet<>()
+        this.desafiosCreados = new HashSet<>()
     }
 
     Set<Programador> programadoresInvolucrados() {

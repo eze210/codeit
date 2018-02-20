@@ -2,12 +2,11 @@ package codeit
 
 class Solucion {
 
-    Participante participante
     String descripcion
-    Desafio desafio
-    Set<Resolucion> resoluciones
 
+    static belongsTo = [participante: Participante, desafio: Desafio]
     static hasMany = [resoluciones: Resolucion]
+    static hasOne = [resultado: Resultado]
 
     static constraints = {
         participante nullable: false, blank: false

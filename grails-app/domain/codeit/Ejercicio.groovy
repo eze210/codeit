@@ -2,11 +2,10 @@ package codeit
 
 class Ejercicio {
 
-    static hasMany = [pruebas: Prueba, resoluciones: Resolucion]
-
-    Desafio desafio
     String enunciado
-    Set<Prueba> pruebas
+
+    static belongsTo = [desafio: Desafio]
+    static hasMany = [pruebas: Prueba, resoluciones: Resolucion]
 
     static constraints = {
         desafio nullable: false, blank: false

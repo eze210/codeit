@@ -2,12 +2,14 @@ package codeit
 
 class Resolucion {
 
-    Ejercicio ejercicio
     // Recibe un String y devuelve un String
     Closure<String> codigo
 
+    static belongsTo = [ejercicio: Ejercicio, solucion: Solucion]
+
     static constraints = {
         ejercicio nullable: false
+        solucion nullable: false
         codigo nullable: false
     }
 

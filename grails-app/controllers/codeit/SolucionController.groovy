@@ -44,7 +44,7 @@ class SolucionController {
         Desafio desafio = Desafio.findById(params.desafio_id)
         Participante participante = Participante.findById(params.participante_id)
         String descripcion = params.descripcion
-        solucion = new Solucion(participante, descripcion, desafio)
+        solucion = participante.proponerSolucionPara(desafio, descripcion)
 
         if (solucion.hasErrors()) {
             transactionStatus.setRollbackOnly()

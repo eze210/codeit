@@ -5,18 +5,13 @@ import org.joda.time.DateTime
 class Desafio {
     // TODO: agregar requisitos para participar
 
-    static belongsTo = Programador
-    static hasMany = [ejercicios: Ejercicio, soluciones: Solucion, resultados: Resultado]
-
     String titulo
     String descripcion
-    Programador creador
     Vigencia vigencia
-
-    Set<Ejercicio> ejercicios
-    Set<Solucion> soluciones
-    Set<Resultado> resultados
     Integer puntajeTotal
+
+    static belongsTo = [creador: Programador]
+    static hasMany = [ejercicios: Ejercicio, soluciones: Solucion, resultados: Resultado]
 
     static constraints = {
         titulo nullable: false, blank: false, unique: true

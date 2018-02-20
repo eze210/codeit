@@ -4,6 +4,8 @@ abstract class Participante {
 
     abstract String nombre
 
+    static hasMany = [soluciones: Solucion]
+
     static constraints = {
         nombre nullable: false, blank: false, unique: true
     }

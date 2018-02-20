@@ -2,9 +2,10 @@ package codeit
 
 class Prueba {
 
-    Ejercicio ejercicio
     String entrada
     String salidaEsperada
+
+    static belongsTo = [ejercicio: Ejercicio]
 
     static constraints = {
         ejercicio nullable: false

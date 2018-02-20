@@ -2,23 +2,21 @@ package codeit
 
 class Equipo extends Participante {
 
-    Set<Programador> programadores
-    String nombre
-
     static belongsTo = Programador
     static hasMany = [programadores: Programador]
 
     static constraints = {
-        nombre(nullable: false, blank: false)
+        programadores nullable: false
     }
 
     Equipo(String nombre) {
         this.nombre = nombre
         this.programadores = new HashSet<>()
+        this.soluciones = new HashSet<>()
     }
 
     Set<Programador> programadoresInvolucrados() {
-        programadores
+        programadores.findAll() //para crear una copia
     }
 
     void agregarMiembro(Programador nuevoMiembro) throws ProgramadorYaMiembro, EquipoYaExistente {

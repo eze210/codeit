@@ -6,13 +6,20 @@ import groovy.transform.EqualsAndHashCode
 @EqualsAndHashCode(excludes=["valido", "puntaje", "correcto"])
 class Resultado {
 
-    Solucion solucion
     Boolean valido
     Boolean correcto
     Integer puntaje
 
+    Solucion solucion
+
+    static belongsTo = [desafio: Desafio]
+
     static constraints = {
         solucion nullable: false
+        desafio nullable: false
+        valido nullable: true
+        correcto nullable: true
+        puntaje nullable: true
     }
 
     Resultado(Solucion solucion) {
@@ -20,6 +27,8 @@ class Resultado {
         this.valido = null
         this.correcto = null
         this.puntaje = null
+        this.desafio = solucion.desafio
+        solucion.resultado = this
     }
 
     Resultado(Solucion solucion, Boolean valido, Boolean correcto, Integer puntaje) {
@@ -27,6 +36,8 @@ class Resultado {
         this.valido = valido
         this.correcto = correcto
         this.puntaje = puntaje
+        this.desafio = solucion.desafio
+        solucion.resultado = this
     }
 
     Boolean estaProcesado() {
