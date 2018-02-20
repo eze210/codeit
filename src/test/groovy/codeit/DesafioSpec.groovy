@@ -15,10 +15,9 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
     void creacionDelDesafio() {
         when:"Se crea un desafío con ciertos parámetros"
         Programador programador = new Programador("El nombre")
-        Desafio desafio = new Desafio(
+        Desafio desafio = programador.proponerDesafio(
                 "El título",
                 "La descripción",
-                programador,
                 DateTime.now(),
                 DateTime.now().plusDays(1))
 
@@ -35,15 +34,14 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
     void agregarUnEjercicio() {
         given:"Un desafío"
         Programador programador = new Programador("El nombre")
-        Desafio desafioNuevo = new Desafio(
+        Desafio desafioNuevo = programador.proponerDesafio(
                 "El título",
                 "La descripción",
-                programador,
                 DateTime.now(),
                 DateTime.now().plusDays(1))
 
         when:"se agrega un ejercicio a ese desafío"
-        Ejercicio ejercicio = new Ejercicio(desafioNuevo, "El enunciado")
+        Ejercicio ejercicio = programador.proponerEjercicioPara(desafioNuevo, "El enunciado")
         desafioNuevo.agregarEjercicio(ejercicio)
 
         then:"El desafío tiene ese ejercicio"
@@ -54,17 +52,16 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
     void agregarEjercicios() {
         given:"Un desafío nuevo"
         Programador programador = new Programador("El nombre")
-        Desafio desafioNuevo = new Desafio(
+        Desafio desafioNuevo = programador.proponerDesafio(
                 "El título",
                 "La descripción",
-                programador,
                 DateTime.now(),
                 DateTime.now().plusDays(1))
 
         when:"Se agregan N ejercicios ese desafío"
         Integer numeroDeEjercicios = 10
         for (Integer i = 0; i < numeroDeEjercicios; ++i) {
-            Ejercicio ejercicio = new Ejercicio(desafioNuevo, "El enunciado " + i)
+            Ejercicio ejercicio = programador.proponerEjercicioPara(desafioNuevo, "El enunciado " + i)
             desafioNuevo.agregarEjercicio(ejercicio)
         }
 
@@ -78,10 +75,9 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
         DateTime ahora = DateTime.now()
         DateTime unDiaDespues = ahora.plusDays(1)
-        Desafio desafioNuevo = new Desafio(
+        Desafio desafioNuevo = programador.proponerDesafio(
                 "El título",
                 "La descripción",
-                programador,
                 ahora,
                 unDiaDespues)
 
@@ -96,10 +92,9 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         DateTime ahora = DateTime.now()
         DateTime ayer = ahora.minusDays(1).minusMillis(1)
         DateTime haceUnMilisegundo = ahora.minusMillis(1)
-        Desafio desafioNuevo = new Desafio(
+        Desafio desafioNuevo = programador.proponerDesafio(
                 "El título",
                 "La descripción",
-                programador,
                 ayer,
                 haceUnMilisegundo)
 
@@ -113,15 +108,14 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
         DateTime ahora = DateTime.now()
         DateTime unDiaDespues = ahora.plusDays(1)
-        Desafio desafioNuevo = new Desafio(
+        Desafio desafioNuevo = programador.proponerDesafio(
                 "El título",
                 "La descripción",
-                programador,
                 ahora,
                 unDiaDespues)
 
         Programador resolvedor = new Programador("Otro nombre")
-        Solucion solucion = new Solucion(resolvedor, "Descripción", desafioNuevo)
+        Solucion solucion = resolvedor.proponerSolucionPara(desafioNuevo, "Descripción")
 
         then:"la solución resuelve el desafío"
         desafioNuevo.soluciones.contains(solucion)
@@ -132,18 +126,17 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Programador programador = new Programador("El nombre")
         DateTime ahora = DateTime.now()
         DateTime maniana = ahora.plusDays(1)
-        Desafio desafioNuevo = new Desafio(
+        Desafio desafioNuevo = programador.proponerDesafio(
                 "El título",
                 "La descripción",
-                programador,
                 ahora,
                 maniana)
-        Ejercicio ejercicio1 = new Ejercicio(desafioNuevo, "Ejercicio viejo")
+        Ejercicio ejercicio1 = programador.proponerEjercicioPara(desafioNuevo, "Ejercicio viejo")
         desafioNuevo.agregarEjercicio(ejercicio1)
 
         and:"que tenía una solución válida"
         Programador resolvedor = new Programador("Otro nombre")
-        Solucion solucion = new Solucion(resolvedor, "Descripción", desafioNuevo)
+        Solucion solucion = resolvedor.proponerSolucionPara(desafioNuevo, "Descripción")
         Resolucion resolucion = new Resolucion(ejercicio1, "")
         solucion.agregarResolucion(resolucion)
         assert desafioNuevo.soluciones.size() == 1
@@ -151,7 +144,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         assert desafioNuevo.validarSolucion(solucion).valido
 
         when:"se agrega un nuevo ejercicio al desafío"
-        Ejercicio ejercicio2 = new Ejercicio(desafioNuevo, "Ejercicio nuevo")
+        Ejercicio ejercicio2 = programador.proponerEjercicioPara(desafioNuevo, "Ejercicio nuevo")
         desafioNuevo.agregarEjercicio(ejercicio2)
 
         then:"la solución debe reprocesarse"
@@ -168,18 +161,17 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Programador programador = new Programador("El nombre")
         DateTime ahora = DateTime.now()
         DateTime maniana = ahora.plusDays(1)
-        Desafio desafio = new Desafio(
+        Desafio desafio = programador.proponerDesafio(
                 "El título",
                 "La descripción",
-                programador,
                 ahora,
                 maniana)
-        Ejercicio ejercicio1 = new Ejercicio(desafio, "Ejercicio viejo")
+        Ejercicio ejercicio1 = programador.proponerEjercicioPara(desafio, "Ejercicio viejo")
         desafio.agregarEjercicio(ejercicio1)
 
         and:"que era resuelto por una solución"
         Programador resolvedor = new Programador("Otro nombre")
-        Solucion solucion = new Solucion(resolvedor, "Descripción", desafio)
+        Solucion solucion = resolvedor.proponerSolucionPara(desafio, "Descripción")
         Resolucion resolucion = new Resolucion(ejercicio1, "")
         solucion.agregarResolucion(resolucion)
         assert desafio.soluciones.size() == 1
@@ -187,7 +179,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         assert desafio.validarSolucion(solucion).valido
 
         when:"se agrega un ejercicio"
-        Ejercicio ejercicio2 = new Ejercicio(desafio, "Ejercicio nuevo")
+        Ejercicio ejercicio2 = programador.proponerEjercicioPara(desafio, "Ejercicio nuevo")
         desafio.agregarEjercicio(ejercicio2)
 
         then:"la solución ya no resuelve el desafío"

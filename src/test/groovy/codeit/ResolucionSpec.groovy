@@ -5,10 +5,12 @@ import spock.lang.Specification
 
 class ResolucionSpec extends Specification implements DomainUnitTest<Resolucion> {
 
+    Programador programador
     Desafio desafio
 
     def setup() {
-        desafio = new Desafio("Título", "Descripción", new Programador("Creador"))
+        programador = new Programador("Creador")
+        desafio = programador.proponerDesafio("Título", "Descripción")
     }
 
     def cleanup() {
@@ -16,7 +18,7 @@ class ResolucionSpec extends Specification implements DomainUnitTest<Resolucion>
 
     void resolucionDelEjercicioIdentidad() {
         given:"Un ejercicio"
-        Ejercicio ejercicio = new Ejercicio(desafio, "Identidad")
+        Ejercicio ejercicio = programador.proponerEjercicioPara(desafio, "Identidad")
 
         when:"Se le agregan varias pruebas con igual entrada y salida"
         for (Integer i = 0; i < 10; ++i) {

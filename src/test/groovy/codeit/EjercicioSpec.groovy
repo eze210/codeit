@@ -5,10 +5,12 @@ import spock.lang.Specification
 
 class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
 
+    Programador programador
     Desafio desafio
 
     def setup() {
-        desafio = new Desafio("Título", "Descripción", new Programador("Creador"))
+        programador = new Programador("Creador")
+        desafio = programador.proponerDesafio("Título", "Descripción")
     }
 
     def cleanup() {
@@ -16,7 +18,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
 
     void unEjercicioNuevoNoTienePruebas() {
         given:"Un ejercicio nuevo"
-        Ejercicio ejercicio = new Ejercicio(desafio, "Un título")
+        Ejercicio ejercicio = programador.proponerEjercicioPara(desafio, "Un título")
 
         expect:"no tiene pruebas"
         ejercicio.pruebas.size() == 0
@@ -24,7 +26,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
 
     void unEjercicioNuevoSeResuelveConUnaResolucionNueva() {
         given:"Un ejercicio nuevo"
-        Ejercicio ejercicio = new Ejercicio(desafio, "Un título")
+        Ejercicio ejercicio = programador.proponerEjercicioPara(desafio, "Un título")
 
         and:"una resolución nueva"
         Resolucion resolucion = new Resolucion(ejercicio, "{ entrada -> null }")
@@ -35,7 +37,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
 
     void unEjercicioConUnaPruebaAgregadaTieneUnaPruebaAsociadaASiMismo() {
         given:"Un ejercicio"
-        Ejercicio ejercicio = new Ejercicio(desafio, "Un título")
+        Ejercicio ejercicio = programador.proponerEjercicioPara(desafio, "Un título")
 
         when:"se le agrega una prueba"
         Prueba prueba = ejercicio.agregarPrueba("", "")
@@ -49,7 +51,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
 
     void ejercicioSimple() {
         given:"Un ejercicio"
-        Ejercicio ejercicio = new Ejercicio(desafio, "Un título")
+        Ejercicio ejercicio = programador.proponerEjercicioPara(desafio, "Un título")
 
         when:"se agrega una prueba simple"
         ejercicio.agregarPrueba("Entrada", "Entrada")
@@ -65,7 +67,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
 
     void ejercicioConVariasPruebas() {
         given:"Un ejercicio"
-        Ejercicio ejercicio = new Ejercicio(desafio, "Un título")
+        Ejercicio ejercicio = programador.proponerEjercicioPara(desafio, "Un título")
 
         when:"se agregan dos pruebas simples"
         ejercicio.agregarPrueba("Entrada", "Entrada")
