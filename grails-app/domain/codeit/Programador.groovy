@@ -111,7 +111,9 @@ class Programador extends Participante {
      */
     Equipo aceptarInvitacion(Invitacion invitacion) {
         assert invitacion.invitado == this
-        invitacion.aceptar()
+        Equipo equipo = invitacion.aceptar()
+        invitaciones = invitaciones.findAll({it.validar()})
+        equipo
     }
 
 

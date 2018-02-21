@@ -52,6 +52,10 @@ class Invitacion {
     }
 
 
+    /** Valida una invitación.
+     *
+     * @return \c true si la invitación es válida, o \c false en otro caso.
+     */
     Boolean validar() {
         Equipo.formanEquipoValido(equipo, invitado)
     }
