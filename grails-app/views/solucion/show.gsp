@@ -22,9 +22,7 @@
             <div class="padded_container">
                 <em>por <g:link controller="participante" action="show" id="${solucion.desafio.creador.id}">${solucion.desafio.creador.nombre}</g:link></em>
                 <br/><br/>
-                <span style="color: ${solucion.resultado.valido != null ? (solucion.resultado.valido ? "black" : "red") : "gray"};">
-                    ${solucion.resultado.valido != null ? (solucion.resultado.valido ? "Puntaje: " + String.valueOf(solucion.resultado.puntaje) : "No es válida") : "Procesando solución ..."}
-                </span>
+                <tmpl:/shared/estadoSolucionDisplay resultado="${solucion.resultado}" style="${'long'}" />
                 <br/><br/>
                 <p>${solucion.descripcion}</p>
             </div>
@@ -36,7 +34,7 @@
             <div class="padded_container">
                 <g:each var="resolucion" status="i" in="${solucion.resoluciones.toSorted()}">
                     <div class="card_container">
-                        <g:render template="/shared/ejercicioDisplay" model="[ejercicio: resolucion.ejercicio, numero: i+1]" />
+                        <tmpl:/shared/ejercicioDisplay ejercicio="${resolucion.ejercicio}" numero="${i+1}" />
                         <div class="card_wrapper">
                             <div class="card soft-card">
                                 <label>${resolucion.codigo}</label>

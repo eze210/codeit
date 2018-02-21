@@ -33,8 +33,8 @@
                     <g:hiddenField name="desafio_id" value="${desafio.id}" />
                     <g:textArea name="descripcion"/>
                     <g:each var="ejercicio" status="i" in="${desafio.ejercicios.toSorted()}">
-                        <g:render template="/shared/ejercicioDisplay" model="[ejercicio: ejercicio, numero: i+1]" />
-                        <label>Resolución</label> (Ponga aquí su código) <br/>
+                        <tmpl:/shared/ejercicioDisplay ejercicio="${ejercicio}" numero="${i+1}" />
+                        <label>Resolución</label> (ponga aquí su código) <br/>
                         <g:textArea name="codigo"/>
                         <g:hiddenField name="ejercicio_id" value="${ejercicio.id}" />
                     </g:each>

@@ -15,8 +15,9 @@ class SolucionController {
             Integer inicio = (params.containsKey("offset") ? params.offset : 0) * params.max
             Integer fin = Math.min(inicio+params.max, desafio.soluciones.size()-1)
             List<Solucion> soluciones = (desafio.soluciones as List)[inicio..fin]
-            respond soluciones, model:[solucionCount: desafio.soluciones.size()]
+            respond soluciones, model:[solucionCount: desafio.soluciones.size(), desafio: desafio]
         } else {
+            // TODO: Filter solucions from current user
             respond Solucion.list(params), model:[solucionCount: Solucion.count()]
         }
     }

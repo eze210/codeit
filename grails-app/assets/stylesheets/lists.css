@@ -19,3 +19,29 @@
 .padded_container {
     padding: 10px 20px;
 }
+
+.circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+}
+
+.processing_background {
+    background-color: gray;
+}
+.wrong_background {
+    background-color: red;
+}
+.valid_background {
+    background-color: green;
+}
+
+.processing_color {
+    color: gray;
+}
+.wrong_color {
+    color: red;
+}
+.valid_color {
+    color: green;
+}

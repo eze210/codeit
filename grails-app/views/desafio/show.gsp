@@ -23,7 +23,7 @@
 
                 <h2>Ejercicios</h2>
                 <g:each var="ejercicio" status="i" in="${desafio.ejercicios.toSorted()}">
-                    <g:render template="/shared/ejercicioDisplay" model="[ejercicio: ejercicio, numero: i+1]" />
+                    <tmpl:/shared/ejercicioDisplay ejercicio="${ejercicio}" numero="${i+1}" />
                 </g:each>
 
                 <h2>Soluciones</h2>

@@ -2,23 +2,52 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'solucion.label', default: 'Solucion')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title>${desafio ? "Soluciones para " + desafio.nombre : "Mis soluciones"}</title>
     </head>
     <body>
-        <a href="#list-solucion" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+        <g:if test="${desafio != null}">
+            <div class="breadcrumble"><g:link controller="desafio" action="index">Desafios</g:link>
+                > <g:link controller="desafio" action="show" id="${desafio.id}">${desafio.titulo}</g:link>
+                > Soluciones
+            </div>
+        </g:if>
         <div class="nav" role="navigation">
             <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+                %{--TODO: Deshabilitar si ya tiene su solución--}%
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
             </ul>
         </div>
+
         <div id="list-solucion" class="content scaffold-list" role="main">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h1>${desafio ? "Soluciones para " + desafio.nombre : "Mis soluciones"}</h1>
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${solucionList}" />
+
+            <table>
+                <thead>
+                </thead>
+                <tbody>
+                <g:each in="${solucionList}" var="solucion">
+                    <tr>
+                        <div class="card_wrapper">
+                            <div class="solucion card">
+                                <h2 style="overflow: hidden;">
+                                    <div style="display: inline-block;">
+                                        <g:link method="GET" resource="${solucion.participante}">${solucion.participante.nombre}</g:link>
+                                    </div>
+                                    <div style="display: inline-block;">
+                                        <tmpl:/shared/estadoSolucionDisplay resultado="${solucion.resultado}" style="${'short'}" />
+                                    </div>
+                                </h2>
+                                <p> <em>${solucion.descripcion}</em> </p>
+                                <p><g:link method="GET" resource="${solucion}">Ver más</g:link></p>
+                            </div>
+                        </div>
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
 
             <div class="pagination">
                 <g:paginate total="${solucionCount ?: 0}" />
