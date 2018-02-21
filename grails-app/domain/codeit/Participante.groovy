@@ -43,16 +43,20 @@ abstract class Participante {
      * @return Las insignias conseguidas por los programadores involucrados con el participante.
      */
     Set<Insignia> obtenerInsignias() {
-        programadoresInvolucrados().collect({it.insignias}).flatten()
+        Set<Insignia> todasLasInsignias = (programadoresInvolucrados()*.insignias).flatten()
+        todasLasInsignias
     }
 
 
     /** Otorga una insignia a todos los programadores involucrados con el participante.
      *
      * @param insignia La insignia que debe ser otorgada a los programadores.
+     *
+     * @return El conjunto de las insignias de todos los programadores involucrados.
      */
-    def asignarInsignia(Insignia insignia) {
-        programadoresInvolucrados().forEach({it.insignias.add(insignia)})
+    Set<Insignia> asignarInsignia(Insignia insignia) {
+        programadoresInvolucrados().collect({it.insignias.add(insignia)})
+        obtenerInsignias()
     }
 
 
@@ -68,6 +72,7 @@ abstract class Participante {
         programadoresInvolucrados().intersect(otros)
     }
 
+
     /** Propone una solución en el desafío indicado.
      *
      * @param desafio El desafío que intentará resolver la solución.
@@ -80,9 +85,10 @@ abstract class Participante {
     }
 
 
+    // TODO: Es método de Programador?
     /** Asigna un punto al desafío.
      *
-     * @param desafio Desafíó al que se quiere asignar un punto.
+     * @param desafio Desafío al que se quiere asignar un punto.
      *
      * @return El nuevo puntaje del desafío.
      */
@@ -107,6 +113,18 @@ abstract class Participante {
      */
     Boolean participaDe(Desafio desafio) {
         desafio.esParticipante(this)
+    }
+
+
+    /** Otorga un punto en alguna faceta a los programadores involucrados.
+     *
+     * @param tipoFaceta Faceta en la cual se quiere asignar un punto.
+     *
+     * @return La nueva cantidad de puntos que suman todos los programadores involucrados en la faceta.
+     */
+    Integer asignarPuntoEnFaceta(TipoFaceta tipoFaceta) {
+        Integer suma = programadoresInvolucrados()*.asignarPuntoEnFaceta(tipoFaceta).sum()
+        suma
     }
 
 }

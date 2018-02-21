@@ -243,4 +243,14 @@ class Programador extends Participante {
         new Desafio(titulo, descripcion, this, new LinkedHashSet<Insignia>())
     }
 
+
+    /** Selecciona una solución de algún desafío propio como la mejor para dicho desafío.
+     *
+     * @param solucion
+     */
+    def elegirMejorSolucion(Solucion solucion) {
+        assert solucion.desafio.creador == this
+
+        solucion.asignarPuntoEnFaceta(TipoFaceta.Ganador)
+    }
 }

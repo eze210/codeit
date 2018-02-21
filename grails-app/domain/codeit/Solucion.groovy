@@ -92,4 +92,15 @@ class Solucion {
         this.participante.asignarInsignia(insignia)
     }
 
+
+    /** Otorga un punto en alguna faceta a la solución y a los programadores involucrados.
+     *
+     * @param tipoFaceta Faceta en la cual se quiere asignar un punto.
+     *
+     * @return La nueva cantidad de puntos que suman todos los programadores involucrados en la faceta.
+     */
+    Integer asignarPuntoEnFaceta(TipoFaceta tipoFaceta) {
+        participante.asignarPuntoEnFaceta(tipoFaceta)
+    }
+
 }

@@ -38,11 +38,27 @@ class PuntuarSolucionesTestSpec extends Specification {
     }
 
     void mejorSolucion() {
+        Programador creador = new Programador("Creador")
+        Desafio desafio = creador.proponerDesafio("Título", "Descripción")
+        Ejercicio ejercicio = creador.proponerEjercicioPara(desafio, "El enunciado")
+        for (Integer i = 0; i < 10; ++i) {
+            String salida = "Cadena " + i
+            String entrada = "x=\"${salida}\""
+            ejercicio.agregarPrueba(entrada, salida)
+        }
+
+        Programador resolvedor = new Programador("Resolvedor")
+        Solucion solucion = resolvedor.proponerSolucionPara(desafio, "Mi solución")
+        solucion.agregarResolucion(new Resolucion(ejercicio, "x"))
+
         given:"Existen soluciones que resuelven la totalidad de un desafío"
+        assert desafio.validarSolucion(solucion)
 
         when:"el creador del desafío elige entre esas soluciones la mejor"
+        creador.elegirMejorSolucion(solucion)
 
         then:"al participante que la propuso se le otorga un punto en la faceta de ganador"
+        resolvedor.obtenerPuntajeParaFaceta(TipoFaceta.Ganador) == 1
     }
 
     void puntajesDeLaComunidad() {

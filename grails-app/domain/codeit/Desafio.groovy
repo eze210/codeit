@@ -36,12 +36,12 @@ class Desafio {
 
     /** Declaraciones necesarias para el mapeo relacional. */
     static belongsTo = [creador: Programador]
-    static hasMany = [ejercicios: Ejercicio,
-                      soluciones: Solucion,
-                      resultados: Resultado,
-                      insigniasRequeridas: Insignia,
+    static hasMany = [ejercicios          : Ejercicio,
+                      soluciones          : Solucion,
+                      resultados          : Resultado,
+                      insigniasRequeridas : Insignia,
                       insigniasHabilitadas: Insignia,
-                      facetas: Faceta]
+                      facetas             : Faceta]
 
     /** Reglas para el mapeo relacional. */
     static constraints = {
@@ -140,7 +140,7 @@ class Desafio {
         }
         soluciones.remove(solucion)
         soluciones.add(solucion)
-        resultados.removeIf({it.solucion == solucion})
+        resultados.removeIf({ it.solucion == solucion })
         Resultado resultado = new Resultado(solucion)
         assert resultado != null
         resultados.add(resultado)
@@ -169,6 +169,7 @@ class Desafio {
         }
     }
 
+
     /** Devuelve el resultado actual de una solución.
      *
      * @param solucion Solución de la que se quiere obtener el resultado.
@@ -189,6 +190,7 @@ class Desafio {
     Boolean comparteMiembrosConCreador(Participante participante) {
         participante.comparteMiembrosCon(creador)
     }
+
 
     /** Verifica las reglas de negocio para que un participante pueda participar de unn desafío.
      *
