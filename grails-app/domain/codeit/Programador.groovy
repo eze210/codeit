@@ -49,6 +49,24 @@ class Programador extends Participante {
     }
 
 
+    Integer obtenerPuntajeParaFaceta(TipoFaceta tipoFaceta) {
+        facetas.find({it.tipo == tipoFaceta}).getPuntosAcumulados()
+    }
+
+
+    Integer asignarPuntoEnFaceta(TipoFaceta tipoFaceta) {
+        Faceta faceta = facetas.find({it.tipo == tipoFaceta})
+        insignias.addAll(faceta.asignarPuntos(1))
+        faceta.puntosAcumulados
+    }
+
+
+    def asignarInsigniaASolucion(Insignia insignia, Solucion solucion) {
+        assert solucion.desafio.creador == this
+        solucion.asignarInsignia(insignia)
+    }
+
+
     Equipo aceptarInvitacion(Invitacion invitacion) {
         assert invitacion.invitado == this
         invitacion.aceptar()
@@ -94,16 +112,6 @@ class Programador extends Participante {
 
     Desafio proponerDesafio(String titulo, String descripcion) {
         new Desafio(titulo, descripcion, this, new LinkedHashSet<Insignia>())
-    }
-
-    Integer obtenerPuntajeParaFaceta(TipoFaceta tipoFaceta) {
-        facetas.find({it.tipo == tipoFaceta}).getPuntosAcumulados()
-    }
-
-    Integer asignarPuntoEnFaceta(TipoFaceta tipoFaceta) {
-        Faceta faceta = facetas.find({it.tipo == tipoFaceta})
-        insignias.addAll(faceta.asignarPuntos(1))
-        faceta.puntosAcumulados
     }
 
 }

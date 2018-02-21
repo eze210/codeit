@@ -44,4 +44,7 @@ class Solucion {
                 puntos)
     }
 
+    def asignarInsignia(Insignia insignia) {
+        this.participante.asignarInsignia(insignia)
+    }
 }

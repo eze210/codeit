@@ -140,7 +140,7 @@ class Desafio {
     }
 
     Set<Insignia> obtenerInsigniasHabilitadas() {
-        new HashSet<Insignia>();
+        insigniasHabilitadas
     }
 
     Set<Insignia> obtenerInsigniasRequeridas() {

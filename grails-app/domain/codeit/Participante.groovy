@@ -16,6 +16,10 @@ abstract class Participante {
         programadoresInvolucrados().collect({it.insignias}).flatten()
     }
 
+    def asignarInsignia(Insignia insignia) {
+        programadoresInvolucrados().forEach({it.insignias.add(insignia)})
+    }
+
     Participante(String nombre) {
         this.nombre = nombre
     }
