@@ -253,4 +253,15 @@ class Programador extends Participante {
 
         solucion.asignarPuntoEnFaceta(TipoFaceta.Ganador)
     }
+
+    /** Quita un miembro de un equipo.
+     *
+     * @param equipo Equipo que el programador desea abandonar.
+     *
+     * @return El equipo sin el programador.
+     */
+    Equipo abandonarEquipo(Equipo equipo) {
+        equipos.remove(equipo)
+        equipo.removerMiembro(this)
+    }
 }

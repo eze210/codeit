@@ -71,7 +71,7 @@ class TrabajarEnEquipoTestSpec extends Specification {
         equipo.programadoresInvolucrados().contains(nuevoProgramador)
 
         and:"se vuelven a validar todas las invitaciones que haya recibido"
-        // TODO: Revalidar invitaciones
+        // TODO: Hacer un mock de invitacion para confirmar la invocación de validar()
     }
 
     void logrosConjuntos() {
@@ -82,37 +82,48 @@ class TrabajarEnEquipoTestSpec extends Specification {
         Programador resolvedor2 = new Programador("Resolvedor 2")
         equipo.agregarMiembro(resolvedor1)
         Solucion laSolucion = equipo.proponerSolucionPara(elDesafio, "La mejor solución")
-        // TODO: agregar las partes correspondientes a puntuaciones cuando las haya
-//        creadorDelDesafio.elegirMejorSolucion(laSolucion)
-//        creadorDelDesafio.otorgarinsignia...
+
+        creadorDelDesafio.elegirMejorSolucion(laSolucion)
+        laSolucion.asignarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
 
         given:"Un equipo ya ha conseguido logros en un desafío"
-//        assert resolvedor1.puntos ...
-//        assert resolvedor1.insignias ...
+        assert resolvedor1.obtenerPuntajeParaFaceta(TipoFaceta.Ganador) == 1
+        assert resolvedor1.obtenerInsignias().contains(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
 
         when:"un programador nuevo se suma al equipo"
         equipo.agregarMiembro(resolvedor2)
 
         then:"no hereda los logros"
-//        resolvedor2.insignias ...
+        !resolvedor2.obtenerInsignias().contains(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
 
         and:"no consigue puntos extra de desafíos finalizados"
-//        resolvedor2.puntos ...
+        resolvedor2.obtenerPuntajeParaFaceta(TipoFaceta.Ganador) == 0
 
         and:"sí gana la habilidad de conseguirlos para toda acción del equipo"
-//        creadorDelDesafio.otorgarinsignia...
-//        resolvedor2.puntos ...
+        laSolucion.asignarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[1])
+        resolvedor2.obtenerInsignias().contains(TipoFaceta.Creativo.insigniasAutomaticasPosibles[1])
     }
 
     void desintegracionDeEquipos() {
         given:"Un equipo"
+        Programador programador1 = new Programador("Un programador")
+        Equipo equipo = programador1.crearEquipo("Equipo")
+        equipo.agregarMiembro(new Programador("Otro programador"))
 
         and:"sin un determinado programador el equipo sigue siendo válido"
+        assert Equipo.formanEquipoValido(equipo.programadoresInvolucrados() - programador1)
+
+        and:"el equipo tiene alguna insignia"
+        equipo.asignarInsignia(TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0])
 
         when:"ese programador decide irse del equipo"
+        programador1.abandonarEquipo(equipo)
 
         then:"no puede participar más en nombre de ese equipo"
+        !equipo.programadoresInvolucrados().contains(programador1)
+        !programador1.equipos.contains(equipo)
 
         and:"no pierde puntos ni logros conseguidos"
+        equipo.obtenerInsignias() == programador1.obtenerInsignias()
     }
 }
