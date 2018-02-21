@@ -50,10 +50,12 @@ class PuntuarSolucionesTestSpec extends Specification {
         Programador elProgramador = new Programador("El programador")
         InsigniaAutomatica insigniaAutomatica = TipoFaceta.Creativo.insigniasAutomaticasPosibles[0]
         Integer umbral = insigniaAutomatica.umbral
-        for (Integer i = 0; i < umbral - 1; ++i) {
+        for (Integer i = 0; i < umbral - 1; ++i)
             elProgramador.asignarPuntoEnFaceta(TipoFaceta.Creativo)
-        }
+
+        and:"con esos puntos no alcanza una insignia"
         assert elProgramador.obtenerPuntajeParaFaceta(TipoFaceta.Creativo) == umbral - 1
+        assert !elProgramador.obtenerInsignias().contains(insigniaAutomatica)
 
         when:"se le asigna un punto"
         Integer nuevoPuntaje = elProgramador.asignarPuntoEnFaceta(TipoFaceta.Creativo)

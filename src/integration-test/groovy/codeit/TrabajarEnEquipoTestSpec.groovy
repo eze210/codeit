@@ -83,7 +83,7 @@ class TrabajarEnEquipoTestSpec extends Specification {
         equipo.agregarMiembro(resolvedor1)
         Solucion laSolucion = equipo.proponerSolucionPara(elDesafio, "La mejor solución")
         // TODO: agregar las partes correspondientes a puntuaciones cuando las haya
-//        creadorDelDesafio.elegirMejorSolucionParaDesafio(elDesafio, laSolucion)
+//        creadorDelDesafio.elegirMejorSolucion(laSolucion)
 //        creadorDelDesafio.otorgarinsignia...
 
         given:"Un equipo ya ha conseguido logros en un desafío"
