@@ -72,19 +72,21 @@ class AutomatizarPruebasTestSpec extends Specification {
     void agregadoDeSolucion() {
         given:"Un desafío en el sistema"
         Programador creador = new Programador("Creador")
-        Desafio desafio = creador.proponerDesafio("Título", "Descripción")
+        Desafio desafio = creador.proponerDesafio("Título", "Descripción", new LinkedHashSet<Insignia>([
+                TipoFaceta.Creativo.insigniasAutomaticasPosibles[0]
+        ]))
         assert desafio != null
-
-        //TODO: Agregar alguna insignia al desafío y al programador
 
         and:"sus insignias requeridas cierto programador posee"
         Programador solucionador = new Programador("Solucionador")
+        solucionador.asignarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
         assert solucionador.obtenerInsignias().containsAll(desafio.obtenerInsigniasRequeridas())
 
         when:"ese programador sube una solución"
         Solucion solucion = solucionador.proponerSolucionPara(desafio, "Mi solución")
 
         then:"se corren las pruebas"
+        desafio.soluciones.contains(solucion)
         // TODO: hacer un mock de Prueba para verificar la invocación del método
         true
     }

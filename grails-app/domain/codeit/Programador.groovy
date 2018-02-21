@@ -7,11 +7,20 @@ import javax.validation.constraints.NotNull
 /** Clase Programador. */
 class Programador extends Participante {
 
-    /** Facetas en las que puede ser puntuado un programador. */
-    Set<Faceta> facetas
-
     /** Insignias conseguidas por un programador. */
     Set<Insignia> insignias
+
+    /** Equipos a los que pertenece un programador. */
+    Set<Equipo> equipos
+
+    /** Invitaciones que se han hecho a un programador. */
+    Set<Invitacion> invitaciones
+
+    /** Desafíos creados por un programador. */
+    Set<Desafio> desafiosCreados
+
+    /** Facetas en las que puede ser puntuado un programador. */
+    Set<Faceta> facetas
 
     /** Declaraciones necesarias para el mapeo relacional. */
     static hasMany = [equipos: Equipo,
@@ -25,13 +34,13 @@ class Programador extends Participante {
         invitaciones nullable: false
     }
 
+
     /** Constructor de un Programador.
      *
      * @param nombre Nombre del nuevo programador.
      */
     Programador(String nombre) {
         super(nombre)
-        this.soluciones = new HashSet<>()
         this.equipos = new HashSet<>()
         this.invitaciones = new HashSet<>()
         this.desafiosCreados = new HashSet<>()
@@ -45,7 +54,7 @@ class Programador extends Participante {
 
 
     /* ****************************************************************** *
-     * Implementación de la Interfaz Participante
+     * Implementación de la Interfaz Participante.
      * ****************************************************************** */
 
     /** Devuelve al propio programador como una colección de programadores.

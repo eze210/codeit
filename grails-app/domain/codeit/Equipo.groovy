@@ -12,7 +12,6 @@ class Equipo extends Participante {
     Equipo(String nombre) {
         super(nombre)
         this.programadores = new HashSet<>()
-        this.soluciones = new HashSet<>()
     }
 
     Set<Programador> programadoresInvolucrados() {
