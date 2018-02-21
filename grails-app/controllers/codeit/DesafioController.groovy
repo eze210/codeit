@@ -28,10 +28,6 @@ class DesafioController {
         respond desafio
     }
 
-    def create() {
-
-    }
-
     @Transactional
     def save() {
         Programador creador = Programador.findById(params.creador_id)

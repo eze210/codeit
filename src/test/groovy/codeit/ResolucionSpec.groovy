@@ -22,10 +22,11 @@ class ResolucionSpec extends Specification implements DomainUnitTest<Resolucion>
 
         when:"Se le agregan varias pruebas con igual entrada y salida"
         for (Integer i = 0; i < 10; ++i) {
-            String entradaYSalida = "Cadena " + i
-            ejercicio.agregarPrueba(entradaYSalida, entradaYSalida)
+            String salida = "Cadena " + i
+            String entrada = "x=\"${salida}\""
+            ejercicio.agregarPrueba(entrada, salida)
         }
-        Resolucion resolucion = new Resolucion(ejercicio, "{ entrada -> entrada }")
+        Resolucion resolucion = new Resolucion(ejercicio, "x")
 
         then:"la resolución con el código que devuelve su entrada resuelve el ejercicio"
         resolucion.resuelveElEjercicio()

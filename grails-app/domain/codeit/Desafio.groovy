@@ -3,22 +3,23 @@ package codeit
 import org.joda.time.DateTime
 
 class Desafio {
-    // TODO: agregar requisitos para participar
 
     String titulo
     String descripcion
     Vigencia vigencia
 
-    Integer puntajeTotal
-
     static belongsTo = [creador: Programador]
-    static hasMany = [ejercicios: Ejercicio, soluciones: Solucion, resultados: Resultado]
+    static hasMany = [ejercicios: Ejercicio,
+                      soluciones: Solucion,
+                      resultados: Resultado,
+                      insigniasRequeridas: Insignia,
+                      insigniasHabilitadas: Insignia,
+                      facetas: Faceta]
 
     static constraints = {
         titulo nullable: false, blank: false, unique: true
         descripcion nullable: false, blank: false, unique: true
         creador nullable: false
-        puntajeTotal nullable: false
     }
 
     static mapping = {
@@ -28,29 +29,31 @@ class Desafio {
         }
     }
 
-    Desafio(String titulo, String descripcion, Programador creador, DateTime fechaDesde, DateTime fechaHasta) {
-        init(titulo, descripcion, creador)
+    Desafio(String titulo, String descripcion, Programador creador, Set<Insignia> insigniasRequeridas, DateTime fechaDesde, DateTime fechaHasta) {
+        init(titulo, descripcion, creador, insigniasRequeridas)
         this.vigencia = new Vigencia(fechaDesde, fechaHasta)
     }
 
-    Desafio(String titulo, String descripcion, Programador creador, DateTime fechaHasta) {
-        init(titulo, descripcion, creador)
+    Desafio(String titulo, String descripcion, Programador creador, Set<Insignia> insigniasRequeridas, DateTime fechaHasta) {
+        init(titulo, descripcion, creador, insigniasRequeridas)
         this.vigencia = new Vigencia(fechaHasta)
     }
 
-    Desafio(String titulo, String descripcion, Programador creador) {
-        init(titulo, descripcion, creador)
+    Desafio(String titulo, String descripcion, Programador creador, Set<Insignia> insigniasRequeridas) {
+        init(titulo, descripcion, creador, insigniasRequeridas)
         this.vigencia = new Vigencia()
     }
 
-    private void init(String titulo, String descripcion, Programador creador) {
+    private void init(String titulo, String descripcion, Programador creador, Set<Insignia> insigniasRequeridas) {
         this.titulo = titulo
         this.descripcion = descripcion
         this.creador = creador
-        this.puntajeTotal = 0
+        this.insigniasRequeridas = insigniasRequeridas
         this.ejercicios = new LinkedHashSet<>()
         this.soluciones = new LinkedHashSet<>()
         this.resultados = new LinkedHashSet<>()
+        this.insigniasHabilitadas = new LinkedHashSet<>()
+        this.facetas = new LinkedHashSet<>([new Faceta(TipoFaceta.Desafio)])
     }
 
     // Función para agegarr la nueva solución del usuario
@@ -94,14 +97,20 @@ class Desafio {
     }
 
     private Boolean esCreador(Participante participante) {
-        creador.involucraA(participante)
+        participante.comparteMiembrosCon(creador)
     }
 
     private Boolean puedeParticipar(Participante participante) {
-        estaVigente() &&
-                ((!esCreador(participante)) ||
-                esParticipante(participante) ||
-                !resultados.find { it.solucion.participante.involucraA(participante) })
+        if (!estaVigente())
+            return false;
+
+        if (esCreador(participante))
+            return false;
+
+        if (resultados.find { it.solucion.participante.comparteMiembrosCon(participante) })
+            return false;
+
+        return true;
     }
 
     private Boolean esParticipante(Participante participante) {
@@ -130,7 +139,21 @@ class Desafio {
         resultados.addAll(soluciones.collect { it.validar(ejercicios) })
     }
 
-    Integer asignarPunto() {
-        puntajeTotal += 1
+    Set<Insignia> obtenerInsigniasHabilitadas() {
+        insigniasHabilitadas
     }
+
+    Set<Insignia> obtenerInsigniasRequeridas() {
+        insigniasRequeridas;
+    }
+
+    Integer asignarPunto() {
+        insigniasHabilitadas.addAll(facetas.find { it.tipo == TipoFaceta.Desafio }.asignarPuntos(1))
+        creador.asignarPuntoEnFaceta(TipoFaceta.Desafiante)
+    }
+
+    Integer obtenerPuntajeTotal() {
+        facetas.find { it.tipo == TipoFaceta.Desafio }.puntosAcumulados
+    }
+
 }

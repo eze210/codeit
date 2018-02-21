@@ -21,7 +21,8 @@ class Resolucion {
     }
 
     String ejecutar(String entrada) {
-        Eval.me(entrada + "\n" + codigo)
+        String programa = entrada + "\n" + codigo
+        new GroovyShell().evaluate(programa)
     }
 
     Boolean resuelveElEjercicio() {

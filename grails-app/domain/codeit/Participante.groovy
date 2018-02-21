@@ -2,7 +2,7 @@ package codeit
 
 abstract class Participante {
 
-    abstract String nombre
+    String nombre
 
     static hasMany = [soluciones: Solucion, desafios: Desafio]
 
@@ -12,8 +12,21 @@ abstract class Participante {
 
     abstract Set<Programador> programadoresInvolucrados()
 
-    Boolean involucraA(Participante participante) {
-        programadoresInvolucrados().containsAll(participante.programadoresInvolucrados())
+    Set<Insignia> obtenerInsignias() {
+        programadoresInvolucrados().collect({it.insignias}).flatten()
+    }
+
+    def asignarInsignia(Insignia insignia) {
+        programadoresInvolucrados().forEach({it.insignias.add(insignia)})
+    }
+
+    Participante(String nombre) {
+        this.nombre = nombre
+    }
+
+    Boolean comparteMiembrosCon(Participante participante) {
+        Set<Programador> otros = participante.programadoresInvolucrados()
+        programadoresInvolucrados().intersect(otros)
     }
 
     Solucion proponerSolucionPara(Desafio desafio, String descripcionDeLaSolucion) {
@@ -21,7 +34,7 @@ abstract class Participante {
     }
 
     Integer asignarPuntoA(Desafio desafio) {
-        if (involucraA(desafio.creador)) {
+        if (comparteMiembrosCon(desafio.creador)) {
             throw new InvolucraAlCreador()
         }
 
@@ -34,10 +47,6 @@ abstract class Participante {
 
     Boolean participaDe(Desafio desafio) {
         desafio.esParticipante(this)
-    }
-
-    Invitacion invitar(Programador programador) {
-        new Invitacion(this, programador)
     }
 
 }

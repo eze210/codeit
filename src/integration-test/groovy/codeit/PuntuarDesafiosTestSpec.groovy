@@ -14,6 +14,7 @@ class PuntuarDesafiosTestSpec extends Specification {
     Desafio desafio
     Ejercicio ejercicio
 
+
     def setup() {
         creador = new Programador("Creador")
         desafio = creador.proponerDesafio("Desafío", "Descripción")
@@ -21,12 +22,14 @@ class PuntuarDesafiosTestSpec extends Specification {
         ejercicio.agregarPrueba("string", "string")
     }
 
+
     def cleanup() {
     }
 
-    void puntuacionesSoloDeLosParticipantesvotaUnParticipante() {
-        Integer puntajeInicialDelDesafio = desafio.puntajeTotal
-        //Integer puntajeInicialDeLaFacetaDesafiante = creador.blah
+
+    void puntuacionesSoloDeLosParticipantesCuandoVotaUnParticipante() {
+        Integer puntajeInicialDelDesafio = desafio.obtenerPuntajeTotal()
+        Integer puntajeInicialDeLaFacetaDesafiante = creador.obtenerPuntajeParaFaceta(TipoFaceta.Desafiante)
 
         given:"Un programador ha subido alguna resolución a algún ejercicio de un desafío"
         Programador programador = new Programador("Resolvedor")
@@ -39,12 +42,13 @@ class PuntuarDesafiosTestSpec extends Specification {
         then:"al puntaje total del desafío se le sumará una unidad"
         nuevoPuntajeDelDesafio == puntajeInicialDelDesafio + 1
 
-        //and:"se asignará un punto en la faceta desafiante del creador"
-        //creador.blah == puntajeInicialDeLaFacetaDesafiante + 1
+        and:"se asignará un punto en la faceta desafiante del creador"
+        creador.obtenerPuntajeParaFaceta(TipoFaceta.Desafiante) == puntajeInicialDeLaFacetaDesafiante + 1
     }
 
+
     void puntuacionesSoloDeLosParticipantesVotaUnNoParticipante() {
-        Integer puntajeInicialDelDesafio = desafio.puntajeTotal
+        Integer puntajeInicialDelDesafio = desafio.obtenerPuntajeTotal()
 
         given:"Un programador no ha subido ninguna resolución a ningún ejercicio de un desafío"
         Programador programador = new Programador("Resolvedor")
@@ -56,11 +60,12 @@ class PuntuarDesafiosTestSpec extends Specification {
         }
 
         and:"el puntaje total del desafío se mantiene igual"
-        desafio.puntajeTotal == puntajeInicialDelDesafio
+        desafio.obtenerPuntajeTotal() == puntajeInicialDelDesafio
     }
 
+
     void puntuacionesSoloDeLosParticipantesVotaElCreador() {
-        Integer puntajeInicialDelDesafio = desafio.puntajeTotal
+        Integer puntajeInicialDelDesafio = desafio.obtenerPuntajeTotal()
 
         when:"El creador de un desafío intenta asignar un punto a su propio desafío"
         then:"el punto asignado es rechazado"
@@ -69,7 +74,7 @@ class PuntuarDesafiosTestSpec extends Specification {
         }
 
         and:"el puntaje del desafío se mantiene igual"
-        desafio.puntajeTotal == puntajeInicialDelDesafio
+        desafio.obtenerPuntajeTotal() == puntajeInicialDelDesafio
     }
 
 }

@@ -54,12 +54,13 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
         Ejercicio ejercicio = programador.proponerEjercicioPara(desafio, "Un título")
 
         when:"se agrega una prueba simple"
-        ejercicio.agregarPrueba("Entrada", "Entrada")
+        ejercicio.agregarPrueba("x=\"Entrada\"", "Entrada")
 
         then:"Es resuelto con una resolución simple"
-        Resolucion resolucionCorrecta = new Resolucion(ejercicio, "{entrada -> entrada}")
-        Resolucion resolucionQuePasa = new Resolucion(ejercicio, "{entrada -> \"Entrada\"}")
-        Resolucion resolucionInorrecta = new Resolucion(ejercicio, "{entrada -> \"Cadena incorrecta\"}")
+        Resolucion resolucionCorrecta = new Resolucion(ejercicio, "x")
+        Resolucion resolucionQuePasa = new Resolucion(ejercicio, "\"Entrada\"")
+        Resolucion resolucionInorrecta = new Resolucion(ejercicio, "\"Cadena incorrecta\"")
+
         ejercicio.validarResolucion(resolucionCorrecta)
         ejercicio.validarResolucion(resolucionQuePasa)
         !ejercicio.validarResolucion(resolucionInorrecta)
@@ -70,13 +71,13 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
         Ejercicio ejercicio = programador.proponerEjercicioPara(desafio, "Un título")
 
         when:"se agregan dos pruebas simples"
-        ejercicio.agregarPrueba("Entrada", "Entrada")
-        ejercicio.agregarPrueba("Salida", "Salida")
+        ejercicio.agregarPrueba("x=\"Entrada\"", "Entrada")
+        ejercicio.agregarPrueba("x=\"Salida\"", "Salida")
 
         then:"Es resuelto con una resolución simple"
-        Resolucion resolucionCorrecta = new Resolucion(ejercicio, "{entrada -> entrada}")
-        Resolucion resolucionQueYaNoPasa = new Resolucion(ejercicio, "{entrada -> \"Entrada\"}")
-        Resolucion resolucionInorrecta = new Resolucion(ejercicio, "{entrada -> \"Cadena incorrecta\"}")
+        Resolucion resolucionCorrecta = new Resolucion(ejercicio, "x")
+        Resolucion resolucionQueYaNoPasa = new Resolucion(ejercicio, "\"Entrada\"")
+        Resolucion resolucionInorrecta = new Resolucion(ejercicio, "\"Cadena incorrecta\"")
         ejercicio.validarResolucion(resolucionCorrecta)
         !ejercicio.validarResolucion(resolucionQueYaNoPasa)
         !ejercicio.validarResolucion(resolucionInorrecta)

@@ -8,20 +8,30 @@ class Invitacion {
         Aceptada
     }
 
+
     Estado estado
 
-    static belongsTo = [participanteQueInvito: Participante, programadorInvitado: Programador]
 
     static constraints = {
-        participanteQueInvito nullable: false, blank: false
-        programadorInvitado nullable: false, blank: false
+        equipo nullable: false, blank: false
+        invitado nullable: false, blank: false
     }
 
-    Invitacion(Participante participanteQueInvito, Programador programadorInvitado) {
-        this.participanteQueInvito = participanteQueInvito
-        this.programadorInvitado = programadorInvitado
+
+    static belongsTo = [equipo: Equipo, invitado: Programador]
+
+
+    Invitacion(Equipo equipo, Programador invitado) {
+        this.equipo = equipo
+        this.invitado = invitado
         this.estado = Estado.Pendiente
-        programadorInvitado.invitaciones.add(this)
+        invitado.invitaciones.add(this)
+    }
+
+
+    Equipo aceptar() {
+        this.estado = Estado.Aceptada
+        equipo.agregarMiembro(invitado)
     }
 
 }

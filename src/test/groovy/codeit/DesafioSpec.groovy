@@ -182,17 +182,18 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Ejercicio ejercicio2 = programador.proponerEjercicioPara(desafio, "Ejercicio nuevo")
         desafio.agregarEjercicio(ejercicio2)
 
+        desafio.save flush: true
+
         then:"la solución ya no resuelve el desafío"
-        !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
-                !desafio.validarSolucion(solucion).valido
+        !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() && !desafio.validarSolucion(solucion).valido
 
         when:"se agrega una resolución para el nuevo ejercicio"
-        solucion.agregarResolucion(new Resolucion(ejercicio2, "{x -> x}"))
+        Resolucion resolucion2 = new Resolucion(ejercicio2, "def f = {x -> x}")
+        solucion.agregarResolucion(resolucion2)
 
         then:"la solución debe reprocesarse"
         and:"la solución vuelve a ser válida"
-        !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
-                desafio.validarSolucion(solucion).valido
+        !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() && desafio.validarSolucion(solucion).valido
     }
 
 }

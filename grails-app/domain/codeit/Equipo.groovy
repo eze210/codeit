@@ -10,7 +10,7 @@ class Equipo extends Participante {
     }
 
     Equipo(String nombre) {
-        this.nombre = nombre
+        super(nombre)
         this.programadores = new HashSet<>()
         this.soluciones = new HashSet<>()
     }
@@ -19,15 +19,20 @@ class Equipo extends Participante {
         programadores.findAll() //para crear una copia
     }
 
-    void agregarMiembro(Programador nuevoMiembro) throws ProgramadorYaMiembro, EquipoYaExistente {
-        if (programadores.contains(nuevoMiembro)) {
+    Equipo agregarMiembro(Programador nuevoMiembro) throws ProgramadorYaMiembro, EquipoYaExistente {
+        if (programadores.contains(nuevoMiembro))
             throw new ProgramadorYaMiembro()
-        }
-        if (!Equipo.formanEquipoValido(this, nuevoMiembro)) {
+
+        if (!Equipo.formanEquipoValido(this, nuevoMiembro))
             throw new EquipoYaExistente()
-        }
+
         programadores.add(nuevoMiembro)
         nuevoMiembro.equipos.add(this)
+        this
+    }
+
+    Invitacion invitar(Programador programador) {
+        new Invitacion(this, programador)
     }
 
     static Boolean formanEquipoValido(Participante parte1, Participante parte2) {

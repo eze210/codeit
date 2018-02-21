@@ -15,6 +15,7 @@ class AutomatizarPruebasTestSpec extends Specification {
     def cleanup() {
     }
 
+
     void agregadoDePruebasSinSolucionesPrevias() {
         given:"Un desafío creado por un determinado programador"
         Programador programador = new Programador("Creador")
@@ -34,6 +35,7 @@ class AutomatizarPruebasTestSpec extends Specification {
         ejercicio.pruebas.contains(prueba)
     }
 
+
     void agregadoDePruebasConSolucionesPrevias() {
         given: "Un desafío creado por un determinado programador"
         Programador programador = new Programador("Creador")
@@ -46,26 +48,26 @@ class AutomatizarPruebasTestSpec extends Specification {
         and: "el desafío tiene soluciones válidas previas,"
         Programador resolvedor = new Programador("Resolvedor")
         Solucion solucion = resolvedor.proponerSolucionPara(desafio, "La solución al desafío sin pruebas")
-        Resolucion resolucion = new Resolucion(ejercicio, "{x -> \"x\"}")
+        Resolucion resolucion = new Resolucion(ejercicio, "")
         solucion.agregarResolucion(resolucion)
         assert desafio.validarSolucion(solucion)
 
-
         when:   "el programador creador agrega una prueba que no falsea las soluciones previas " +
                 "para un ejercicio de dicho desafío"
-        ejercicio.agregarPrueba("x", "x")
+        ejercicio.agregarPrueba("x = 2", "2")
         assert ejercicio.validarResolucion(resolucion)
 
         then:"La solución sigue siendo válida"
         desafio.validarSolucion(solucion)
 
         when:"la prueba sí falsea"
-        ejercicio.agregarPrueba("y", "y")
+        ejercicio.agregarPrueba("y = 3", "2")
         assert !ejercicio.validarResolucion(resolucion)
 
         then:"La solución deja de valer"
         !desafio.validarSolucion(solucion)
     }
+
 
     void agregadoDeSolucion() {
         given:"Un desafío en el sistema"
@@ -73,8 +75,11 @@ class AutomatizarPruebasTestSpec extends Specification {
         Desafio desafio = creador.proponerDesafio("Título", "Descripción")
         assert desafio != null
 
-        // TODO: and:"sus insignias requeridas cierto programador posee"
+        //TODO: Agregar alguna insignia al desafío y al programador
+
+        and:"sus insignias requeridas cierto programador posee"
         Programador solucionador = new Programador("Solucionador")
+        assert solucionador.obtenerInsignias().containsAll(desafio.obtenerInsigniasRequeridas())
 
         when:"ese programador sube una solución"
         Solucion solucion = solucionador.proponerSolucionPara(desafio, "Mi solución")

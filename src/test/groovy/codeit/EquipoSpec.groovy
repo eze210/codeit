@@ -35,7 +35,7 @@ class EquipoSpec extends Specification implements DomainUnitTest<Equipo> {
         equipo.agregarMiembro(miembro3)
 
         then:"Dichos miembros están involucrados en el equipo"
-        equipo.involucraA(miembro1) && equipo.involucraA(miembro2) && equipo.involucraA(miembro3)
+        equipo.comparteMiembrosCon(miembro1) && equipo.comparteMiembrosCon(miembro2) && equipo.comparteMiembrosCon(miembro3)
     }
 
     void noSePuedeAgregarDosVecesElMismoProgramadorAlMismoEquipo() {

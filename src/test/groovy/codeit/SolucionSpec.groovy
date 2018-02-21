@@ -17,8 +17,9 @@ class SolucionSpec extends Specification implements DomainUnitTest<Solucion> {
         desafio = programador.proponerDesafio("Título", "Descripción", ahora, ahora.plusDays(1))
         ejercicio = programador.proponerEjercicioPara(desafio, "El enunciado")
         for (Integer i = 0; i < 10; ++i) {
-            String cadenaEntradaYSalida = "Cadena " + i
-            ejercicio.agregarPrueba(cadenaEntradaYSalida, cadenaEntradaYSalida)
+            String salida = "Cadena " + i
+            String entrada = "x=\"${salida}\""
+            ejercicio.agregarPrueba(entrada, salida)
         }
     }
 
@@ -42,7 +43,7 @@ class SolucionSpec extends Specification implements DomainUnitTest<Solucion> {
         assert desafio.ejercicios.size() == 1
 
         and:"la resolución correcta a ese ejercicio"
-        Resolucion resolucion = new Resolucion(ejercicio, "{ x -> x }")
+        Resolucion resolucion = new Resolucion(ejercicio, "x")
         assert ejercicio.validarResolucion(resolucion)
 
         when:"se propone una solución que tiene esa resolución"
