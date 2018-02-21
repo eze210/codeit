@@ -2,35 +2,36 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'desafio.label', default: 'Desafio')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <title>Crear desafío</title>
     </head>
     <body>
-        <a href="#create-desafio" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-            </ul>
-        </div>
         <div id="create-desafio" class="content scaffold-create" role="main">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+            <h1>Crear desafío</h1>
+
             <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
+                <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <g:hasErrors bean="${this.desafio}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.desafio}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
-            </g:hasErrors>
-            <g:form resource="${this.desafio}" method="POST">
+            <g:if test="${flash.errors}">
+                <ul class="errors" role="alert">
+                    <g:each in="${flash.errors}">
+                        <li>${it}</li>
+                    </g:each>
+                </ul>
+            </g:if>
+
+            <g:form name="atributos_desafio" controller="desafio" action="save">
                 <fieldset class="form">
-                    <f:all bean="desafio"/>
+                    %{--TODO: Add login and use participante from there--}%
+                    <g:hiddenField name="creador_id" value="5" />
+                    <label>Título</label> <label class="wrong_color">*</label>
+                    <g:textField name="titulo"/>
+                    <label>Descripción</label> <label class="wrong_color">*</label>
+                    <g:textArea name="descripcion"/>
+                    %{--TODO: Add vigencia--}%
+                    %{--TODO: Add exercises--}%
                 </fieldset>
                 <fieldset class="buttons">
-                    <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <g:submitButton name="create" class="save" value="Crear" />
                 </fieldset>
             </g:form>
         </div>

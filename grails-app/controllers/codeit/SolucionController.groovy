@@ -13,12 +13,13 @@ class SolucionController {
         if (params.containsKey("to")) {
             Desafio desafio = Desafio.findById(params.to)
             Integer inicio = (params.containsKey("offset") ? params.offset : 0) * params.max
-            Integer fin = Math.min(inicio+params.max, desafio.soluciones.size()-1)
-            List<Solucion> soluciones = (desafio.soluciones as List)[inicio..fin]
-            respond soluciones, model:[solucionCount: desafio.soluciones.size(), desafio: desafio]
+            Integer count = desafio.soluciones.size()
+            Integer fin = Math.min(inicio + params.max, count - 1)
+            List<Solucion> soluciones = fin > 0 ? (desafio.soluciones as List)[inicio..fin] : []
+            respond solucionList: soluciones, solucionCount: desafio.soluciones.size(), desafio: desafio
         } else {
             // TODO: Filter solucions from current user
-            respond Solucion.list(params), model:[solucionCount: Solucion.count()]
+            respond solucionList: Solucion.list(params), solucionCount: Solucion.count()
         }
     }
 
@@ -50,17 +51,13 @@ class SolucionController {
             solucion.agregarResolucion(it)
         }
 
-//        if (params.descripcion.isEmpty()) {
-//            solucion.errors.reject("solucion.descripcion.vacia", "No puede crearse una solución sin descripción")
-//        }
-//
-//        if (solucion.hasErrors()) {
-//            transactionStatus.setRollbackOnly()
-//            render view:'create', model: [desafio: desafio, errors: solucion.errors]
-//            return
-//        }
+        if (params.descripcion.isEmpty()) {
+            flash.errors = ["La descripción no puede estar vacía"]
+            redirect action: "create", params: [to: desafio.id]
+            return
+        }
 
-        // Actualizar las soluciones en el desafío y los resultados creados
+        // Actualiza las soluciones en el desafío y los resultados y resoluciones creados
         desafio.save flush: true, failOnError: true
 
         redirect action: "show", id: solucion.id

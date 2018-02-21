@@ -2,13 +2,18 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="Desafio" />
-        <title>Desafíos</title>
+        <title>${participante ? "Desafíos de " + participante.nombre : "Desafíos"}</title>
     </head>
     <body>
+        <g:if test="${participante}">
+            <div class="breadcrumble">
+                <g:link controller="participante" action="index">Participantes</g:link>
+                > <g:link controller="participante" action="show" id="${participante.id}">${participante.nombre}</g:link>
+                > Desafíos</div>
+        </g:if>
         <div class="nav" role="navigation">
             <ul>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="create" action="create"><g:message code="default.new.label" args="Desafio" /></g:link></li>
             </ul>
         </div>
         <div id="list-desafio" class="content scaffold-list" role="main">

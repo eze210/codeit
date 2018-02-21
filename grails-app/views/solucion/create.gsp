@@ -16,18 +16,17 @@
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-
-            <g:if test="${errors}">
-            <ul class="errors" role="alert">
-                <g:each var="error" in="${errors}">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:each>
-            </ul>
+            <g:if test="${flash.errors}">
+                <ul class="errors" role="alert">
+                    <g:each in="${flash.errors}">
+                        <li>${it}</li>
+                    </g:each>
+                </ul>
             </g:if>
 
             <g:form name="atributos_solucion" controller="solucion" action="save">
                 <fieldset class="form">
-                    <label>Descripción</label> * <br/>
+                    <label>Descripción</label> <label class="wrong_color">*</label> <br/>
                     %{--TODO: Add login and use participante from there--}%
                     <g:hiddenField name="participante_id" value="5" />
                     <g:hiddenField name="desafio_id" value="${desafio.id}" />

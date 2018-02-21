@@ -8,6 +8,7 @@ class Desafio {
     String titulo
     String descripcion
     Vigencia vigencia
+
     Integer puntajeTotal
 
     static belongsTo = [creador: Programador]
@@ -52,7 +53,7 @@ class Desafio {
         this.resultados = new LinkedHashSet<>()
     }
 
-    // Función para agregar la nueva solución del usuario
+    // Función para agegarr la nueva solución del usuario
     void proponerSolucion(Solucion solucion) throws InvolucraAlCreador, YaParticipaDelDesafio, DesafioNoVigente {
         if (!estaVigente()) {
             throw new DesafioNoVigente()
