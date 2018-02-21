@@ -1,5 +1,6 @@
 package codeit
 
+/** Clase equipo. */
 class Equipo extends Participante {
 
     /** Miembros del equipo. */

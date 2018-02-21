@@ -2,6 +2,7 @@ package codeit
 
 import org.joda.time.DateTime
 
+/** Clase desafío. */
 class Desafio {
 
     /** Título del desafío. */

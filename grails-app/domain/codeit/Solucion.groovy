@@ -1,6 +1,6 @@
 package codeit
 
-/* Clase Solución. */
+/** Clase Solución. */
 class Solucion {
 
     /** Participante que propuso la solución. */
