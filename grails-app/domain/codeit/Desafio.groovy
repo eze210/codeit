@@ -124,20 +124,11 @@ class Desafio {
     /** Función para agregar la nueva solución del progroamador.
      *
      * @param solucion Solución que se desea proponer.
-     * @throws InvolucraAlCreador
+     * @throws ComparteMiembrosConCreador
      * @throws YaParticipaDelDesafio
      * @throws DesafioNoVigente
      */
-    void proponerSolucion(Solucion solucion) throws InvolucraAlCreador, YaParticipaDelDesafio, DesafioNoVigente {
-        if (!estaVigente()) {
-            throw new DesafioNoVigente()
-        }
-        if (comparteMiembrosConCreador(solucion.participante)) {
-            throw new InvolucraAlCreador()
-        }
-        if (!puedeParticipar(solucion.participante)) {
-            throw new YaParticipaDelDesafio()
-        }
+    void proponerSolucion(Solucion solucion) throws ComparteMiembrosConCreador, YaParticipaDelDesafio, DesafioNoVigente {
         soluciones.remove(solucion)
         soluciones.add(solucion)
         resultados.removeIf({ it.solucion == solucion })
@@ -181,17 +172,6 @@ class Desafio {
     }
 
 
-    /** Verifica si un participante comparte miembros con el creador.
-     *
-     * @param participante
-     *
-     * @return \c true si un participante comparte miembros con el creador, o \c false en otro caso.
-     */
-    Boolean comparteMiembrosConCreador(Participante participante) {
-        participante.comparteMiembrosCon(creador)
-    }
-
-
     /** Verifica las reglas de negocio para que un participante pueda participar de unn desafío.
      *
      * @param participante Participante que quiere participar del desafío.
@@ -199,22 +179,49 @@ class Desafio {
      * @return \c true si el participante puede participar, o \c false en otro caso.
      */
     Boolean puedeParticipar(Participante participante) {
-        if (!estaVigente())
-            return false;
+        try {
+            validarParticipacion(participante)
+        } catch (Exception) {
+            return false
+        }
+        return true;
+    }
 
-        if (comparteMiembrosConCreador(participante))
-            return false;
+
+    /** Verifica las reglas de negocio para que un participante pueda participar de unn desafío.
+     *
+     * @param participante Participante que quiere participar del desafío.
+     * @throws DesafioNoVigente,
+     * @throws ComparteMiembrosConCreador,
+     * @throws ComparteMiembrosConParticipante,
+     * @throws NoPoseeInsignias
+     *
+     * @return \c true si ninguna validación falla.
+     */
+    Boolean validarParticipacion(Participante participante) throws
+            DesafioNoVigente,
+            ComparteMiembrosConCreador,
+            ComparteMiembrosConParticipante,
+            NoPoseeInsignias {
+        if (!estaVigente())
+            throw new DesafioNoVigente()
+
+        if (participante.comparteMiembrosCon(creador))
+            throw new ComparteMiembrosConCreador()
+
+        if (participante.comparteAlgunEquipoCon(creador))
+            throw new ComparteEquipoConCreador()
 
         /* si ya es participante puede seguir participando */
         if (esParticipante(participante))
             return true;
 
         /* todavía no participa pero comparte miembros con algún participante */
-        if (resultados.find { it.solucion.participante.comparteMiembrosCon(participante) })
-            return false;
+        if (resultados.findAll { it.solucion.participante.comparteMiembrosCon(participante) })
+            throw new ComparteMiembrosConParticipante()
 
         if (!participante.obtenerInsignias().containsAll(insigniasRequeridas))
-            return false;
+            throw new NoPoseeInsignias();
 
         return true;
     }

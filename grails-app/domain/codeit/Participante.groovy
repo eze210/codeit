@@ -81,6 +81,7 @@ abstract class Participante {
      * @return La nueva solución.
      */
     Solucion proponerSolucionPara(Desafio desafio, String descripcionDeLaSolucion) {
+        desafio.validarParticipacion(this)
         new Solucion(this, descripcionDeLaSolucion, desafio)
     }
 
@@ -92,9 +93,9 @@ abstract class Participante {
      *
      * @return El nuevo puntaje del desafío.
      */
-    Integer asignarPuntoA(Desafio desafio) throws InvolucraAlCreador, NoParticipaDelDesafio {
+    Integer asignarPuntoA(Desafio desafio) throws ComparteMiembrosConCreador, NoParticipaDelDesafio {
         if (comparteMiembrosCon(desafio.creador)) {
-            throw new InvolucraAlCreador()
+            throw new ComparteMiembrosConCreador()
         }
 
         if (!participaDe(desafio)) {
@@ -125,6 +126,13 @@ abstract class Participante {
     Integer asignarPuntoEnFaceta(TipoFaceta tipoFaceta) {
         Integer suma = programadoresInvolucrados()*.asignarPuntoEnFaceta(tipoFaceta).sum()
         suma
+    }
+
+    Boolean comparteAlgunEquipoCon(Participante otro) {
+        Set<Equipo> equiposInvolucradosConThis = (this.programadoresInvolucrados()*.equipos).flatten()
+        Set<Equipo> equiposInvolucradosConOtro = (otro.programadoresInvolucrados()*.equipos).flatten()
+        Set<Equipo> interseccion = equiposInvolucradosConThis.intersect(equiposInvolucradosConOtro)
+        interseccion.size() > 0
     }
 
 }

@@ -69,7 +69,7 @@ class PuntuarDesafiosTestSpec extends Specification {
 
         when:"El creador de un desafío intenta asignar un punto a su propio desafío"
         then:"el punto asignado es rechazado"
-        shouldFail(InvolucraAlCreador) {
+        shouldFail(ComparteMiembrosConCreador) {
             creador.asignarPuntoA(desafio)
         }
 
