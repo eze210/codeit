@@ -1,6 +1,6 @@
 package codeit
 
-import org.grails.orm.hibernate.cfg.GrailsHibernateUtil
+import codeit.seguridad.Usuario
 import org.joda.time.DateTime
 
 import javax.validation.constraints.NotNull
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull
 class Programador extends Participante {
 
     /** Usuario para la seguridad. */
-    User user
+    Usuario usuario
 
     /** Insignias conseguidas por un programador. */
     Set<Insignia> insignias
@@ -46,20 +46,7 @@ class Programador extends Participante {
     Programador(String nombre) {
         super(nombre)
 
-        user = new User(username: nombre, password: '1234')
-        try {
-            Role role = Role.findByAuthority('ROLE_ADMIN')
-            user.save(flush: true)
-            UserRole.create(user, role, true)
-            UserRole.withSession {
-                it.flush()
-                it.clear()
-            }
-        } catch (IllegalStateException e) {
-            e.printStackTrace()
-        } catch (NullPointerException e) {
-            e.printStackTrace()
-        }
+        usuario = Seguridad.crearUsuario(nombre, '1234')
 
         this.equipos = new HashSet<>()
         this.invitaciones = new HashSet<>()

@@ -1,4 +1,4 @@
-package codeit
+package codeit.seguridad
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
@@ -7,7 +7,7 @@ import grails.compiler.GrailsCompileStatic
 @GrailsCompileStatic
 @EqualsAndHashCode(includes='username')
 @ToString(includes='username', includeNames=true, includePackage=false)
-class User implements Serializable {
+class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1
 
@@ -18,8 +18,8 @@ class User implements Serializable {
     boolean accountLocked
     boolean passwordExpired
 
-    Set<Role> getAuthorities() {
-        (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
+    Set<Rol> getAuthorities() {
+        (UsuarioRol.findAllByUser(this) as List<UsuarioRol>)*.role as Set<Rol>
     }
 
     static constraints = {

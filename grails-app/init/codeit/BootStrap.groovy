@@ -1,14 +1,15 @@
 package codeit
 
+import codeit.seguridad.Rol
 import org.joda.time.DateTime
 
 class BootStrap {
 
     def init = { servletContext ->
         if (Participante.count() == 0) {
-            new Role(authority: 'ROLE_ADMIN').save(flush: true)
-            assert Role.count() == 1
-            assert Role.findAll().size() == 1
+            new Rol(authority: 'ROLE_ADMIN').save(flush: true)
+            assert Rol.count() == 1
+            assert Rol.findAll().size() == 1
 
             // Programadores
             Programador prog1 = new Programador("Esio Trot")
