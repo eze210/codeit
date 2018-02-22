@@ -6,6 +6,10 @@ class BootStrap {
 
     def init = { servletContext ->
         if (Participante.count() == 0) {
+            new Role(authority: 'ROLE_ADMIN').save(flush: true)
+            assert Role.count() == 1
+            assert Role.findAll().size() == 1
+
             // Programadores
             Programador prog1 = new Programador("Esio Trot")
             prog1.save flush: true
@@ -59,17 +63,6 @@ class BootStrap {
             sol2_2.agregarResolucion(sol2_2_3)
 
             des2.save flush: true
-
-            def adminRole = new Role(authority: 'ROLE_ADMIN').save()
-            def testUser = new User(username: 'me', password: 'password').save()
-            UserRole.create testUser, adminRole
-            UserRole.withSession {
-                it.flush()
-                it.clear()
-            }
-            assert User.count() == 1
-            assert Role.count() == 1
-            assert UserRole.count() == 1
         }
     }
     def destroy = {
