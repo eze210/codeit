@@ -30,6 +30,10 @@ class DesafioController {
         respond desafio
     }
 
+    def create() {
+        render view: "create", model: [params: params]
+    }
+
     @Transactional
     def save() {
         Programador creador = Programador.findById(params.creador_id)
@@ -38,19 +42,21 @@ class DesafioController {
         DateTime desde = null //TODO: Get from params
         DateTime hasta = null //TODO: Get from params
 
-        List<String> enunciados = []//TODO: Get from params: params.list("enunciado")
+        List<String> enunciados = params.list("enunciado")
 
         if (titulo.isEmpty()) {
             flash.errors = ["El título no puede estar vacío"]
         }
         if (descripcion.isEmpty()) {
-            flash.errors = flash.errors + "La descripción no puede estar vacía"
+            flash.errors = (flash.errors ?: []) + ["La descripción no puede estar vacía"]
         }
-        if (enunciados.contains("")) {
-           flash.errors = flash.errors + "No puede tener enunciados vacíos"
+        enunciados.withIndex().forEach { elem, index ->
+            if (!elem) {
+                flash.errors = (flash.errors ?: []) + ["El enunciado del ejercicio ${index + 1} no puede ser vacío."]
+            }
         }
         if (flash.errors) {
-            redirect action: "create"
+            redirect action: "create", params: [titulo: params.titulo, descripcion: params.descripcion, enunciados: params.enunciado]
             return
         }
 
