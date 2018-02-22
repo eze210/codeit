@@ -2,8 +2,10 @@ package codeit
 
 import static org.springframework.http.HttpStatus.*
 import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.annotation.Secured
 
 @Transactional(readOnly = true)
+@Secured('ROLE_ADMIN')
 class ParticipanteController {
 
     static allowedMethods = [listadoProgramadores: 'POST', listadoEquipos: 'POST']

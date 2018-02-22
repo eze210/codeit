@@ -27,6 +27,7 @@ repositories {
 
 dependencies {
     compile 'org.grails.plugins:remote-pagination:0.5.0'
+    compile 'org.grails.plugins:spring-security-core:3.2.1'
     compile "org.joda.time:joda-time:2.4"
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
