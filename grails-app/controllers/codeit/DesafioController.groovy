@@ -75,7 +75,7 @@ class DesafioController {
         // Crea desafío y ejercicios
         desafio.save flush: true, failOnError: true
 
-        redirect action: "show", id: solucion.id
+        redirect action: "show", id: desafio.id
     }
 
     def edit(Desafio desafio) {

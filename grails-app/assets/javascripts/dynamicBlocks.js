@@ -6,10 +6,11 @@ function addItem(id, elem, min, max, onComplete, limitMessage, removeBtnLabel) {
     if (!max || $('[id^=' + id + ']').length < max) {
         // increments the item counter
         var $countElem = $('#count_' + id);
-        var num = parseInt($countElem.html()) + 1;
+        var index = parseInt($countElem.html());
+        var num = index + 1;
         $countElem.html(num);
         // creates new item and adds the index number to it
-        var $newElem = $('<div></div>').html(elem).attr({'id' : id + num}).css('margin', '5px');
+        var $newElem = $('<div></div>').html(elem(index)).attr({'id' : id + num}).css('margin', '5px');
         // creates the "Remove" button
         var $removeButton = $('<input type="button"/>').appendTo($newElem);
         $removeButton.attr({

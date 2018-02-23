@@ -28,17 +28,16 @@
                         Título:
                         <span class="required-indicator">*</span>
                     </label>
-                    <g:textField name="titulo" value="${desafio?.titulo ?: params?.titulo}"/>
+                    <g:textField name="titulo" value="${params?.titulo}"/>
 
                     <label for="descripcion">
                         Descripción:
                         <span class="required-indicator">*</span>
                     </label>
-                    <g:textArea name="descripcion" value="${desafio?.descripcion ?: params?.descripcion}"/>
+                    <g:textArea name="descripcion" value="${params?.descripcion}"/>
                     <br/>
                     %{--TODO: Add vigencia--}%
                     %{--TODO: Add exercises--}%
-                    %{--<tmpl:formEjercicios />--}%
                     <label>
                         Ejercicios:
                         <span class="required-indicator">*</span>
@@ -49,7 +48,7 @@
                                 Enunciado:
                                 <span class="required-indicator">*</span>
                             </label>
-                            <g:textArea name="enunciado"/>
+                            <g:textArea name="enunciado" value="${params?.enunciados ? params.enunciados[it] : ""}"/>
                         </dynamic:block>
                     </div>
                 </fieldset>
