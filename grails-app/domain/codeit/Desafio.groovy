@@ -3,7 +3,7 @@ package codeit
 import org.joda.time.DateTime
 
 /** Clase desafío. */
-class Desafio {
+class Desafio implements Puntuable {
 
     /** Título del desafío. */
     String titulo
@@ -26,11 +26,8 @@ class Desafio {
     /** Insignias que debe tener un participante para participar del desafío. */
     Set<Insignia> insigniasRequeridas
 
-    /** Insignias que el creador del desafío puede asignar a las soluciones. */
-    Set<Insignia> insigniasHabilitadas
-
-    /** Facetas en las que se puede puntuar al desafío. */
-    Set<Faceta> facetas
+    /** Puntaje del desafío. */
+    Puntaje puntaje
 
     /** Declaraciones necesarias para el mapeo relacional. */
     static belongsTo = [creador: Programador]
@@ -55,7 +52,6 @@ class Desafio {
         }
     }
 
-
     /** Constructor del desafío.
      *
      * @param titulo Título del nuevo desafío.
@@ -70,7 +66,6 @@ class Desafio {
         this.vigencia = new Vigencia(fechaDesde, fechaHasta)
     }
 
-
     /** Constructor del desafío.
      *
      * @param titulo Título del nuevo desafío.
@@ -84,7 +79,6 @@ class Desafio {
         this.vigencia = new Vigencia(fechaHasta)
     }
 
-
     /** Constructor del desafío.
      *
      * @param titulo Título del nuevo desafío.
@@ -96,7 +90,6 @@ class Desafio {
         init(titulo, descripcion, creador, insigniasRequeridas)
         this.vigencia = new Vigencia()
     }
-
 
     /** Función auxiliar del constructor del desafío.
      *
@@ -112,10 +105,8 @@ class Desafio {
         this.insigniasRequeridas = insigniasRequeridas
         this.ejercicios = new LinkedHashSet<>()
         this.resultados = new LinkedHashSet<>()
-        this.insigniasHabilitadas = new LinkedHashSet<>()
-        this.facetas = new LinkedHashSet<>([new Faceta(TipoFaceta.Desafio)])
+        this.puntaje = new Puntaje([new Faceta(TipoFaceta.Desafio)])
     }
-
 
     /** Función para agregar la nueva solución del progroamador.
      *
@@ -136,11 +127,9 @@ class Desafio {
         //TODO: Triggerear revalidar ese resultado
     }
 
-
     /** Función para procesar la solución del usuario.
      *
      * @param solucion La solución que se quiere procesar.
-     *
      * @return El resultado de procesar la solución.
      */
     Resultado validarSolucion(Solucion solucion) {
@@ -151,22 +140,18 @@ class Desafio {
         resultados[index]
     }
 
-
     /** Devuelve el resultado actual de una solución.
      *
      * @param solucion Solución de la que se quiere obtener el resultado.
-     *
      * @return El resultado actual de una solución.
      */
     Resultado obtenerResultadoActualDeSolucion(Solucion solucion) {
         resultados.find { it.solucion == solucion }
     }
 
-
     /** Verifica las reglas de negocio para que un participante pueda participar de unn desafío.
      *
      * @param participante Participante que quiere participar del desafío.
-     *
      * @return \c true si el participante puede participar, o \c false en otro caso.
      */
     Boolean puedeParticipar(Participante participante) {
@@ -178,7 +163,6 @@ class Desafio {
         return true;
     }
 
-
     /** Verifica las reglas de negocio para que un participante pueda participar de unn desafío.
      *
      * @param participante Participante que quiere participar del desafío.
@@ -186,7 +170,6 @@ class Desafio {
      * @throws ComparteMiembrosConCreador,
      * @throws ComparteMiembrosConParticipante,
      * @throws NoPoseeInsignias
-     *
      * @return \c true si ninguna validación falla.
      */
     Boolean validarParticipacion(Participante participante) throws
@@ -204,7 +187,7 @@ class Desafio {
             throw new ComparteEquipoConCreador()
 
         /* si ya es participante puede seguir participando */
-        if (esParticipante(participante))
+        if (propusoAlgunaSolucion(participante))
             return true;
 
         /* todavía no participa pero comparte miembros con algún participante */
@@ -217,17 +200,14 @@ class Desafio {
         return true;
     }
 
-
     /** Verifica si un participante ya propuso alguna solución al desafío.
      *
      * @param participante El participante sobre el que se efectúa la consulta.
-     *
      * @return \c true si el participante participa del desafío, o \c false en otro caso.
      */
-    Boolean esParticipante(Participante participante) {
+    Boolean propusoAlgunaSolucion(Participante participante) {
         resultados.find { it.solucion.participante == participante } != null
     }
-
 
     /** Corrobora que un desafío esté en vigencia.
      *
@@ -238,12 +218,10 @@ class Desafio {
         vigencia.estaVigente()
     }
 
-
     /** Agrega un ejercicio al desafío.
      *
      * @param ejercicio Ejercicio que se quiere agregar.
      * @throws DesafioNoVigente
-     *
      * @return Los nuevos resultados.
      */
     Set<Resultado> agregarEjercicio(Ejercicio ejercicio) throws DesafioNoVigente {
@@ -272,17 +250,6 @@ class Desafio {
         resultados
     }
 
-
-    /** Devuelve las insignias habilitadas para que el creador las otorgue a las soluciones.
-     *
-     * @return Las insignias habilitadas para que el creador las otorgue a las soluciones.
-     */
-    Set<Insignia> obtenerInsigniasHabilitadas() {
-        //TODO: Devolver solamente las que no se hayan asignado a alguna solución.
-        insigniasHabilitadas
-    }
-
-
     /** Devuelve las insignias requeridas para que un participante pueda proponer una solución.
      *
      * @return Las insignias requeridas para que un participante pueda proponer una solución.
@@ -291,25 +258,33 @@ class Desafio {
         insigniasRequeridas
     }
 
+    /* ****************************************************************** *
+     * Implementación de la Interfaz Puntuable.
+     * ****************************************************************** */
 
-    /** Asigna un punto al desafío.
-     *
-     * @return La nueva cantidad de puntos que tiene un desafío.
-     */
-    Integer asignarPunto() {
-        Faceta facetaDesafiante = facetas.find { it.tipo == TipoFaceta.Desafio }
-        insigniasHabilitadas.addAll(facetaDesafiante.asignarPuntos(1))
-        creador.asignarPuntoEnFaceta(TipoFaceta.Desafiante)
-        facetaDesafiante.getPuntosAcumulados()
+    @Override
+    Set<Insignia> otorgarInsignia(Insignia insignia) {
+        puntaje.otorgarInsignia(insignia)
     }
 
-
-    /** Devuelve el puntaje del desafío.
-     *
-     * @return El puntaje del desafío.
-     */
-    Integer obtenerPuntajeTotal() {
-        facetas.find { it.tipo == TipoFaceta.Desafio }.puntosAcumulados
+    @Override
+    Set<Insignia> obtenerInsignias() {
+        puntaje.obtenerInsignias()
     }
 
+    @Override
+    Insignia retirarInsignia(Insignia insignia) {
+        puntaje.retirarInsignia(insignia)
+    }
+
+    @Override
+    Integer otorgarPuntoEnFaceta(TipoFaceta tipoFaceta) {
+        creador.otorgarPuntoEnFaceta(TipoFaceta.Desafiante)
+        puntaje.otorgarPuntoEnFaceta(tipoFaceta)
+    }
+
+    @Override
+    Integer obtenerPuntajeEnFaceta(TipoFaceta tipoFaceta) {
+        puntaje.obtenerPuntajeEnFaceta(tipoFaceta)
+    }
 }

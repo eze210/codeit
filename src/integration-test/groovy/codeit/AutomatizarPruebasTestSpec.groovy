@@ -79,7 +79,7 @@ class AutomatizarPruebasTestSpec extends Specification {
 
         and:"sus insignias requeridas cierto programador posee"
         Programador solucionador = new Programador("Solucionador")
-        solucionador.asignarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
+        solucionador.otorgarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
         assert solucionador.obtenerInsignias().containsAll(desafio.obtenerInsigniasRequeridas())
 
         when:"ese programador sube una solución"

@@ -15,7 +15,7 @@ class Seguridad {
     static Usuario crearUsuario(String nombre, String contraseña) {
         Usuario nuevoUsuario = new Usuario(username: nombre, password: contraseña)
         try {
-            Rol role = Rol.findByAuthority('ROLE_ADMIN')
+            Rol role = Rol.findByAuthority('ROLE_USER')
             nuevoUsuario.save(flush: true)
             UsuarioRol.create(nuevoUsuario, role, true)
             UsuarioRol.withSession {

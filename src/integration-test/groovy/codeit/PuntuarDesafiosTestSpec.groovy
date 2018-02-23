@@ -28,8 +28,8 @@ class PuntuarDesafiosTestSpec extends Specification {
 
 
     void puntuacionesSoloDeLosParticipantesCuandoVotaUnParticipante() {
-        Integer puntajeInicialDelDesafio = desafio.obtenerPuntajeTotal()
-        Integer puntajeInicialDeLaFacetaDesafiante = creador.obtenerPuntajeParaFaceta(TipoFaceta.Desafiante)
+        Integer puntajeInicialDelDesafio = desafio.obtenerPuntajeEnFaceta(TipoFaceta.Desafio)
+        Integer puntajeInicialDeLaFacetaDesafiante = creador.obtenerPuntajeEnFaceta(TipoFaceta.Desafiante)
 
         given:"Un programador ha subido alguna resolución a algún ejercicio de un desafío"
         Programador programador = new Programador("Resolvedor")
@@ -44,12 +44,12 @@ class PuntuarDesafiosTestSpec extends Specification {
         nuevoPuntajeDelDesafio == puntajeInicialDelDesafio + 1
 
         and:"se asignará un punto en la faceta desafiante del creador"
-        creador.obtenerPuntajeParaFaceta(TipoFaceta.Desafiante) == puntajeInicialDeLaFacetaDesafiante + 1
+        creador.obtenerPuntajeEnFaceta(TipoFaceta.Desafiante) == puntajeInicialDeLaFacetaDesafiante + 1
     }
 
 
     void puntuacionesSoloDeLosParticipantesVotaUnNoParticipante() {
-        Integer puntajeInicialDelDesafio = desafio.obtenerPuntajeTotal()
+        Integer puntajeInicialDelDesafio = desafio.obtenerPuntajeEnFaceta(TipoFaceta.Desafio)
 
         given:"Un programador no ha subido ninguna resolución a ningún ejercicio de un desafío"
         Programador programador = new Programador("Resolvedor")
@@ -61,12 +61,12 @@ class PuntuarDesafiosTestSpec extends Specification {
         }
 
         and:"el puntaje total del desafío se mantiene igual"
-        desafio.obtenerPuntajeTotal() == puntajeInicialDelDesafio
+        desafio.obtenerPuntajeEnFaceta(TipoFaceta.Desafio) == puntajeInicialDelDesafio
     }
 
 
     void puntuacionesSoloDeLosParticipantesVotaElCreador() {
-        Integer puntajeInicialDelDesafio = desafio.obtenerPuntajeTotal()
+        Integer puntajeInicialDelDesafio = desafio.obtenerPuntajeEnFaceta(TipoFaceta.Desafio)
 
         when:"El creador de un desafío intenta asignar un punto a su propio desafío"
         then:"el punto asignado es rechazado"
@@ -75,7 +75,7 @@ class PuntuarDesafiosTestSpec extends Specification {
         }
 
         and:"el puntaje del desafío se mantiene igual"
-        desafio.obtenerPuntajeTotal() == puntajeInicialDelDesafio
+        desafio.obtenerPuntajeEnFaceta(TipoFaceta.Desafio) == puntajeInicialDelDesafio
     }
 
 }

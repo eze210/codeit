@@ -1,7 +1,5 @@
 package codeit
 
-import groovy.transform.EqualsAndHashCode
-
 class Resultado {
 
     /** Indica si todos los ejercicios de la solución estaban resueltos. */
@@ -23,7 +21,6 @@ class Resultado {
         correcto nullable: true
         puntaje nullable: true
     }
-
 
     /** Constructor de un resultado sin procesar.
      *
@@ -63,5 +60,4 @@ class Resultado {
     Boolean asBoolean() {
         return correcto ?: false
     }
-
 }

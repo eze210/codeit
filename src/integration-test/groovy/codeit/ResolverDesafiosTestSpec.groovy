@@ -25,7 +25,7 @@ class ResolverDesafiosTestSpec extends Specification {
 
         and:"un programador posee ese nivel de insignias"
         Programador resolvedor = new Programador("Resolvedor")
-        resolvedor.asignarInsignia(
+        resolvedor.otorgarInsignia(
                 TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0]
         )
 
@@ -73,7 +73,7 @@ class ResolverDesafiosTestSpec extends Specification {
 
         and:"un programador posee ese nivel de insignias"
         Programador resolvedor = creador
-        resolvedor.asignarInsignia(
+        resolvedor.otorgarInsignia(
                 TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0]
         )
 
@@ -97,7 +97,7 @@ class ResolverDesafiosTestSpec extends Specification {
 
         and:"un programador posee ese nivel de insignias"
         Programador resolvedor = new Programador("Resolvedor")
-        resolvedor.asignarInsignia(
+        resolvedor.otorgarInsignia(
                 TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0]
         )
 
@@ -125,7 +125,7 @@ class ResolverDesafiosTestSpec extends Specification {
 
         and:"un programador posee ese nivel de insignias"
         Programador resolvedor = new Programador("Resolvedor")
-        resolvedor.asignarInsignia(
+        resolvedor.otorgarInsignia(
                 TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0]
         )
 
@@ -161,11 +161,11 @@ class ResolverDesafiosTestSpec extends Specification {
 
         and:"un equipo X tiene miembros de forma que ellos en conjunto alcanzan el nivel de insignia A y B"
         Programador programadorProlijo = new Programador("Prolijo")
-        programadorProlijo.asignarInsignia(
+        programadorProlijo.otorgarInsignia(
                 TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0]
         )
         Programador programadorCreativo = new Programador("Creativo")
-        programadorCreativo.asignarInsignia(
+        programadorCreativo.otorgarInsignia(
                 TipoFaceta.Creativo.insigniasAutomaticasPosibles[0]
         )
         Equipo equipo = programadorCreativo.crearEquipo("El equipo").agregarMiembro(programadorProlijo)
@@ -187,13 +187,13 @@ class ResolverDesafiosTestSpec extends Specification {
 
         and:"un programador tiene la insignia A"
         Programador programadorProlijo = new Programador("Prolijo")
-        programadorProlijo.asignarInsignia(
+        programadorProlijo.otorgarInsignia(
                 TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0]
         )
 
         and:"otro programador tiene la insignia B"
         Programador programadorCreativo = new Programador("Creativo")
-        programadorCreativo.asignarInsignia(
+        programadorCreativo.otorgarInsignia(
                 TipoFaceta.Creativo.insigniasAutomaticasPosibles[0]
         )
 

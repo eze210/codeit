@@ -24,7 +24,6 @@ class Resolucion {
         codigo nullable: false
     }
 
-
     /** Constructor de una resolución.
      *
      * @param ejercicio Ejercicio que intenta resolver la resolución.
@@ -34,7 +33,6 @@ class Resolucion {
         this.ejercicio = ejercicio
         this.codigo = codigo
     }
-
 
     /** Ejecuta el código de la resolución con la entrada especificada, y devuelve
      * la salida de la ejecución.
@@ -48,7 +46,6 @@ class Resolucion {
         new GroovyShell().evaluate(programa)
     }
 
-
     /** Delega en el ejercicio la validación de sí misma.
      *
      * @return \c true si resuelve el ejercicio, o \c false sino.
@@ -56,5 +53,4 @@ class Resolucion {
     Boolean resuelveElEjercicio() {
         ejercicio.validarResolucion(this)
     }
-
 }

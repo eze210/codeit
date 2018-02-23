@@ -7,7 +7,7 @@ class BootStrap {
 
     def init = { servletContext ->
         if (Participante.count() == 0) {
-            new Rol(authority: 'ROLE_ADMIN').save(flush: true)
+            new Rol(authority: 'ROLE_USER').save(flush: true)
             assert Rol.count() == 1
             assert Rol.findAll().size() == 1
 

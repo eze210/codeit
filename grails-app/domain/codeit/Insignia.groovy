@@ -9,12 +9,14 @@ abstract class Insignia {
     /** Explicación del origen de la insignia. */
     String origen
 
+    /** Declaraciones necesarias para el mapeo relacional. */
+    static hasMany = [puntajes: Puntaje]
+
     /** Reglas para el mapeo relacional. */
     static constraints = {
         origen nullable: false, blank: false
         nombre nullable: false, blank: false, unique: true
     }
-
 
     /** Constructor de una insignia.
      *
@@ -25,7 +27,6 @@ abstract class Insignia {
         this.origen = origen
         this.nombre = nombre
     }
-
 }
 
 
@@ -39,7 +40,6 @@ class InsigniaAutomatica extends Insignia {
     static constraints = {
         umbral nullable: false
     }
-
 
     /** Constructor de una insignia automática.
      *

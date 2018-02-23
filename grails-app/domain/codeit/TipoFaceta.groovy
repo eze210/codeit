@@ -40,16 +40,13 @@ enum TipoFaceta {
         this.insigniasAutomaticasPosibles = insigniasAutomaticasPosibles
     }
 
-
     /** Devuelve las insignias que debe tener un puntuable que tenga determinada cantidad
      * de puntos en un tipo de faceta.
      *
      * @param puntaje Cantidad de puntos que tiene el puntuable.
-     *
      * @return Las insignias que se le deben asignar.
      */
     Set<InsigniaAutomatica> obtenerInsignias(Integer puntaje) {
         insigniasAutomaticasPosibles.findAll { puntaje >= it.umbral }
     }
-
 }
