@@ -28,7 +28,6 @@ class Invitacion {
         invitado nullable: false, blank: false
     }
 
-
     /** Constructor de una invitación.
      *
      * @param equipo Equipo que invita.
@@ -41,7 +40,6 @@ class Invitacion {
         invitado.invitaciones.add(this)
     }
 
-
     /** Acepta la invitación.
      *
      * @return El equipo con los nuevos miembros.
@@ -51,7 +49,6 @@ class Invitacion {
         equipo.agregarMiembro(invitado)
     }
 
-
     /** Valida una invitación.
      *
      * @return \c true si la invitación es válida, o \c false en otro caso.
@@ -59,5 +56,4 @@ class Invitacion {
     Boolean validar() {
         Equipo.formanEquipoValido(equipo, invitado)
     }
-
 }

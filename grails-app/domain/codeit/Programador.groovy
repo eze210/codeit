@@ -6,13 +6,10 @@ import org.joda.time.DateTime
 import javax.validation.constraints.NotNull
 
 /** Clase Programador. */
-class Programador extends Participante {
+class Programador extends Participante implements Creador, Puntuable {
 
     /** Usuario para la seguridad. */
     Usuario usuario
-
-    /** Insignias conseguidas por un programador. */
-    Set<Insignia> insignias
 
     /** Equipos a los que pertenece un programador. */
     Set<Equipo> equipos
@@ -23,21 +20,19 @@ class Programador extends Participante {
     /** Desafíos creados por un programador. */
     Set<Desafio> desafiosCreados
 
-    /** Facetas en las que puede ser puntuado un programador. */
-    Set<Faceta> facetas
+    /** Puntaje del programador. */
+    Puntaje puntaje
 
     /** Declaraciones necesarias para el mapeo relacional. */
     static hasMany = [equipos: Equipo,
                       invitaciones: Invitacion,
-                      desafiosCreados: Desafio,
-                      facetas: Faceta]
+                      desafiosCreados: Desafio]
 
     /** Reglas para el mapeo relacional. */
     static constraints = {
         equipos nullable: false
         invitaciones nullable: false
     }
-
 
     /** Constructor de un Programador.
      *
@@ -51,14 +46,12 @@ class Programador extends Participante {
         this.equipos = new HashSet<>()
         this.invitaciones = new HashSet<>()
         this.desafiosCreados = new HashSet<>()
-        this.insignias = new HashSet<>()
-        this.facetas = new LinkedHashSet<>([new Faceta(TipoFaceta.Ganador),
-                                            new Faceta(TipoFaceta.Desafiante),
-                                            new Faceta(TipoFaceta.Solucionador),
-                                            new Faceta(TipoFaceta.Creativo),
-                                            new Faceta(TipoFaceta.Prolijo)])
+        puntaje = new Puntaje([new Faceta(TipoFaceta.Ganador),
+                               new Faceta(TipoFaceta.Desafiante),
+                               new Faceta(TipoFaceta.Solucionador),
+                               new Faceta(TipoFaceta.Creativo),
+                               new Faceta(TipoFaceta.Prolijo)])
     }
-
 
     /* ****************************************************************** *
      * Implementación de la Interfaz Participante.
@@ -72,31 +65,6 @@ class Programador extends Participante {
         [this] as Set<Programador>
     }
 
-
-    /** Devuelve el puntaje acumulado en el tipo de faceta pedida.
-     *
-     * @param tipoFaceta El tipo de la faceta de la cual se quiere obtener la puntuación acumulada.
-     *
-     * @return El puntaje acumulado en la faceta correspondiente.
-     */
-    Integer obtenerPuntajeParaFaceta(TipoFaceta tipoFaceta) {
-        facetas.find({it.tipo == tipoFaceta}).getPuntosAcumulados()
-    }
-
-
-    /** Suma un punto en el tipo de faceta indicado.
-     *
-     * @param tipoFaceta El tipo de faceta cuyo puntaje se desea incrementar.
-     *
-     * @return El nuevo puntaje en la faceta.
-     */
-    Integer asignarPuntoEnFaceta(TipoFaceta tipoFaceta) {
-        Faceta faceta = facetas.find({it.tipo == tipoFaceta})
-        insignias.addAll(faceta.asignarPuntos(1))
-        faceta.puntosAcumulados
-    }
-
-
     /** Otorga una insignia a la solución y a todos los programadores involucrados.
      *
      * @param insignia Insignia a otorgar.
@@ -104,11 +72,10 @@ class Programador extends Participante {
      *
      * @return
      */
-    def asignarInsigniaASolucion(Insignia insignia, Solucion solucion) {
+    def otorgarInsigniaASolucion(Insignia insignia, Solucion solucion) {
         assert solucion.desafio.creador == this
-        solucion.asignarInsignia(insignia)
+        solucion.otorgarInsignia(insignia)
     }
-
 
     /** Acepta la invitación indicada.
      *
@@ -123,7 +90,6 @@ class Programador extends Participante {
         equipo
     }
 
-
     /** Crea un equipo nuevo que contiene al programador.
      *
      * @param Nombre del nuevo equipo.
@@ -137,7 +103,6 @@ class Programador extends Participante {
         equipo
     }
 
-
     /** Crea una invitación desde el programador actual al otro programador, en nombre del equipo especificado.
      *
      * @param otroProgramador Programador que debe ser invitado.
@@ -149,9 +114,48 @@ class Programador extends Participante {
         equipo.invitar(otroProgramador)
     }
 
+    /** Quita un miembro de un equipo.
+     *
+     * @param equipo Equipo que el programador desea abandonar.
+     *
+     * @return El equipo sin el programador.
+     */
+    Equipo abandonarEquipo(Equipo equipo) {
+        equipos.remove(equipo)
+        equipo.removerMiembro(this)
+    }
 
     /* ****************************************************************** *
-     * TODO: Implementación de la Interfaz Creador
+     * Implementación de la Interfaz Puntuable
+     * ****************************************************************** */
+
+    @Override
+    Set<Insignia> otorgarInsignia(Insignia insignia) {
+        puntaje.otorgarInsignia(insignia)
+    }
+
+    @Override
+    Set<Insignia> obtenerInsignias() {
+        puntaje.obtenerInsignias()
+    }
+
+    @Override
+    Insignia retirarInsignia(Insignia insignia) {
+        puntaje.retirarInsignia(insignia)
+    }
+
+    @Override
+    Integer otorgarPuntoEnFaceta(TipoFaceta tipoFaceta) {
+        puntaje.otorgarPuntoEnFaceta(tipoFaceta)
+    }
+
+    @Override
+    Integer obtenerPuntajeEnFaceta(TipoFaceta tipoFaceta) {
+        puntaje.obtenerPuntajeEnFaceta(tipoFaceta)
+    }
+
+    /* ****************************************************************** *
+     * Implementación de la Interfaz Creador
      * ****************************************************************** */
 
     /** Propone un nuevo ejercicio con el propio programador como creador.
@@ -171,7 +175,6 @@ class Programador extends Participante {
         nuevoEjercicio
     }
 
-
     /** Propone un nuevo desafío.
      *
      * @param titulo Título del nuevo desafío.
@@ -186,7 +189,6 @@ class Programador extends Participante {
         new Desafio(titulo, descripcion, this, insigniasRequeridas, fechaDesde, fechaHasta)
     }
 
-
     /** Propone un nuevo desafío.
      *
      * @param titulo Título del nuevo desafío.
@@ -200,7 +202,6 @@ class Programador extends Participante {
         new Desafio(titulo, descripcion, this, insigniasRequeridas, fechaHasta)
     }
 
-
     /** Propone un nuevo desafío.
      *
      * @param titulo Título del nuevo desafío.
@@ -212,7 +213,6 @@ class Programador extends Participante {
     Desafio proponerDesafio(String titulo, String descripcion, Set<Insignia> insigniasRequeridas) {
         new Desafio(titulo, descripcion, this, insigniasRequeridas)
     }
-
 
     /** Propone un nuevo desafío.
      *
@@ -227,7 +227,6 @@ class Programador extends Participante {
         new Desafio(titulo, descripcion, this, new LinkedHashSet<Insignia>(), fechaDesde, fechaHasta)
     }
 
-
     /** Propone un nuevo desafío.
      *
      * @param titulo Título del nuevo desafío.
@@ -240,7 +239,6 @@ class Programador extends Participante {
         new Desafio(titulo, descripcion, this, new LinkedHashSet<Insignia>(), fechaHasta)
     }
 
-
     /** Propone un nuevo desafío.
      *
      * @param titulo Título del nuevo desafío.
@@ -252,25 +250,13 @@ class Programador extends Participante {
         new Desafio(titulo, descripcion, this, new LinkedHashSet<Insignia>())
     }
 
-
     /** Selecciona una solución de algún desafío propio como la mejor para dicho desafío.
      *
      * @param solucion
      */
-    def elegirMejorSolucion(Solucion solucion) {
+    void elegirMejorSolucion(Solucion solucion) {
         assert solucion.desafio.creador == this
-
-        solucion.asignarPuntoEnFaceta(TipoFaceta.Ganador)
+        solucion.otorgarPuntoEnFaceta(TipoFaceta.Ganador)
     }
 
-    /** Quita un miembro de un equipo.
-     *
-     * @param equipo Equipo que el programador desea abandonar.
-     *
-     * @return El equipo sin el programador.
-     */
-    Equipo abandonarEquipo(Equipo equipo) {
-        equipos.remove(equipo)
-        equipo.removerMiembro(this)
-    }
 }

@@ -5,7 +5,7 @@ import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
 @Transactional(readOnly = true)
-@Secured('ROLE_ADMIN')
+@Secured('ROLE_USER')
 class SolucionController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]

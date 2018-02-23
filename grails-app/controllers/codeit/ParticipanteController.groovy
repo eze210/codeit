@@ -5,7 +5,7 @@ import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
 @Transactional(readOnly = true)
-@Secured('ROLE_ADMIN')
+@Secured('ROLE_USER')
 class ParticipanteController {
 
     static allowedMethods = [listadoProgramadores: 'POST', listadoEquipos: 'POST']

@@ -9,7 +9,6 @@ class Faceta {
     /** Puntos acumulados en la faceta. */
     Integer puntosAcumulados
 
-
     /** Constructor de la faceta.
      *
      * @param tipoFaceta El tipo de la faceta.
@@ -18,7 +17,6 @@ class Faceta {
         this.tipo = tipoFaceta
         this.puntosAcumulados = 0
     }
-
 
     /** Asigna una cantidad de puntos a la faceta.
      *
@@ -30,5 +28,4 @@ class Faceta {
         puntosAcumulados += cantidad
         tipo.obtenerInsignias(puntosAcumulados)
     }
-
 }

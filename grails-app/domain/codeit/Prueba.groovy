@@ -22,7 +22,6 @@ class Prueba {
         salidaEsperada nullable: false
     }
 
-
     /** Constructor de una prueba.
      *
      * @param ejercicio Ejercicio que es probado por la prueba.
@@ -35,16 +34,13 @@ class Prueba {
         this.salidaEsperada = salidaEsperada
     }
 
-
     /** Ejecuta el código de una resolución pasándole la entrada de la prueba
      * y verifica que la salida sea la esperada por la prueba.
      *
      * @param resolucion Resolución cuyo código se quiere ejecutar.
-     *
      * @return \c true si la salida esperada coincide, o \c false sino.
      */
     Boolean validarResolucion(Resolucion resolucion) {
         resolucion.ejecutar(entrada) == salidaEsperada
     }
-
 }

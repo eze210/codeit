@@ -20,18 +20,18 @@ class PuntuarSolucionesTestSpec extends Specification {
         Programador programadorCreador = new Programador("Nombre")
         Desafio desafio = programadorCreador.proponerDesafio("Desafío", "Descripción")
         for (Integer i = 0; i < P; ++i)
-            desafio.asignarPunto()
+            desafio.otorgarPuntoEnFaceta(TipoFaceta.Desafio)
 
         and:"tiene insignias habilitadas"
-        assert desafio.obtenerInsigniasHabilitadas().size() > 0
+        assert desafio.obtenerInsignias().size() > 0
 
         and: "tiene alguna solución propuesta"
         Programador programadorResolvedor = new Programador("Otro Nombre")
         Solucion solucion = programadorResolvedor.proponerSolucionPara(desafio, "Una solución")
 
         when:"el creador del desafío intenta asignar una insignia E habilitada a una solución"
-        Insignia E = desafio.obtenerInsigniasHabilitadas()[0]
-        programadorCreador.asignarInsigniaASolucion(E, solucion)
+        Insignia E = desafio.obtenerInsignias()[0]
+        programadorCreador.otorgarInsigniaASolucion(E, solucion)
 
         then:"la insignia será otorgada a cada programador involucrado en el participante que creó la solución"
         programadorResolvedor.obtenerInsignias().contains(E)
@@ -58,7 +58,7 @@ class PuntuarSolucionesTestSpec extends Specification {
         creador.elegirMejorSolucion(solucion)
 
         then:"al participante que la propuso se le otorga un punto en la faceta de ganador"
-        resolvedor.obtenerPuntajeParaFaceta(TipoFaceta.Ganador) == 1
+        resolvedor.obtenerPuntajeEnFaceta(TipoFaceta.Ganador) == 1
     }
 
     void puntajesDeLaComunidad() {
@@ -67,14 +67,14 @@ class PuntuarSolucionesTestSpec extends Specification {
         InsigniaAutomatica insigniaAutomatica = TipoFaceta.Creativo.insigniasAutomaticasPosibles[0]
         Integer umbral = insigniaAutomatica.umbral
         for (Integer i = 0; i < umbral - 1; ++i)
-            elProgramador.asignarPuntoEnFaceta(TipoFaceta.Creativo)
+            elProgramador.otorgarPuntoEnFaceta(TipoFaceta.Creativo)
 
         and:"con esos puntos no alcanza una insignia"
-        assert elProgramador.obtenerPuntajeParaFaceta(TipoFaceta.Creativo) == umbral - 1
+        assert elProgramador.obtenerPuntajeEnFaceta(TipoFaceta.Creativo) == umbral - 1
         assert !elProgramador.obtenerInsignias().contains(insigniaAutomatica)
 
         when:"se le asigna un punto"
-        Integer nuevoPuntaje = elProgramador.asignarPuntoEnFaceta(TipoFaceta.Creativo)
+        Integer nuevoPuntaje = elProgramador.otorgarPuntoEnFaceta(TipoFaceta.Creativo)
 
         and:"con ese punto se alcanza el umbral de una insignia"
         assert nuevoPuntaje == umbral

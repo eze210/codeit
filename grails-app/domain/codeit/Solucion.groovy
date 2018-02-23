@@ -1,7 +1,7 @@
 package codeit
 
 /** Clase Solución. */
-class Solucion {
+class Solucion implements Puntuable {
 
     /** Participante que propuso la solución. */
     Participante participante
@@ -21,7 +21,6 @@ class Solucion {
     /** Declaraciones necesarias para el mapeo relacional. */
     static belongsTo = [participante: Participante, desafio: Desafio]
     static hasMany = [resoluciones: Resolucion]
-    static hasOne = [resultado: Resultado]
 
     /** Reglas para el mapeo relacional. */
     static constraints = {
@@ -46,7 +45,6 @@ class Solucion {
         desafio.proponerSolucion(this)
     }
 
-
     /** Agrega una resolución para un ejercicio del desafío.
      *
      * @param resolucion Resolución que debe ser agregada.
@@ -61,11 +59,9 @@ class Solucion {
         desafio.proponerSolucion(this)
     }
 
-
     /** Valida una solución con los ejercicios que debe resolver.
      *
      * @param todosLosEjercicios Ejercicios del desafío que se intenta resolver.
-     *
      * @return El resultado de la validación.
      */
     Resultado validar(Set<Ejercicio> todosLosEjercicios) {
@@ -81,26 +77,33 @@ class Solucion {
                 puntos)
     }
 
+    /* ****************************************************************** *
+     * Implementación de la Interfaz Puntuable.
+     * ****************************************************************** */
 
-    /** Otorga una insignia a la solución y a los programadores involucrados.
-     *
-     * @param insignia La insignia a otorgar.
-     *
-     * @return
-     */
-    def asignarInsignia(Insignia insignia) {
-        this.participante.asignarInsignia(insignia)
+    @Override
+    Set<Insignia> otorgarInsignia(Insignia insignia) {
+        participante.otorgarInsignia(insignia)
+    }
+
+    @Override
+    Set<Insignia> obtenerInsignias() {
+        participante.obtenerInsignias()
+    }
+
+    @Override
+    Insignia retirarInsignia(Insignia insignia) {
+        participante.retirarInsignia(insignia)
     }
 
 
-    /** Otorga un punto en alguna faceta a la solución y a los programadores involucrados.
-     *
-     * @param tipoFaceta Faceta en la cual se quiere asignar un punto.
-     *
-     * @return La nueva cantidad de puntos que suman todos los programadores involucrados en la faceta.
-     */
-    Integer asignarPuntoEnFaceta(TipoFaceta tipoFaceta) {
-        participante.asignarPuntoEnFaceta(tipoFaceta)
+    @Override
+    Integer obtenerPuntajeEnFaceta(TipoFaceta tipoFaceta) {
+        participante.obtenerPuntajeEnFaceta(tipoFaceta)
     }
 
+    @Override
+    Integer otorgarPuntoEnFaceta(TipoFaceta tipoFaceta) {
+        participante.otorgarPuntoEnFaceta(tipoFaceta)
+    }
 }

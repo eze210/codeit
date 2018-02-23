@@ -84,10 +84,10 @@ class TrabajarEnEquipoTestSpec extends Specification {
         Solucion laSolucion = equipo.proponerSolucionPara(elDesafio, "La mejor solución")
 
         creadorDelDesafio.elegirMejorSolucion(laSolucion)
-        laSolucion.asignarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
+        laSolucion.otorgarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
 
         given:"Un equipo ya ha conseguido logros en un desafío"
-        assert resolvedor1.obtenerPuntajeParaFaceta(TipoFaceta.Ganador) == 1
+        assert resolvedor1.obtenerPuntajeEnFaceta(TipoFaceta.Ganador) == 1
         assert resolvedor1.obtenerInsignias().contains(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
 
         when:"un programador nuevo se suma al equipo"
@@ -97,10 +97,10 @@ class TrabajarEnEquipoTestSpec extends Specification {
         !resolvedor2.obtenerInsignias().contains(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
 
         and:"no consigue puntos extra de desafíos finalizados"
-        resolvedor2.obtenerPuntajeParaFaceta(TipoFaceta.Ganador) == 0
+        resolvedor2.obtenerPuntajeEnFaceta(TipoFaceta.Ganador) == 0
 
         and:"sí gana la habilidad de conseguirlos para toda acción del equipo"
-        laSolucion.asignarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[1])
+        laSolucion.otorgarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[1])
         resolvedor2.obtenerInsignias().contains(TipoFaceta.Creativo.insigniasAutomaticasPosibles[1])
     }
 
@@ -114,7 +114,7 @@ class TrabajarEnEquipoTestSpec extends Specification {
         assert Equipo.formanEquipoValido(equipo.programadoresInvolucrados() - programador1)
 
         and:"el equipo tiene alguna insignia"
-        equipo.asignarInsignia(TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0])
+        equipo.otorgarInsignia(TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0])
 
         when:"ese programador decide irse del equipo"
         programador1.abandonarEquipo(equipo)

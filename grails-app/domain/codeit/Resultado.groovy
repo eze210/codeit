@@ -33,7 +33,6 @@ class Resultado {
         puntaje nullable: true
     }
 
-
     /** Constructor de un resultado sin procesar.
      *
      * @param solucion Solución que aún no se verificó.
@@ -46,7 +45,6 @@ class Resultado {
         this.desafio = solucion.desafio
         solucion.resultado = this
     }
-
 
     /** Constructor de un resultado
      *
@@ -64,7 +62,6 @@ class Resultado {
         solucion.resultado = this
     }
 
-
     /** Consulta si el resultado está procesado.
      *
      * @return \c true si el resultado fue construido a partir de la verificación de una solución.
@@ -72,7 +69,6 @@ class Resultado {
     Boolean estaProcesado() {
         return valido != null && correcto != null && puntaje != null
     }
-
 
     /** Interpretación del resultado como Boolean.
      *
@@ -82,5 +78,4 @@ class Resultado {
     Boolean asBoolean() {
         return correcto ?: false
     }
-
 }
