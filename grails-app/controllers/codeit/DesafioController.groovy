@@ -47,6 +47,9 @@ class DesafioController {
         if (titulo.isEmpty()) {
             flash.errors = ["El título no puede estar vacío"]
         }
+        if (Desafio.findByTitulo(titulo)) {
+            flash.errors = (flash.errors ?: []) + ["Ya existe un desafío con ese título"]
+        }
         if (descripcion.isEmpty()) {
             flash.errors = (flash.errors ?: []) + ["La descripción no puede estar vacía"]
         }
@@ -83,57 +86,54 @@ class DesafioController {
     }
 
     @Transactional
-    def update(Desafio desafio) {
-        if (desafio == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
+    def update() {
+        Desafio desafio = Desafio.findById(params.desafio_id)
+        String titulo = params.titulo
+        String descripcion = params.descripcion
+        DateTime desde = null //TODO: Get from params
+        DateTime hasta = null //TODO: Get from params
+
+        List<String> enunciados = params.list("enunciado")
+
+        if (titulo.isEmpty()) {
+            flash.errors = ["El título no puede estar vacío"]
+        }
+        if (Desafio.findByTitulo(titulo)) {
+            flash.errors = (flash.errors ?: []) + ["Ya existe un desafío con ese título"]
+        }
+        if (descripcion.isEmpty()) {
+            flash.errors = (flash.errors ?: []) + ["La descripción no puede estar vacía"]
+        }
+        enunciados.withIndex().forEach { elem, index ->
+            if (!elem) {
+                flash.errors = (flash.errors ?: []) + ["El enunciado del ejercicio ${index + 1} no puede ser vacío."]
+            }
+        }
+        if (flash.errors) {
+            redirect action: "edit", params: [desafio: desafio, titulo: params.titulo, descripcion: params.descripcion, enunciados: params.enunciado]
             return
         }
 
-        if (desafio.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond desafio.errors, view:'edit'
-            return
+        if (desde) {
+            desafio.vigencia = new Vigencia(desde, hasta)
+        } else if (hasta) {
+            desafio.vigencia = new Vigencia(hasta)
+        } else {
+            desafio.vigencia = new Vigencia()
         }
 
-        desafio.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'desafio.label', default: 'Desafio'), desafio.id])
-                redirect desafio
+        enunciados.withIndex().forEach { enunciado, index ->
+            if (index < desafio.ejercicios.size()) {
+                desafio.ejercicios[index].enunciado = enunciado
+            } else {
+                desafio.creador.proponerEjercicioPara(desafio, enunciado)
             }
-            '*'{ respond desafio, [status: OK] }
         }
+
+        // Actualiza desafío, ejercicios y pruebas
+        desafio.save flush: true, failOnError: true
+
+        redirect action: "edit", id: desafio.id
     }
 
-    @Transactional
-    def delete(Desafio desafio) {
-
-        if (desafio == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        desafio.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'desafio.label', default: 'Desafio'), desafio.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'desafio.label', default: 'Desafio'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }

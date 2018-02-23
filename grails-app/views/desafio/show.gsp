@@ -10,6 +10,7 @@
         <div class="nav" role="navigation">
             <ul>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="edit" action="edit" resource="${desafio}"><g:message code="default.edit.label" args="[entityName]" /></g:link></li>
             </ul>
         </div>
         <div id="show-desafio" class="content scaffold-show" role="main">

@@ -1,3 +1,5 @@
+package codeit
+
 class DynamicBlocksTagLib {
 
     /**
@@ -34,8 +36,8 @@ class DynamicBlocksTagLib {
         if (!id) throwTagError("[id] attribute must be specified")
 
         // validates the min and max attributes
-        def min
-        def max
+        def min = null
+        def max = null
         try {
             min = attrs.min ? attrs.min as int : null
             max = attrs.max ? attrs.max as int : null
@@ -46,27 +48,15 @@ class DynamicBlocksTagLib {
             throwTagError("[min] attribute must be less than [max]")
         }
 
-        def var = attrs.var ? attrs.var as String : "it"
-
-        def elemFunction = { num ->
-            // prepares template for new items
-            if (attrs.template) {
-                def model = attrs.model ?: []
-                model[var] = num
-                elem = render(template: attrs.template, model: attrs.model)
-            } else {
-                elem = body((var): num)
-            }
-            elem = elem.replaceAll('\n', '') // makes the template single-lined in order to pass it
-            // as a parameter to JS function that adds new items
-            elem.encodeAsJavaScript() // makes the template able to pass into a JS function
-        }
+        def elem = attrs.template ? render(template: attrs.template, model: attrs.model) : body()
+        elem = elem.replaceAll('\n', '') // makes the template single-lined in order to pass it
+        // as a parameter to JS function that adds new items
+        elem.encodeAsJavaScript() // makes the template able to pass into a JS function
 
         // renders GSP template with auxiliary HTML and JS code
         out << render(template: "/shared/dynamicBlocks/add", model: [
                 id: id,
-                var: var,
-                elem: elemFunction,
+                elem: elem,
                 addBtnId: attrs.addBtnId,
                 removeBtnLabel: attrs.removeBtnLabel,
                 min: min ?: 0,

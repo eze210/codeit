@@ -37,7 +37,7 @@
                     <g:textArea name="descripcion" value="${params?.descripcion}"/>
                     <br/>
                     %{--TODO: Add vigencia--}%
-                    %{--TODO: Add exercises--}%
+                    
                     <label>
                         Ejercicios:
                         <span class="required-indicator">*</span>
@@ -48,7 +48,7 @@
                                 Enunciado:
                                 <span class="required-indicator">*</span>
                             </label>
-                            <g:textArea name="enunciado" value="${params?.enunciados ? params.enunciados[it] : ""}"/>
+                            <g:textArea name="enunciado" />
                         </dynamic:block>
                     </div>
                 </fieldset>
