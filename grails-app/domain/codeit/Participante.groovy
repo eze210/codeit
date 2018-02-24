@@ -58,24 +58,6 @@ abstract class Participante implements Puntuable {
         new Solucion(this, descripcionDeLaSolucion, desafio)
     }
 
-    // TODO: Es método de Programador?
-    /** Asigna un punto al desafío.
-     *
-     * @param desafio Desafío al que se quiere asignar un punto.
-     * @return El nuevo puntaje del desafío.
-     */
-    Integer asignarPuntoA(Desafio desafio) throws ComparteMiembrosConCreador, NoParticipaDelDesafio {
-        if (comparteMiembrosCon(desafio.creador)) {
-            throw new ComparteMiembrosConCreador()
-        }
-
-        if (!participaDe(desafio)) {
-            throw new NoParticipaDelDesafio()
-        }
-
-        desafio.otorgarPuntoEnFaceta(TipoFaceta.Desafio)
-    }
-
     /** Verifica si el participante participa del desafío.
      *
      * @param desafio Desafío del cual se quiere saber si el participante participa.

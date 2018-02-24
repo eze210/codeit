@@ -64,8 +64,12 @@ class BootStrap {
             sol2_2.agregarResolucion(sol2_2_3)
 
             des2.save flush: true
+            Validador.obtenerInstancia().start()
         }
     }
+
     def destroy = {
+        Validador.obtenerInstancia().destruir()
+        Validador.obtenerInstancia().join()
     }
 }

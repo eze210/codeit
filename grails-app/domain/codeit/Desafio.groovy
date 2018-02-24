@@ -33,9 +33,7 @@ class Desafio implements Puntuable {
     static belongsTo = [creador: Programador]
     static hasMany = [ejercicios          : Ejercicio,
                       resultados          : Resultado,
-                      insigniasRequeridas : Insignia,
-                      insigniasHabilitadas: Insignia,
-                      facetas             : Faceta]
+                      insigniasRequeridas : Insignia]
 
     /** Reglas para el mapeo relacional. */
     static constraints = {
@@ -124,7 +122,7 @@ class Desafio implements Puntuable {
             Resultado resultado = new Resultado(solucion)
             resultados.add(resultado)
         }
-        //TODO: Triggerear revalidar ese resultado
+        Validador.obtenerInstancia() << this
     }
 
     /** Función para procesar la solución del usuario.
@@ -232,8 +230,8 @@ class Desafio implements Puntuable {
         assert ejercicios != null
         ejercicios.add(ejercicio)
 
-        //TODO: Triggerear revalidarSoluciones() en otro thread
         invalidarSoluciones()
+        Validador.obtenerInstancia() << this
         resultados
     }
 

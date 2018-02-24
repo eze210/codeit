@@ -38,7 +38,6 @@ class Resolucion {
      * la salida de la ejecución.
      *
      * @param entrada Entrada a pasarle al código de la resolución.
-     *
      * @return La salida del código para la entrada especificada.
      */
     String ejecutar(String entrada) {

@@ -46,7 +46,7 @@ class Ejercicio {
         Prueba prueba = new Prueba(this, entrada, salida)
         pruebas.add(prueba)
         desafio.invalidarSoluciones()
-        //TODO: Triggerear revalidarSoluciones en otro thread.
+        Validador.obtenerInstancia() << desafio
         prueba
     }
 

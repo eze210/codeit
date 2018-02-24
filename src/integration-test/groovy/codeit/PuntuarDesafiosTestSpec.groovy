@@ -38,7 +38,7 @@ class PuntuarDesafiosTestSpec extends Specification {
         )
 
         when:"intenta asignar un punto al desafío"
-        Integer nuevoPuntajeDelDesafio = programador.asignarPuntoA(desafio)
+        Integer nuevoPuntajeDelDesafio = programador.otorgarPuntoADesafio(desafio)
 
         then:"al puntaje total del desafío se le sumará una unidad"
         nuevoPuntajeDelDesafio == puntajeInicialDelDesafio + 1
@@ -57,7 +57,7 @@ class PuntuarDesafiosTestSpec extends Specification {
         when:"intenta asignar un punto al desafío"
         then:"el punto asignado es rechazado"
         shouldFail(NoParticipaDelDesafio) {
-            programador.asignarPuntoA(desafio)
+            programador.otorgarPuntoADesafio(desafio)
         }
 
         and:"el puntaje total del desafío se mantiene igual"
@@ -71,7 +71,7 @@ class PuntuarDesafiosTestSpec extends Specification {
         when:"El creador de un desafío intenta asignar un punto a su propio desafío"
         then:"el punto asignado es rechazado"
         shouldFail(ComparteMiembrosConCreador) {
-            creador.asignarPuntoA(desafio)
+            creador.otorgarPuntoADesafio(desafio)
         }
 
         and:"el puntaje del desafío se mantiene igual"

@@ -69,7 +69,6 @@ class Programador extends Participante implements Creador, Puntuable {
      *
      * @param insignia Insignia a otorgar.
      * @param solucion Solución que se quiere premiar.
-     *
      * @return
      */
     def otorgarInsigniaASolucion(Insignia insignia, Solucion solucion) {
@@ -80,7 +79,6 @@ class Programador extends Participante implements Creador, Puntuable {
     /** Acepta la invitación indicada.
      *
      * @param invitacion Invitación que se desea aceptar.
-     *
      * @return El equipo correspondiente con su nuevo estado.
      */
     Equipo aceptarInvitacion(Invitacion invitacion) {
@@ -93,7 +91,6 @@ class Programador extends Participante implements Creador, Puntuable {
     /** Crea un equipo nuevo que contiene al programador.
      *
      * @param Nombre del nuevo equipo.
-     *
      * @return El nuevo equipo.
      */
     Equipo crearEquipo(String nombreDelEquipo) {
@@ -123,6 +120,23 @@ class Programador extends Participante implements Creador, Puntuable {
     Equipo abandonarEquipo(Equipo equipo) {
         equipos.remove(equipo)
         equipo.removerMiembro(this)
+    }
+
+    /** Asigna un punto al desafío.
+     *
+     * @param desafio Desafío al que se quiere asignar un punto.
+     * @return El nuevo puntaje del desafío.
+     */
+    Integer otorgarPuntoADesafio(Desafio desafio) throws ComparteMiembrosConCreador, NoParticipaDelDesafio {
+        if (comparteMiembrosCon(desafio.creador)) {
+            throw new ComparteMiembrosConCreador()
+        }
+
+        if (!participaDe(desafio)) {
+            throw new NoParticipaDelDesafio()
+        }
+
+        desafio.otorgarPuntoEnFaceta(TipoFaceta.Desafio)
     }
 
     /* ****************************************************************** *
@@ -162,7 +176,6 @@ class Programador extends Participante implements Creador, Puntuable {
      *
      * @param desafio Desafío en el que va a ser propuesto el ejercicio.
      * @param enunciado Enunciado del nuevo ejercicio.
-     *
      * @return El nuevo ejercicio.
      *
      * Nota: el desafío debe haber sido creado por el programador.
@@ -182,7 +195,6 @@ class Programador extends Participante implements Creador, Puntuable {
      * @param insigniasRequeridas Insignias que requiere el nuevo desafío.
      * @param fechaDesde Fecha desde la cual estará vigente el nuevo desafío.
      * @param fechaHasta Fecha hasta la cual estará vigente el nuevo desafío.
-     *
      * @return El nuevo desafío.
      */
     Desafio proponerDesafio(String titulo, String descripcion, Set<Insignia> insigniasRequeridas, DateTime fechaDesde, DateTime fechaHasta) {
@@ -195,7 +207,6 @@ class Programador extends Participante implements Creador, Puntuable {
      * @param descripcion Descripción del nuevo desafío.
      * @param insigniasRequeridas Insignias que requiere el nuevo desafío.
      * @param fechaHasta Fecha hasta la cual estará vigente el nuevo desafío.
-     *
      * @return El nuevo desafío.
      */
     Desafio proponerDesafio(String titulo, String descripcion, Set<Insignia> insigniasRequeridas, DateTime fechaHasta) {
@@ -207,7 +218,6 @@ class Programador extends Participante implements Creador, Puntuable {
      * @param titulo Título del nuevo desafío.
      * @param descripcion Descripción del nuevo desafío.
      * @param insigniasRequeridas Insignias que requiere el nuevo desafío.
-     *
      * @return El nuevo desafío.
      */
     Desafio proponerDesafio(String titulo, String descripcion, Set<Insignia> insigniasRequeridas) {
@@ -220,7 +230,6 @@ class Programador extends Participante implements Creador, Puntuable {
      * @param descripcion Descripción del nuevo desafío.
      * @param fechaDesde Fecha desde la cual estará vigente el nuevo desafío.
      * @param fechaHasta Fecha hasta la cual estará vigente el nuevo desafío.
-     *
      * @return El nuevo desafío.
      */
     Desafio proponerDesafio(String titulo, String descripcion, DateTime fechaDesde, DateTime fechaHasta) {
@@ -232,7 +241,6 @@ class Programador extends Participante implements Creador, Puntuable {
      * @param titulo Título del nuevo desafío.
      * @param descripcion Descripción del nuevo desafío.
      * @param fechaHasta Fecha hasta la cual estará vigente el nuevo desafío.
-     *
      * @return El nuevo desafío.
      */
     Desafio proponerDesafio(String titulo, String descripcion, DateTime fechaHasta) {
@@ -243,7 +251,6 @@ class Programador extends Participante implements Creador, Puntuable {
      *
      * @param titulo Título del nuevo desafío.
      * @param descripcion Descripción del nuevo desafío.
-     *
      * @return El nuevo desafío.
      */
     Desafio proponerDesafio(String titulo, String descripcion) {
@@ -258,5 +265,4 @@ class Programador extends Participante implements Creador, Puntuable {
         assert solucion.desafio.creador == this
         solucion.otorgarPuntoEnFaceta(TipoFaceta.Ganador)
     }
-
 }
