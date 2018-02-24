@@ -7,6 +7,7 @@ import spock.lang.Specification
 class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
     def setup() {
+        Validador.crearInstancia(Validador.TipoValidador.Sincronico)
     }
 
     def cleanup() {
@@ -147,11 +148,12 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         desafioNuevo.agregarEjercicio(ejercicio2)
 
         then:"la solución debe reprocesarse"
-        and:"la solución ya no resuelve el desafío"
         desafioNuevo.resultados.size() == 1
         desafioNuevo.obtenerResultadoActualDeSolucion(solucion) != null
-        !desafioNuevo.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
-                !desafioNuevo.validarSolucion(solucion).valido
+        !desafioNuevo.obtenerResultadoActualDeSolucion(solucion).estaProcesado()
+
+        and:"la solución ya no resuelve el desafío"
+        !desafioNuevo.validarSolucion(solucion).valido
     }
 
     void solucionVuelveASerValidaCuandoSeAgregaUnaResolucionParaElEjercicioNuevo() {
@@ -182,15 +184,21 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         desafio.save flush: true
 
         then:"la solución ya no resuelve el desafío"
-        !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() && !desafio.validarSolucion(solucion).valido
+        !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado()
+        !desafio.validarSolucion(solucion).valido
 
         when:"se agrega una resolución para el nuevo ejercicio"
         Resolucion resolucion2 = new Resolucion(ejercicio2, "def f = {x -> x}")
         solucion.agregarResolucion(resolucion2)
 
         then:"la solución debe reprocesarse"
-        and:"la solución vuelve a ser válida"
-        !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado() && desafio.validarSolucion(solucion).valido
+        !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado()
+
+        when:"la solución se revalida"
+        desafio.revalidarSoluciones()
+
+        then:"la solución vuelve a ser válida"
+        desafio.validarSolucion(solucion).valido
     }
 
 }

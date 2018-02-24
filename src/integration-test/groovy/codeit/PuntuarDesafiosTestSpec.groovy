@@ -16,10 +16,11 @@ class PuntuarDesafiosTestSpec extends Specification {
 
 
     def setup() {
+        Validador.crearInstancia(Validador.TipoValidador.Sincronico)
         creador = new Programador("Creador")
         desafio = creador.proponerDesafio("Desafío", "Descripción")
         ejercicio = creador.proponerEjercicioPara(desafio, "Ejercicio")
-        ejercicio.agregarPrueba("string", "string")
+        ejercicio.agregarPrueba("x=\"string\"", "string")
     }
 
 

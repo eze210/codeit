@@ -53,8 +53,7 @@ class Solucion implements Puntuable {
         resoluciones.add(resolucion)
         resolucion.solucion = this
 
-        /* se vuelve a proponer para que se valide nuevamente */
-        desafio.proponerSolucion(this)
+        desafio.invalidarSolucion(this)
     }
 
     /**

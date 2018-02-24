@@ -239,6 +239,10 @@ class Desafio implements Puntuable {
         resultados.forEach { it.invalidar() }
     }
 
+    void invalidarSolucion(Solucion solucion) {
+        resultados.find { it.solucion.id == solucion.id }?.invalidar()
+    }
+
     /** Vuelve a calcular los resultados para las soluciones propuestas.
      *
      * @return La nueva colección de resultados.

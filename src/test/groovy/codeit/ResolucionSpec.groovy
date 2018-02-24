@@ -9,6 +9,7 @@ class ResolucionSpec extends Specification implements DomainUnitTest<Resolucion>
     Desafio desafio
 
     def setup() {
+        Validador.crearInstancia(Validador.TipoValidador.Sincronico)
         programador = new Programador("Creador")
         desafio = programador.proponerDesafio("Título", "Descripción")
     }

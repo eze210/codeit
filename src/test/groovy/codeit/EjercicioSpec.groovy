@@ -9,6 +9,7 @@ class EjercicioSpec extends Specification implements DomainUnitTest<Ejercicio> {
     Desafio desafio
 
     def setup() {
+        Validador.crearInstancia(Validador.TipoValidador.Sincronico)
         programador = new Programador("Creador")
         desafio = programador.proponerDesafio("Título", "Descripción")
     }

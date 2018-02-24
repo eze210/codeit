@@ -11,6 +11,8 @@ class BootStrap {
             assert Rol.count() == 1
             assert Rol.findAll().size() == 1
 
+            Validador.crearInstancia(Validador.TipoValidador.Asincronico)
+
             // Programadores
             Programador prog1 = new Programador("Esio Trot")
             prog1.save flush: true
@@ -70,6 +72,5 @@ class BootStrap {
 
     def destroy = {
         Validador.obtenerInstancia().destruir()
-        Validador.obtenerInstancia().join()
     }
 }
