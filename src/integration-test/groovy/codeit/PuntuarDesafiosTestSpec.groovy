@@ -16,10 +16,11 @@ class PuntuarDesafiosTestSpec extends Specification {
 
 
     def setup() {
+        Validador.crearInstancia(Validador.TipoValidador.Sincronico)
         creador = new Programador("Creador")
         desafio = creador.proponerDesafio("Desafío", "Descripción")
         ejercicio = creador.proponerEjercicioPara(desafio, "Ejercicio")
-        ejercicio.agregarPrueba("string", "string")
+        ejercicio.agregarPrueba("x=\"string\"", "string")
     }
 
 
@@ -34,10 +35,11 @@ class PuntuarDesafiosTestSpec extends Specification {
         given:"Un programador ha subido alguna resolución a algún ejercicio de un desafío"
         Programador programador = new Programador("Resolvedor")
         programador.proponerSolucionPara(desafio, "Solución").agregarResolucion(
-                new Resolucion(ejercicio, "{x -> x}"))
+                new Resolucion(ejercicio, "x")
+        )
 
         when:"intenta asignar un punto al desafío"
-        Integer nuevoPuntajeDelDesafio = programador.asignarPuntoA(desafio)
+        Integer nuevoPuntajeDelDesafio = programador.otorgarPuntoADesafio(desafio)
 
         then:"al puntaje total del desafío se le sumará una unidad"
         nuevoPuntajeDelDesafio == puntajeInicialDelDesafio + 1
@@ -56,7 +58,7 @@ class PuntuarDesafiosTestSpec extends Specification {
         when:"intenta asignar un punto al desafío"
         then:"el punto asignado es rechazado"
         shouldFail(NoParticipaDelDesafio) {
-            programador.asignarPuntoA(desafio)
+            programador.otorgarPuntoADesafio(desafio)
         }
 
         and:"el puntaje total del desafío se mantiene igual"
@@ -70,7 +72,7 @@ class PuntuarDesafiosTestSpec extends Specification {
         when:"El creador de un desafío intenta asignar un punto a su propio desafío"
         then:"el punto asignado es rechazado"
         shouldFail(ComparteMiembrosConCreador) {
-            creador.asignarPuntoA(desafio)
+            creador.otorgarPuntoADesafio(desafio)
         }
 
         and:"el puntaje del desafío se mantiene igual"

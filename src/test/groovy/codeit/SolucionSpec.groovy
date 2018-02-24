@@ -35,7 +35,8 @@ class SolucionSpec extends Specification implements DomainUnitTest<Solucion> {
         Solucion solucion = participante.proponerSolucionPara(desafio, "Solución equivocada")
 
         then:"la solución no resuelve el desafío"
-        !solucion.validar(desafio.ejercicios).valido
+        solucion.validar()
+        !solucion.resultado.valido
     }
 
     void solucionCorrecta() {

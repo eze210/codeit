@@ -23,12 +23,34 @@
                 <fieldset class="form">
                     %{--TODO: Add login and use participante from there--}%
                     <g:hiddenField name="creador_id" value="5" />
-                    <label>Título</label> <label class="wrong_color">*</label>
-                    <g:textField name="titulo"/>
-                    <label>Descripción</label> <label class="wrong_color">*</label>
-                    <g:textArea name="descripcion"/>
+
+                    <label for="titulo">
+                        Título:
+                        <span class="required-indicator">*</span>
+                    </label>
+                    <g:textField name="titulo" value="${params?.titulo}"/>
+
+                    <label for="descripcion">
+                        Descripción:
+                        <span class="required-indicator">*</span>
+                    </label>
+                    <g:textArea name="descripcion" value="${params?.descripcion}"/>
+                    <br/>
                     %{--TODO: Add vigencia--}%
-                    %{--TODO: Add exercises--}%
+                    
+                    <label>
+                        Ejercicios:
+                        <span class="required-indicator">*</span>
+                    </label>
+                    <div class="padded_container">
+                        <dynamic:block itemId="ejercicio" min="1">
+                            <label>
+                                Enunciado:
+                                <span class="required-indicator">*</span>
+                            </label>
+                            <g:textArea name="enunciado" />
+                        </dynamic:block>
+                    </div>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="Crear" />

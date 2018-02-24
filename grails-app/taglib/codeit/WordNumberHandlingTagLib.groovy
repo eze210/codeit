@@ -1,3 +1,5 @@
+package codeit
+
 class WordNumberHandlingTagLib {
 
     def wordFromNumber = { attrs ->

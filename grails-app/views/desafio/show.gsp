@@ -10,6 +10,7 @@
         <div class="nav" role="navigation">
             <ul>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="edit" action="edit" resource="${desafio}"><g:message code="default.edit.label" args="[entityName]" /></g:link></li>
             </ul>
         </div>
         <div id="show-desafio" class="content scaffold-show" role="main">
@@ -29,7 +30,7 @@
                 <h2>Soluciones</h2>
                 <p>
                     <%-- TODO: AGREGAR LINKS CUANDO SE PUEDAN VER LAS SOLUCIONES DE UN DESAFÍO --%>
-                            <g:link controller="solucion" action="index" params="[to: desafio.id]"><g:quantityOf number="${desafio.soluciones.size()}" word="solución" plural="soluciones" /></g:link> por ahora,
+                            <g:link controller="solucion" action="index" params="[to: desafio.id]"><g:quantityOf number="${desafio.resultados.size()}" word="solución" plural="soluciones" /></g:link> por ahora,
                             <g:quantityOf number="${desafio.resultados.findAll { it.correcto }.size()}" word="correcta" />,
                             <g:quantityOf number="${desafio.resultados.findAll { it.valido }.size()}" word="valida" />
 

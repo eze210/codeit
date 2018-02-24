@@ -13,7 +13,7 @@
         </g:if>
         <div class="nav" role="navigation">
             <ul>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="Desafio" /></g:link></li>
+                <li><g:link class="create" action="create">Nuevo Desafio</g:link></li>
             </ul>
         </div>
         <div id="list-desafio" class="content scaffold-list" role="main">

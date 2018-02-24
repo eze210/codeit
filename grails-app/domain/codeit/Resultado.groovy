@@ -1,9 +1,5 @@
 package codeit
 
-import groovy.transform.EqualsAndHashCode
-
-// Así son iguales para los sets si pertenecen a la misma solución
-@EqualsAndHashCode(excludes=["valido", "puntaje", "correcto"])
 class Resultado {
 
     /** Indica si todos los ejercicios de la solución estaban resueltos. */
@@ -18,16 +14,9 @@ class Resultado {
     /** Solución que se probó para generar el resultado. */
     Solucion solucion
 
-    /** Desafío en el que estaba propuesta la solución. */
-    Desafio desafio
-
-    /** Declaraciones necesarias para el mapeo relacional. */
-    static belongsTo = [desafio: Desafio]
-
     /** Reglas para el mapeo relacional. */
     static constraints = {
         solucion nullable: false
-        desafio nullable: false
         valido nullable: true
         correcto nullable: true
         puntaje nullable: true
@@ -42,23 +31,6 @@ class Resultado {
         this.valido = null
         this.correcto = null
         this.puntaje = null
-        this.desafio = solucion.desafio
-        solucion.resultado = this
-    }
-
-    /** Constructor de un resultado
-     *
-     * @param solucion Solución que se verificó.
-     * @param valido Indica si todos los ejercicios de la solución estaban resueltos.
-     * @param correcto Indica si todos los ejercicios estaban correctamente resueltos.
-     * @param puntaje Cantidad de ejercicios correctamente resueltos.
-     */
-    Resultado(Solucion solucion, Boolean valido, Boolean correcto, Integer puntaje) {
-        this.solucion = solucion
-        this.valido = valido
-        this.correcto = correcto
-        this.puntaje = puntaje
-        this.desafio = solucion.desafio
         solucion.resultado = this
     }
 
@@ -68,6 +40,16 @@ class Resultado {
      */
     Boolean estaProcesado() {
         return valido != null && correcto != null && puntaje != null
+    }
+
+    void procesar() {
+        solucion.validar()
+    }
+
+    void invalidar() {
+        valido = null
+        correcto = null
+        puntaje = null
     }
 
     /** Interpretación del resultado como Boolean.

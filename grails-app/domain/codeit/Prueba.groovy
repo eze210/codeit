@@ -1,6 +1,9 @@
 package codeit
 
+import groovy.transform.Sortable
+
 /** Clase prueba. */
+@Sortable(includes = ['id'])
 class Prueba {
 
     /** Entrada de la prueba. */

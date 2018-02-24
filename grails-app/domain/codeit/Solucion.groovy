@@ -15,11 +15,11 @@ class Solucion implements Puntuable {
     /** Descripción de la solución. */
     String descripcion
 
-    /** Resultado actual de la solución en el desafío. */
+    /** Resultado de la validación de la solución. */
     Resultado resultado
 
     /** Declaraciones necesarias para el mapeo relacional. */
-    static belongsTo = [participante: Participante, desafio: Desafio]
+    static belongsTo = [participante: Participante, desafio: Desafio, resultado: Resultado]
     static hasMany = [resoluciones: Resolucion]
 
     /** Reglas para el mapeo relacional. */
@@ -42,6 +42,7 @@ class Solucion implements Puntuable {
         this.descripcion = descripcion
         this.desafio = desafio
         this.resoluciones = new LinkedHashSet<>()
+        participante.soluciones.add(this)
         desafio.proponerSolucion(this)
     }
 
@@ -55,26 +56,21 @@ class Solucion implements Puntuable {
         resoluciones.add(resolucion)
         resolucion.solucion = this
 
-        /* se vuelve a proponer para que se valide nuevamente */
-        desafio.proponerSolucion(this)
+        desafio.invalidarSolucion(this)
     }
 
-    /** Valida una solución con los ejercicios que debe resolver.
-     *
-     * @param todosLosEjercicios Ejercicios del desafío que se intenta resolver.
-     * @return El resultado de la validación.
+    /** Revalida la solución.
      */
-    Resultado validar(Set<Ejercicio> todosLosEjercicios) {
+    void validar() {
         /* como no hay dos resoluciones que resuelvan el mismo ejercicio, si los tamaños son iguales
          * entonces todos los ejercicios están resueltos */
-        Boolean todosLosEjerciciosEstanResueltos = todosLosEjercicios.size() == resoluciones.size()
+        Boolean todosLosEjerciciosEstanResueltos = desafio.ejercicios.size() == resoluciones.size()
 
         Integer puntos = resoluciones.count { resolucion -> resolucion.ejercicio.validarResolucion(resolucion) }
 
-        new Resultado(this,
-                todosLosEjerciciosEstanResueltos,
-                puntos == todosLosEjercicios.size(),
-                puntos)
+        resultado.valido = todosLosEjerciciosEstanResueltos
+        resultado.correcto = puntos == desafio.ejercicios.size()
+        resultado.puntaje = puntos
     }
 
     /* ****************************************************************** *

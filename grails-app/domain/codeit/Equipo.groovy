@@ -126,7 +126,6 @@ class Equipo extends Participante implements Puntuable {
     /** Verifica las reglas de negocio acerca de la conformación de equipos.
      *
      * @param miembros Miembros del hipotético equipo.
-     *
      * @return \c true si los hipotéticos miembros forman un equipo válido, o \c false en otro caso.
      */
     static Boolean formanEquipoValido(Set<Programador> miembros) {

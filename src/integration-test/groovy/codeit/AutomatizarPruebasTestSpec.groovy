@@ -10,6 +10,7 @@ import spock.lang.Specification
 class AutomatizarPruebasTestSpec extends Specification {
 
     def setup() {
+        Validador.crearInstancia(Validador.TipoValidador.Sincronico)
     }
 
     def cleanup() {
@@ -29,7 +30,7 @@ class AutomatizarPruebasTestSpec extends Specification {
         assert desafio.estaVigente()
 
         when:"y ese programador agrega una prueba para un ejercicio de dicho desafío"
-        Prueba prueba = ejercicio.agregarPrueba("Cadena", "Cadena")
+        Prueba prueba = ejercicio.agregarPrueba("x=\"Cadena\"", "Cadena")
 
         then:"la prueba queda agregada al ejercicio"
         ejercicio.pruebas.contains(prueba)
@@ -62,6 +63,7 @@ class AutomatizarPruebasTestSpec extends Specification {
 
         when:"la prueba sí falsea"
         ejercicio.agregarPrueba("y = 3", "2")
+
         assert !ejercicio.validarResolucion(resolucion)
 
         then:"La solución deja de valer"
@@ -86,7 +88,7 @@ class AutomatizarPruebasTestSpec extends Specification {
         Solucion solucion = solucionador.proponerSolucionPara(desafio, "Mi solución")
 
         then:"se corren las pruebas"
-        desafio.soluciones.contains(solucion)
+        desafio.obtenerResultadoActualDeSolucion(solucion) != null
         // TODO: hacer un mock de Prueba para verificar la invocación del método
         true
     }

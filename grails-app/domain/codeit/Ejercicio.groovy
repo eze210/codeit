@@ -21,7 +21,7 @@ class Ejercicio {
     /** Reglas para el mapeo relacional. */
     static constraints = {
         desafio nullable: false, blank: false
-        enunciado nullable: false, blank: false, unique: true
+        enunciado nullable: false, blank: false
     }
 
     /** Constructor de un ejercicio.
@@ -45,7 +45,8 @@ class Ejercicio {
     Prueba agregarPrueba(String entrada, String salida) {
         Prueba prueba = new Prueba(this, entrada, salida)
         pruebas.add(prueba)
-        desafio.revalidarSoluciones()
+        desafio.invalidarSoluciones()
+        Validador.obtenerInstancia() << desafio
         prueba
     }
 

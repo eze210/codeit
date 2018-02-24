@@ -20,9 +20,6 @@ class Desafio implements Puntuable {
     /** Ejercicios que debe resolver una solución propuesta para ser válida. */
     Set<Ejercicio> ejercicios
 
-    /** Soluciones propuestas para el desafío. */
-    Set<Solucion> soluciones
-
     /** Reultados de las soluciones propuestas. */
     Set<Resultado> resultados
 
@@ -35,11 +32,8 @@ class Desafio implements Puntuable {
     /** Declaraciones necesarias para el mapeo relacional. */
     static belongsTo = [creador: Programador]
     static hasMany = [ejercicios          : Ejercicio,
-                      soluciones          : Solucion,
                       resultados          : Resultado,
-                      insigniasRequeridas : Insignia,
-                      insigniasHabilitadas: Insignia,
-                      facetas             : Faceta]
+                      insigniasRequeridas : Insignia]
 
     /** Reglas para el mapeo relacional. */
     static constraints = {
@@ -108,7 +102,6 @@ class Desafio implements Puntuable {
         this.creador = creador
         this.insigniasRequeridas = insigniasRequeridas
         this.ejercicios = new LinkedHashSet<>()
-        this.soluciones = new LinkedHashSet<>()
         this.resultados = new LinkedHashSet<>()
         this.puntaje = new Puntaje([new Faceta(TipoFaceta.Desafio)])
     }
@@ -121,12 +114,15 @@ class Desafio implements Puntuable {
      * @throws DesafioNoVigente
      */
     void proponerSolucion(Solucion solucion) throws ComparteMiembrosConCreador, YaParticipaDelDesafio, DesafioNoVigente {
-        soluciones.remove(solucion)
-        soluciones.add(solucion)
-        resultados.removeIf({ it.solucion == solucion })
-        Resultado resultado = new Resultado(solucion)
-        assert resultado != null
-        resultados.add(resultado)
+        // TODO: tirar las excepciones que dice la doc.
+        int index = resultados.findIndexOf { it.solucion == solucion }
+        if (~index) {
+            resultados[index].invalidar()
+        } else {
+            Resultado resultado = new Resultado(solucion)
+            resultados.add(resultado)
+        }
+        Validador.obtenerInstancia() << this
     }
 
     /** Función para procesar la solución del usuario.
@@ -137,17 +133,9 @@ class Desafio implements Puntuable {
     Resultado validarSolucion(Solucion solucion) {
         int index = resultados.findIndexOf { it.solucion == solucion }
         if (~index && !resultados[index].estaProcesado()) {
-            soluciones.remove(solucion)
-            soluciones.add(solucion)
-            resultados.removeIf({ it.solucion == solucion })
-            Resultado resultado = solucion.validar(ejercicios)
-            assert resultado != null
-            resultados.add(resultado)
-            resultado
-        } else {
-            assert resultados[index] != null
-            resultados[index]
+            resultados[index].procesar()
         }
+        resultados[index]
     }
 
     /** Devuelve el resultado actual de una solución.
@@ -216,7 +204,7 @@ class Desafio implements Puntuable {
      * @return \c true si el participante participa del desafío, o \c false en otro caso.
      */
     Boolean propusoAlgunaSolucion(Participante participante) {
-        soluciones.find { it.participante == participante }
+        resultados.find { it.solucion.participante == participante } != null
     }
 
     /** Corrobora que un desafío esté en vigencia.
@@ -242,10 +230,17 @@ class Desafio implements Puntuable {
         assert ejercicios != null
         ejercicios.add(ejercicio)
 
-        //TODO: Conviene usar revalidarSoluciones()?
-        resultados.clear()
-        resultados.addAll(soluciones.collect { new Resultado(it) })
+        invalidarSoluciones()
+        Validador.obtenerInstancia() << this
         resultados
+    }
+
+    void invalidarSoluciones() {
+        resultados.forEach { it.invalidar() }
+    }
+
+    void invalidarSolucion(Solucion solucion) {
+        resultados.find { it.solucion.id == solucion.id }?.invalidar()
     }
 
     /** Vuelve a calcular los resultados para las soluciones propuestas.
@@ -253,8 +248,7 @@ class Desafio implements Puntuable {
      * @return La nueva colección de resultados.
      */
     Set<Resultado> revalidarSoluciones() {
-        resultados.clear()
-        resultados.addAll(soluciones.collect { it.validar(ejercicios) })
+        resultados.forEach { it.procesar() }
         resultados
     }
 
