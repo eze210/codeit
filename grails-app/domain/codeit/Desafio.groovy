@@ -20,9 +20,6 @@ class Desafio {
     /** Ejercicios que debe resolver una solución propuesta para ser válida. */
     Set<Ejercicio> ejercicios
 
-    /** Soluciones propuestas para el desafío. */
-    Set<Solucion> soluciones
-
     /** Reultados de las soluciones propuestas. */
     Set<Resultado> resultados
 
@@ -38,7 +35,6 @@ class Desafio {
     /** Declaraciones necesarias para el mapeo relacional. */
     static belongsTo = [creador: Programador]
     static hasMany = [ejercicios          : Ejercicio,
-                      soluciones          : Solucion,
                       resultados          : Resultado,
                       insigniasRequeridas : Insignia,
                       insigniasHabilitadas: Insignia,
@@ -115,7 +111,6 @@ class Desafio {
         this.creador = creador
         this.insigniasRequeridas = insigniasRequeridas
         this.ejercicios = new LinkedHashSet<>()
-        this.soluciones = new LinkedHashSet<>()
         this.resultados = new LinkedHashSet<>()
         this.insigniasHabilitadas = new LinkedHashSet<>()
         this.facetas = new LinkedHashSet<>([new Faceta(TipoFaceta.Desafio)])
@@ -130,12 +125,15 @@ class Desafio {
      * @throws DesafioNoVigente
      */
     void proponerSolucion(Solucion solucion) throws ComparteMiembrosConCreador, YaParticipaDelDesafio, DesafioNoVigente {
-        soluciones.remove(solucion)
-        soluciones.add(solucion)
-        resultados.removeIf({ it.solucion == solucion })
-        Resultado resultado = new Resultado(solucion)
-        assert resultado != null
-        resultados.add(resultado)
+        // TODO: tirar las excepciones que dice la doc.
+        int index = resultados.findIndexOf { it.solucion == solucion }
+        if (~index) {
+            resultados[index].invalidar()
+        } else {
+            Resultado resultado = new Resultado(solucion)
+            resultados.add(resultado)
+        }
+        //TODO: Triggerear revalidar ese resultado
     }
 
 
@@ -148,17 +146,9 @@ class Desafio {
     Resultado validarSolucion(Solucion solucion) {
         int index = resultados.findIndexOf { it.solucion == solucion }
         if (~index && !resultados[index].estaProcesado()) {
-            soluciones.remove(solucion)
-            soluciones.add(solucion)
-            resultados.removeIf({ it.solucion == solucion })
-            Resultado resultado = solucion.validar(ejercicios)
-            assert resultado != null
-            resultados.add(resultado)
-            resultado
-        } else {
-            assert resultados[index] != null
-            resultados[index]
+            resultados[index].procesar()
         }
+        resultados[index]
     }
 
 
@@ -235,7 +225,7 @@ class Desafio {
      * @return \c true si el participante participa del desafío, o \c false en otro caso.
      */
     Boolean esParticipante(Participante participante) {
-        soluciones.find { it.participante == participante }
+        resultados.find { it.solucion.participante == participante }
     }
 
 
@@ -264,20 +254,21 @@ class Desafio {
         assert ejercicios != null
         ejercicios.add(ejercicio)
 
-        //TODO: Conviene usar revalidarSoluciones()?
-        resultados.clear()
-        resultados.addAll(soluciones.collect { new Resultado(it) })
+        //TODO: Triggerear revalidarSoluciones() en otro thread
+        invalidarSoluciones()
         resultados
     }
 
+    void invalidarSoluciones() {
+        resultados.forEach { it.invalidar() }
+    }
 
     /** Vuelve a calcular los resultados para las soluciones propuestas.
      *
      * @return La nueva colección de resultados.
      */
     Set<Resultado> revalidarSoluciones() {
-        resultados.clear()
-        resultados.addAll(soluciones.collect { it.validar(ejercicios) })
+        resultados.forEach { it.procesar() }
         resultados
     }
 

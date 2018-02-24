@@ -2,8 +2,6 @@ package codeit
 
 import groovy.transform.EqualsAndHashCode
 
-// Así son iguales para los sets si pertenecen a la misma solución
-@EqualsAndHashCode(excludes=["valido", "puntaje", "correcto"])
 class Resultado {
 
     /** Indica si todos los ejercicios de la solución estaban resueltos. */
@@ -47,24 +45,6 @@ class Resultado {
         solucion.resultado = this
     }
 
-
-    /** Constructor de un resultado
-     *
-     * @param solucion Solución que se verificó.
-     * @param valido Indica si todos los ejercicios de la solución estaban resueltos.
-     * @param correcto Indica si todos los ejercicios estaban correctamente resueltos.
-     * @param puntaje Cantidad de ejercicios correctamente resueltos.
-     */
-    Resultado(Solucion solucion, Boolean valido, Boolean correcto, Integer puntaje) {
-        this.solucion = solucion
-        this.valido = valido
-        this.correcto = correcto
-        this.puntaje = puntaje
-        this.desafio = solucion.desafio
-        solucion.resultado = this
-    }
-
-
     /** Consulta si el resultado está procesado.
      *
      * @return \c true si el resultado fue construido a partir de la verificación de una solución.
@@ -73,6 +53,15 @@ class Resultado {
         return valido != null && correcto != null && puntaje != null
     }
 
+    void procesar() {
+        solucion.validar()
+    }
+
+    void invalidar() {
+        valido = null
+        correcto = null
+        puntaje = null
+    }
 
     /** Interpretación del resultado como Boolean.
      *

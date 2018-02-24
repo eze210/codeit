@@ -164,7 +164,7 @@ class Programador extends Participante {
      * Nota: el desafío debe haber sido creado por el programador.
      */
     Ejercicio proponerEjercicioPara(@NotNull Desafio desafio, String enunciado) {
-        assert desafio.creador == this
+        assert desafio.creador.id == this.id
 
         Ejercicio nuevoEjercicio = new Ejercicio(desafio, enunciado)
         desafio.agregarEjercicio(nuevoEjercicio)

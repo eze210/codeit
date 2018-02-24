@@ -48,7 +48,8 @@ class Ejercicio {
     Prueba agregarPrueba(String entrada, String salida) {
         Prueba prueba = new Prueba(this, entrada, salida)
         pruebas.add(prueba)
-        desafio.revalidarSoluciones()
+        desafio.invalidarSoluciones()
+        //TODO: Triggerear revalidarSoluciones en otro thread.
         prueba
     }
 

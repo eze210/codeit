@@ -8,7 +8,7 @@
     <body>
         <div class="breadcrumble">
             %{--TODO: Use logged user--}%
-            <g:link controller="desafio" action="index" params="[from: codeit.Programador.findById(5).id]">Mis desafíos</g:link>
+            <g:link controller="desafio" action="index" params="[from: codeit.Programador.findById(4).id]">Mis desafíos</g:link>
             > <g:link controller="desafio" action="show" id="${desafio.id}">${desafio.titulo}</g:link>
             > Editar</div>
         </div>
@@ -70,6 +70,17 @@
                                             <g:textField name="salida_esperada_${i}" value="${prueba[1]}" />
                                             <br/>
                                         </g:each>
+                                        <div>
+                                            <label>
+                                                ¿Más pruebas?
+                                            </label>
+                                            <dynamic:block itemId="prueba_${i}" min="0">
+                                                <label>Entrada: </label>
+                                                <g:textField name="entrada_${i}" />
+                                                <label>Salida esperada: </label>
+                                                <g:textField name="salida_esperada_${i}" />
+                                            </dynamic:block>
+                                        </div>
                                     </div>
                                 </div>
                                 <br/>
@@ -96,6 +107,17 @@
                                             <g:textField name="salida_esperada_${i}" value="${prueba.salidaEsperada}" />
                                             <br/>
                                         </g:each>
+                                        <div>
+                                            <label>
+                                                ¿Más pruebas?
+                                            </label>
+                                            <dynamic:block itemId="prueba_${i}" min="0">
+                                                <label>Entrada: </label>
+                                                <g:textField name="entrada_${i}" />
+                                                <label>Salida esperada: </label>
+                                                <g:textField name="salida_esperada_${i}" />
+                                            </dynamic:block>
+                                        </div>
                                     </div>
                                 </div>
                                 <br/>

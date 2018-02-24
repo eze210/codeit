@@ -21,7 +21,6 @@ class Solucion {
     /** Declaraciones necesarias para el mapeo relacional. */
     static belongsTo = [participante: Participante, desafio: Desafio]
     static hasMany = [resoluciones: Resolucion]
-    static hasOne = [resultado: Resultado]
 
     /** Reglas para el mapeo relacional. */
     static constraints = {
@@ -62,23 +61,19 @@ class Solucion {
     }
 
 
-    /** Valida una solución con los ejercicios que debe resolver.
-     *
-     * @param todosLosEjercicios Ejercicios del desafío que se intenta resolver.
-     *
-     * @return El resultado de la validación.
+    /**
+     * Revalida la solución.
      */
-    Resultado validar(Set<Ejercicio> todosLosEjercicios) {
+    void validar() {
         /* como no hay dos resoluciones que resuelvan el mismo ejercicio, si los tamaños son iguales
          * entonces todos los ejercicios están resueltos */
-        Boolean todosLosEjerciciosEstanResueltos = todosLosEjercicios.size() == resoluciones.size()
+        Boolean todosLosEjerciciosEstanResueltos = desafio.ejercicios.size() == resoluciones.size()
 
         Integer puntos = resoluciones.count { resolucion -> resolucion.ejercicio.validarResolucion(resolucion) }
 
-        new Resultado(this,
-                todosLosEjerciciosEstanResueltos,
-                puntos == todosLosEjercicios.size(),
-                puntos)
+        resultado.valido = todosLosEjerciciosEstanResueltos
+        resultado.correcto = puntos == desafio.ejercicios.size()
+        resultado.puntaje = puntos
     }
 
 

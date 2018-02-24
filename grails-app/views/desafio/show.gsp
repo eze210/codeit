@@ -30,7 +30,7 @@
                 <h2>Soluciones</h2>
                 <p>
                     <%-- TODO: AGREGAR LINKS CUANDO SE PUEDAN VER LAS SOLUCIONES DE UN DESAFÍO --%>
-                            <g:link controller="solucion" action="index" params="[to: desafio.id]"><g:quantityOf number="${desafio.soluciones.size()}" word="solución" plural="soluciones" /></g:link> por ahora,
+                            <g:link controller="solucion" action="index" params="[to: desafio.id]"><g:quantityOf number="${desafio.resultados.size()}" word="solución" plural="soluciones" /></g:link> por ahora,
                             <g:quantityOf number="${desafio.resultados.findAll { it.correcto }.size()}" word="correcta" />,
                             <g:quantityOf number="${desafio.resultados.findAll { it.valido }.size()}" word="valida" />
 

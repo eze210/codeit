@@ -5,10 +5,10 @@
         <title>Participantes</title>
     </head>
     <body>
-        <div id="programadores">
+        <div class="padded_container" id="programadores">
             <tmpl:listadoProgramadores />
         </div>
-        <div id="equipos">
+        <div class="padded_container" id="equipos">
             <tmpl:listadoEquipos />
         </div>
     </body>

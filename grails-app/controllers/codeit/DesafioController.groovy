@@ -139,19 +139,37 @@ class DesafioController {
             desafio.vigencia = new Vigencia()
         }
 
+        List<Ejercicio> ejercicios = desafio.ejercicios.toSorted()
         enunciados.withIndex().forEach { enunciado, index ->
+
+            List<String> entradas = params.list("entrada_${index}")
+            List<String> salidas = params.list("salida_esperada_${index}")
+
             if (index < desafio.ejercicios.size()) {
-                Ejercicio ejercicio = desafio.ejercicios.toSorted()[index]
+
+                Ejercicio ejercicio = ejercicios[index]
                 ejercicio.enunciado = enunciado
-                List<String> entradas = params.list("entrada_${index}")
-                List<String> salidas = params.list("salida_esperada_${index}")
-                ejercicio.pruebas.toSorted().withIndex().forEach { prueba, indexP ->
-                    prueba.entrada = entradas[indexP]
-                    prueba.salidaEsperada = salidas[indexP]
+                List<Prueba> pruebas = ejercicio.pruebas.toSorted()
+
+                entradas.withIndex().forEach { entrada, indexP ->
+                    if (indexP < ejercicio.pruebas.size()) {
+                        Prueba prueba = pruebas[indexP]
+                        prueba.entrada = entrada
+                        prueba.salidaEsperada = salidas[indexP]
+                    } else {
+                        ejercicio.agregarPrueba(entrada, salidas[indexP])
+                    }
                 }
+
             } else {
-                desafio.creador.proponerEjercicioPara(desafio, enunciado)
+                Ejercicio ejercicio = desafio.creador.proponerEjercicioPara(desafio, enunciado)
+
+                entradas.withIndex().forEach { entrada, indexP ->
+                    ejercicio.agregarPrueba(entrada, salidas[indexP])
+                }
+
             }
+
         }
 
         // Actualiza desafío, ejercicios y pruebas
