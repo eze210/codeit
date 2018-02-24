@@ -70,19 +70,6 @@ class Desafio implements Puntuable {
      * @param descripcion Descripción del nuevo desafío.
      * @param creador Programador que crea el nuevo desafío.
      * @param insigniasRequeridas Insignias que requiere el nuevo desafío.
-     * @param fechaHasta Fecha hasta la cual estará vigente el nuevo desafío.
-     */
-    Desafio(String titulo, String descripcion, Programador creador, Set<Insignia> insigniasRequeridas, DateTime fechaHasta) {
-        init(titulo, descripcion, creador, insigniasRequeridas)
-        this.vigencia = new Vigencia(fechaHasta)
-    }
-
-    /** Constructor del desafío.
-     *
-     * @param titulo Título del nuevo desafío.
-     * @param descripcion Descripción del nuevo desafío.
-     * @param creador Programador que crea el nuevo desafío.
-     * @param insigniasRequeridas Insignias que requiere el nuevo desafío.
      */
     Desafio(String titulo, String descripcion, Programador creador, Set<Insignia> insigniasRequeridas) {
         init(titulo, descripcion, creador, insigniasRequeridas)
@@ -212,7 +199,6 @@ class Desafio implements Puntuable {
      * @return \c true si el desafío está vigente, o \c false sino.
      */
     Boolean estaVigente() {
-        assert vigencia != null
         vigencia.estaVigente()
     }
 
@@ -223,7 +209,9 @@ class Desafio implements Puntuable {
      * @return Los nuevos resultados.
      */
     Set<Resultado> agregarEjercicio(Ejercicio ejercicio) throws DesafioNoVigente {
-        if (!estaVigente()) {
+        // Se permite agregar ejercicios si el desafío está vigente
+        // o si se va a habilitar luego
+        if (!estaVigente() && !vigencia.posteriorA(new DateTime())) {
             throw new DesafioNoVigente()
         }
 

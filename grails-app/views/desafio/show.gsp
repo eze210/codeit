@@ -20,6 +20,7 @@
             </g:if>
             <div class="padded_container">
                 <tmpl:vigenciaDisplay vigencia="${desafio.vigencia}" />
+                <br/>
                 <p><em>${desafio.descripcion}</em></p>
 
                 <h2>Ejercicios</h2>

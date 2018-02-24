@@ -1,6 +1,8 @@
 package codeit
 
-import codeit.seguridad.*
+import codeit.seguridad.Rol
+import codeit.seguridad.Usuario
+import codeit.seguridad.UsuarioRol
 
 /** Clase que encapsula el manejo de las clases auto-generadas por el módulo de seguridad. */
 class Seguridad {

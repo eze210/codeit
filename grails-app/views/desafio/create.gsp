@@ -36,8 +36,13 @@
                     </label>
                     <g:textArea name="descripcion" value="${params?.descripcion}"/>
                     <br/>
-                    %{--TODO: Add vigencia--}%
-                    
+
+                    <label>Válido desde: </label>
+                    <g:datePicker name="desde" precision="day" noSelection="['':'-Elija si desea-']" relativeYears="[0..1]" default="none" />
+                    <label>hasta:</label>
+                    <g:datePicker name="hasta" precision="day" noSelection="['':'-Elija si desea-']" relativeYears="[0..1]" default="none" />
+                    <br/>
+
                     <label>
                         Ejercicios:
                         <span class="required-indicator">*</span>

@@ -9,6 +9,7 @@ public class Vigencia implements Serializable {
 
     static enum Tipo {
         Plazo,
+        Inicio,
         Vencimiento,
         Infinita
     }
@@ -16,17 +17,27 @@ public class Vigencia implements Serializable {
     Tipo tipo
     Range<DateTime> rangoDeFechas
 
-    Vigencia(DateTime fechaHasta) {
-        this.tipo = Tipo.Vencimiento
-        this.rangoDeFechas = Range.lessThan(fechaHasta)
-    }
-
     Vigencia(DateTime fechaDesde, DateTime fechaHasta) {
-        this.tipo = Tipo.Plazo
-        this.rangoDeFechas = Range.closed(fechaDesde, fechaHasta)
+        if (fechaDesde && fechaHasta) {
+            this.tipo = Tipo.Plazo
+            this.rangoDeFechas = Range.closed(fechaDesde, fechaHasta)
+        } else if (fechaDesde) {
+            this.tipo = Tipo.Inicio
+            this.rangoDeFechas = Range.atLeast(fechaDesde)
+        } else if (fechaHasta) {
+            this.tipo = Tipo.Vencimiento
+            this.rangoDeFechas = Range.atMost(fechaHasta)
+        } else {
+            init()
+        }
+
     }
 
     Vigencia() {
+        init()
+    }
+
+    private init() {
         this.tipo = Tipo.Infinita
         this.rangoDeFechas = Range.all()
     }
@@ -37,6 +48,10 @@ public class Vigencia implements Serializable {
 
     Boolean estaVigente() {
         this.contiene(DateTime.now())
+    }
+
+    Boolean posteriorA(DateTime date) {
+        this.rangoDeFechas.hasLowerBound() ? date <= this.rangoDeFechas.lowerEndpoint() : false
     }
 
 }

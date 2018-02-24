@@ -15,10 +15,10 @@ class SolucionController {
         if (params.containsKey("to")) {
             Desafio desafio = Desafio.findById(params.int("to"))
             Integer inicio = (params.containsKey("offset") ? params.offset : 0) * params.max
-            Integer count = desafio.soluciones.size()
+            Integer count = desafio.resultados.size()
             Integer fin = Math.min(inicio + params.max, count - 1)
-            List<Solucion> soluciones = fin > 0 ? (desafio.soluciones as List)[inicio..fin] : []
-            respond solucionList: soluciones, solucionCount: desafio.soluciones.size(), desafio: desafio
+            List<Solucion> soluciones = fin > 0 ? (desafio.resultados*.solucion as List)[inicio..fin] : []
+            respond solucionList: soluciones, solucionCount: count, desafio: desafio
         } else {
             // TODO: Filter solucions from current user
             respond solucionList: Solucion.list(params), solucionCount: Solucion.count()

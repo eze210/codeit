@@ -206,18 +206,6 @@ class Programador extends Participante implements Creador, Puntuable {
      * @param titulo Título del nuevo desafío.
      * @param descripcion Descripción del nuevo desafío.
      * @param insigniasRequeridas Insignias que requiere el nuevo desafío.
-     * @param fechaHasta Fecha hasta la cual estará vigente el nuevo desafío.
-     * @return El nuevo desafío.
-     */
-    Desafio proponerDesafio(String titulo, String descripcion, Set<Insignia> insigniasRequeridas, DateTime fechaHasta) {
-        new Desafio(titulo, descripcion, this, insigniasRequeridas, fechaHasta)
-    }
-
-    /** Propone un nuevo desafío.
-     *
-     * @param titulo Título del nuevo desafío.
-     * @param descripcion Descripción del nuevo desafío.
-     * @param insigniasRequeridas Insignias que requiere el nuevo desafío.
      * @return El nuevo desafío.
      */
     Desafio proponerDesafio(String titulo, String descripcion, Set<Insignia> insigniasRequeridas) {
@@ -234,17 +222,6 @@ class Programador extends Participante implements Creador, Puntuable {
      */
     Desafio proponerDesafio(String titulo, String descripcion, DateTime fechaDesde, DateTime fechaHasta) {
         new Desafio(titulo, descripcion, this, new LinkedHashSet<Insignia>(), fechaDesde, fechaHasta)
-    }
-
-    /** Propone un nuevo desafío.
-     *
-     * @param titulo Título del nuevo desafío.
-     * @param descripcion Descripción del nuevo desafío.
-     * @param fechaHasta Fecha hasta la cual estará vigente el nuevo desafío.
-     * @return El nuevo desafío.
-     */
-    Desafio proponerDesafio(String titulo, String descripcion, DateTime fechaHasta) {
-        new Desafio(titulo, descripcion, this, new LinkedHashSet<Insignia>(), fechaHasta)
     }
 
     /** Propone un nuevo desafío.

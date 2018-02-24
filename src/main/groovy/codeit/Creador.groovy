@@ -8,10 +8,8 @@ import javax.validation.constraints.NotNull
 interface Creador {
     Ejercicio proponerEjercicioPara(@NotNull Desafio desafio, String enunciado)
     Desafio proponerDesafio(String titulo, String descripcion, Set<Insignia> insigniasRequeridas, DateTime fechaDesde, DateTime fechaHasta)
-    Desafio proponerDesafio(String titulo, String descripcion, Set<Insignia> insigniasRequeridas, DateTime fechaHasta)
     Desafio proponerDesafio(String titulo, String descripcion, Set<Insignia> insigniasRequeridas)
     Desafio proponerDesafio(String titulo, String descripcion, DateTime fechaDesde, DateTime fechaHasta)
-    Desafio proponerDesafio(String titulo, String descripcion, DateTime fechaHasta)
     Desafio proponerDesafio(String titulo, String descripcion)
     void elegirMejorSolucion(Solucion solucion)
 }

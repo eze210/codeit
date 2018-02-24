@@ -39,8 +39,8 @@ class DesafioController {
         Programador creador = Programador.findById(params.creador_id)
         String titulo = params.titulo
         String descripcion = params.descripcion
-        DateTime desde = null //TODO: Get from params
-        DateTime hasta = null //TODO: Get from params
+        DateTime desde = params.desde ? new DateTime(params.desde) : null
+        DateTime hasta = params.hasta ? new DateTime(params.hasta) : null
 
         List<String> enunciados = params.list("enunciado")
 
@@ -63,14 +63,7 @@ class DesafioController {
             return
         }
 
-        Desafio desafio
-        if (desde) {
-            desafio = creador.proponerDesafio(titulo, descripcion, desde, hasta)
-        } else if (hasta) {
-            desafio = creador.proponerDesafio(titulo, descripcion, hasta)
-        } else {
-            desafio = creador.proponerDesafio(titulo, descripcion)
-        }
+        Desafio desafio = creador.proponerDesafio(titulo, descripcion, desde, hasta)
 
         List<Ejercicio> ejercicios = enunciados.collect { new Ejercicio(desafio, it) }
         ejercicios.forEach { desafio.agregarEjercicio(it) }
@@ -131,13 +124,7 @@ class DesafioController {
         desafio.titulo = params.titulo
         desafio.descripcion = params.descripcion
 
-        if (desde) {
-            desafio.vigencia = new Vigencia(desde, hasta)
-        } else if (hasta) {
-            desafio.vigencia = new Vigencia(hasta)
-        } else {
-            desafio.vigencia = new Vigencia()
-        }
+        desafio.vigencia = new Vigencia(desde, hasta)
 
         List<Ejercicio> ejercicios = desafio.ejercicios.toSorted()
         enunciados.withIndex().forEach { enunciado, index ->

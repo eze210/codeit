@@ -31,7 +31,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
 
     void unaFechaCreadaConUnSoloParametroEsUnVencimiento() {
         when:"Una vigencia es creada con un solo parámetro"
-        Vigencia vigencia = new Vigencia(DateTime.now())
+        Vigencia vigencia = new Vigencia(null, DateTime.now())
 
         then:"es de tipo vencimiento"
         vigencia.tipo == Vigencia.Tipo.Vencimiento
@@ -42,7 +42,7 @@ class VigenciaSpec extends Specification implements GrailsUnitTest {
         DateTime ahora = DateTime.now()
         DateTime mesPasado = ahora.minusMonths(1)
         DateTime diaSiguiente = ahora.plusDays(1)
-        Vigencia vigencia = new Vigencia(ahora)
+        Vigencia vigencia = new Vigencia(null, ahora)
         assert vigencia.tipo == Vigencia.Tipo.Vencimiento
 
         expect:"contiene una fecha del mes pasado"

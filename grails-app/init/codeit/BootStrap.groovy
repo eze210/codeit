@@ -37,7 +37,7 @@ class BootStrap {
             eq2.save flush: true
 
             // Desafíos
-            Desafio des1 = prog1.proponerDesafio("EL desafío", "Sólo tenés que hacer la mejor función del mundo", DateTime.now().plusDays(5))
+            Desafio des1 = prog1.proponerDesafio("EL desafío", "Sólo tenés que hacer la mejor función del mundo", null, DateTime.now().plusDays(5))
             Ejercicio ej1_1 = prog1.proponerEjercicioPara(des1, "Para hacer la mejor función del mundo, tiene que aprobarnos con 10")
             des1.save flush: true
 

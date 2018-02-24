@@ -61,13 +61,7 @@ class VigenciaUserType implements UserType {
         fechaHasta = fechaHasta == new Date(0,0,0) ? null : fechaHasta
         DateTime desde = fechaDesde ? new DateTime(fechaDesde) : null
         DateTime hasta = fechaHasta ? new DateTime(fechaHasta) : null
-        if (desde && hasta) {
-            new Vigencia(hasta, desde)
-        } else if (hasta) {
-            new Vigencia(hasta)
-        } else {
-            new Vigencia()
-        }
+        new Vigencia(desde, hasta)
     }
 
     @Override
@@ -98,7 +92,10 @@ class VigenciaUserType implements UserType {
             return new Vigencia(vig.rangoDeFechas.lowerEndpoint(), vig.rangoDeFechas.upperEndpoint())
         }
         if (vig.rangoDeFechas.hasUpperBound()) {
-            return new Vigencia(vig.rangoDeFechas.upperEndpoint())
+            return new Vigencia(null, vig.rangoDeFechas.upperEndpoint())
+        }
+        if (vig.rangoDeFechas.hasLowerBound()) {
+            return new Vigencia(vig.rangoDeFechas.lowerEndpoint(), null)
         }
         return new Vigencia()
     }
