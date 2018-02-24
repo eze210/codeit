@@ -34,7 +34,8 @@ class PuntuarDesafiosTestSpec extends Specification {
         given:"Un programador ha subido alguna resolución a algún ejercicio de un desafío"
         Programador programador = new Programador("Resolvedor")
         programador.proponerSolucionPara(desafio, "Solución").agregarResolucion(
-                new Resolucion(ejercicio, "{x -> x}"))
+                new Resolucion(ejercicio, "x")
+        )
 
         when:"intenta asignar un punto al desafío"
         Integer nuevoPuntajeDelDesafio = programador.asignarPuntoA(desafio)

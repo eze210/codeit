@@ -15,11 +15,8 @@ class Solucion {
     /** Descripción de la solución. */
     String descripcion
 
-    /** Resultado actual de la solución en el desafío. */
-    Resultado resultado
-
     /** Declaraciones necesarias para el mapeo relacional. */
-    static belongsTo = [participante: Participante, desafio: Desafio]
+    static belongsTo = [participante: Participante, desafio: Desafio, resultado: Resultado]
     static hasMany = [resoluciones: Resolucion]
 
     /** Reglas para el mapeo relacional. */
@@ -42,6 +39,7 @@ class Solucion {
         this.descripcion = descripcion
         this.desafio = desafio
         this.resoluciones = new LinkedHashSet<>()
+        participante.soluciones.add(this)
         desafio.proponerSolucion(this)
     }
 

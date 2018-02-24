@@ -118,7 +118,7 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Solucion solucion = resolvedor.proponerSolucionPara(desafioNuevo, "Descripción")
 
         then:"la solución resuelve el desafío"
-        desafioNuevo.soluciones.contains(solucion)
+        desafioNuevo.obtenerResultadoActualDeSolucion(solucion) != null
     }
 
     void solucionSeInvalidaCuandoSeAgregaUnNuevoEjercicio() {
@@ -139,7 +139,6 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Solucion solucion = resolvedor.proponerSolucionPara(desafioNuevo, "Descripción")
         Resolucion resolucion = new Resolucion(ejercicio1, "")
         solucion.agregarResolucion(resolucion)
-        assert desafioNuevo.soluciones.size() == 1
         assert desafioNuevo.resultados.size() == 1
         assert desafioNuevo.validarSolucion(solucion).valido
 
@@ -149,7 +148,6 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
 
         then:"la solución debe reprocesarse"
         and:"la solución ya no resuelve el desafío"
-        desafioNuevo.soluciones.size() == 1
         desafioNuevo.resultados.size() == 1
         desafioNuevo.obtenerResultadoActualDeSolucion(solucion) != null
         !desafioNuevo.obtenerResultadoActualDeSolucion(solucion).estaProcesado() &&
@@ -174,7 +172,6 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         Solucion solucion = resolvedor.proponerSolucionPara(desafio, "Descripción")
         Resolucion resolucion = new Resolucion(ejercicio1, "")
         solucion.agregarResolucion(resolucion)
-        assert desafio.soluciones.size() == 1
         assert desafio.resultados.size() == 1
         assert desafio.validarSolucion(solucion).valido
 

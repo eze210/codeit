@@ -86,7 +86,7 @@ class AutomatizarPruebasTestSpec extends Specification {
         Solucion solucion = solucionador.proponerSolucionPara(desafio, "Mi solución")
 
         then:"se corren las pruebas"
-        desafio.soluciones.contains(solucion)
+        desafio.obtenerResultadoActualDeSolucion(solucion) != null
         // TODO: hacer un mock de Prueba para verificar la invocación del método
         true
     }

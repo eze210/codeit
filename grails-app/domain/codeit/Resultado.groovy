@@ -16,16 +16,9 @@ class Resultado {
     /** Solución que se probó para generar el resultado. */
     Solucion solucion
 
-    /** Desafío en el que estaba propuesta la solución. */
-    Desafio desafio
-
-    /** Declaraciones necesarias para el mapeo relacional. */
-    static belongsTo = [desafio: Desafio]
-
     /** Reglas para el mapeo relacional. */
     static constraints = {
         solucion nullable: false
-        desafio nullable: false
         valido nullable: true
         correcto nullable: true
         puntaje nullable: true
@@ -41,7 +34,6 @@ class Resultado {
         this.valido = null
         this.correcto = null
         this.puntaje = null
-        this.desafio = solucion.desafio
         solucion.resultado = this
     }
 

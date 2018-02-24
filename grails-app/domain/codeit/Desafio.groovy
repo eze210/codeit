@@ -225,7 +225,7 @@ class Desafio {
      * @return \c true si el participante participa del desafío, o \c false en otro caso.
      */
     Boolean esParticipante(Participante participante) {
-        resultados.find { it.solucion.participante == participante }
+        resultados.find { it.solucion.participante == participante } != null
     }
 
 

@@ -36,13 +36,13 @@ class ResolverDesafiosTestSpec extends Specification {
         assert !creador.comparteAlgunEquipoCon(resolvedor)
 
         and:"no pertenece a un equipo que ya subió una solución"
-        assert !desafio.soluciones*.participante*.programadoresInvolucrados()*.contains(resolvedor)
+        assert !desafio.resultados*.solucion*.participante*.programadoresInvolucrados()*.contains(resolvedor)
 
         when:"el programador quiere subir una solución al desafío"
         Solucion solucion = resolvedor.proponerSolucionPara(desafio, "Descripción de la solución")
 
         then:"es aceptada y validada"
-        desafio.soluciones.contains(solucion)
+        desafio.obtenerResultadoActualDeSolucion(solucion) != null
         (desafio.resultados*.solucion).contains(solucion)
     }
 
@@ -142,7 +142,7 @@ class ResolverDesafiosTestSpec extends Specification {
         assert !creador.comparteAlgunEquipoCon(resolvedor)
 
         and:"pertenece a un equipo que ya subió una solución"
-        assert desafio.soluciones*.participante*.programadoresInvolucrados()*.contains(resolvedor)
+        assert desafio.resultados*.solucion*.participante*.programadoresInvolucrados()*.contains(resolvedor)
 
         when:"el programador quiere subir una solución al desafío"
 
@@ -174,7 +174,7 @@ class ResolverDesafiosTestSpec extends Specification {
         Solucion solucion = equipo.proponerSolucionPara(desafio, "Una solución")
 
         then:"la solución es recibida y probada"
-        desafio.soluciones.contains(solucion)
+        desafio.obtenerResultadoActualDeSolucion(solucion) != null
         (desafio.resultados*.solucion).contains(solucion)
     }
 
