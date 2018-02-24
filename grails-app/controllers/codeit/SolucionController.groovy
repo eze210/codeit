@@ -13,7 +13,7 @@ class SolucionController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         if (params.containsKey("to")) {
-            Desafio desafio = Desafio.findById(params.to)
+            Desafio desafio = Desafio.findById(params.int("to"))
             Integer inicio = (params.containsKey("offset") ? params.offset : 0) * params.max
             Integer count = desafio.soluciones.size()
             Integer fin = Math.min(inicio + params.max, count - 1)

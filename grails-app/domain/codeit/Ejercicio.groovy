@@ -21,7 +21,7 @@ class Ejercicio {
     /** Reglas para el mapeo relacional. */
     static constraints = {
         desafio nullable: false, blank: false
-        enunciado nullable: false, blank: false, unique: true
+        enunciado nullable: false, blank: false
     }
 
 

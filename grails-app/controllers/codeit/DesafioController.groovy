@@ -15,7 +15,7 @@ class DesafioController {
     def index(Integer max) {
         params.max = Math.min(max ?: 1, 100)
         if (params.containsKey("from")) {
-            Participante participante = Participante.findById(params.from)
+            Participante participante = Participante.findById(params.int("from"))
             Integer inicio = (params.containsKey("offset") ? params.offset : 0) * params.max
             Integer count = participante.desafios.size()
             Integer fin = Math.min(inicio + params.max, count - 1)
@@ -82,7 +82,12 @@ class DesafioController {
     }
 
     def edit(Desafio desafio) {
-        respond desafio
+        if (params.containsKey("enunciados")) {
+            params.desafio = desafio
+            render view: "edit", model: params
+        } else {
+            render view: "edit", model: [desafio: desafio]
+        }
     }
 
     @Transactional
@@ -98,7 +103,8 @@ class DesafioController {
         if (titulo.isEmpty()) {
             flash.errors = ["El título no puede estar vacío"]
         }
-        if (Desafio.findByTitulo(titulo)) {
+
+        if (titulo != desafio.titulo && Desafio.findByTitulo(titulo)) {
             flash.errors = (flash.errors ?: []) + ["Ya existe un desafío con ese título"]
         }
         if (descripcion.isEmpty()) {
@@ -110,9 +116,20 @@ class DesafioController {
             }
         }
         if (flash.errors) {
-            redirect action: "edit", params: [desafio: desafio, titulo: params.titulo, descripcion: params.descripcion, enunciados: params.enunciado]
+            def newParams = [:]
+            newParams.titulo = params.titulo
+            newParams.descripcion = params.descripcion
+            newParams.enunciado = params.enunciado
+            enunciados.withIndex().forEach { elem, index ->
+                newParams["entrada_" + index.toString()] = params["entrada_${index}"]
+                newParams["salida_esperada_" + index.toString()] = params["salida_esperada_${index}"]
+            }
+            redirect action: "edit", id: desafio.id, params: newParams
             return
         }
+
+        desafio.titulo = params.titulo
+        desafio.descripcion = params.descripcion
 
         if (desde) {
             desafio.vigencia = new Vigencia(desde, hasta)
@@ -124,7 +141,14 @@ class DesafioController {
 
         enunciados.withIndex().forEach { enunciado, index ->
             if (index < desafio.ejercicios.size()) {
-                desafio.ejercicios[index].enunciado = enunciado
+                Ejercicio ejercicio = desafio.ejercicios.toSorted()[index]
+                ejercicio.enunciado = enunciado
+                List<String> entradas = params.list("entrada_${index}")
+                List<String> salidas = params.list("salida_esperada_${index}")
+                ejercicio.pruebas.toSorted().withIndex().forEach { prueba, indexP ->
+                    prueba.entrada = entradas[indexP]
+                    prueba.salidaEsperada = salidas[indexP]
+                }
             } else {
                 desafio.creador.proponerEjercicioPara(desafio, enunciado)
             }
@@ -133,6 +157,7 @@ class DesafioController {
         // Actualiza desafío, ejercicios y pruebas
         desafio.save flush: true, failOnError: true
 
+        flash.message = "Los cambios han sido guardados."
         redirect action: "edit", id: desafio.id
     }
 
