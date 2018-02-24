@@ -11,8 +11,4 @@ class DynamicBlocksTagLibSpec extends Specification implements TagLibUnitTest<Dy
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
 }
