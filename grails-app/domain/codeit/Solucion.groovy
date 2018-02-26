@@ -52,7 +52,7 @@ class Solucion implements Puntuable {
      */
     void agregarResolucion(Resolucion resolucion) {
         /* no puede haber dos resoluciones para el mismo ejercicio */
-        resoluciones.removeIf({res -> res.ejercicio == resolucion.ejercicio})
+        resoluciones.removeIf({res -> res.ejercicio.id == resolucion.ejercicio.id})
         resoluciones.add(resolucion)
         resolucion.solucion = this
 

@@ -10,7 +10,7 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured('ROLE_USER')
 class DesafioController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 1, 100)

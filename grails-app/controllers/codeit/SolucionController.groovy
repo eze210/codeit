@@ -1,6 +1,5 @@
 package codeit
 
-import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
@@ -8,7 +7,7 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured('ROLE_USER')
 class SolucionController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -31,7 +30,7 @@ class SolucionController {
 
     def create() {
         Desafio desafio = Desafio.findById(params.to)
-        render view:"create", model:[desafio: desafio]
+        render view: "create", model: [desafio: desafio]
     }
 
     @Transactional
@@ -66,61 +65,47 @@ class SolucionController {
     }
 
     def edit(Solucion solucion) {
-        respond solucion
-    }
-
-    @Transactional
-    def update(Solucion solucion) {
-        if (solucion == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        if (solucion.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond solucion.errors, view:'edit'
-            return
-        }
-
-        solucion.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'solucion.label', default: 'Solucion'), solucion.id])
-                redirect solucion
-            }
-            '*'{ respond solucion, [status: OK] }
+        if (params.containsKey("descripcion")) {
+            render view: "edit", model: [solucion: solucion, params: params]
+        } else {
+            render view: "edit", model: [solucion: solucion]
         }
     }
 
     @Transactional
-    def delete(Solucion solucion) {
+    def update() {
+        Solucion solucion = Solucion.findById(params.int("solucion_id"))
 
-        if (solucion == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
+        List<String> codigos = params.list("codigo")
+        List<Ejercicio> ejercicios = params.list("ejercicio_id").collect { Ejercicio.findById(it.toInteger()) }
+        List<String> idResoluciones = params.list("resolucion_id")
+
+        if (params.descripcion.isEmpty()) {
+            flash.errors = ["La descripción no puede estar vacía"]
+
+            def newParams = [:]
+            newParams.descripcion = params.descripcion
+            newParams.codigo = params.codigo
+
+            redirect action: "edit", id: solucion.id, params: newParams
             return
         }
 
-        solucion.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'solucion.label', default: 'Solucion'), solucion.id])
-                redirect action:"index", method:"GET"
+        [ejercicios, codigos].transpose().withIndex().forEach { tupla, index ->
+            if (index < solucion.resoluciones.size()) {
+                Resolucion resolucion = Resolucion.findById(idResoluciones[index].toInteger())
+                assert resolucion.ejercicio.id == tupla[0].id
+                resolucion.codigo = tupla[1]
+            } else {
+                Resolucion resolucion = new Resolucion(tupla[0], tupla[1])
+                solucion.agregarResolucion(resolucion)
             }
-            '*'{ render status: NO_CONTENT }
         }
+
+        // Actualiza las soluciones en el desafío y los resultados y resoluciones creadas
+        solucion.desafio.save flush: true, failOnError: true
+        flash.message = "Los cambios han sido guardados"
+        redirect action: "edit", id: solucion.id
     }
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'solucion.label', default: 'Solucion'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }

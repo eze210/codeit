@@ -277,4 +277,5 @@ class Desafio implements Puntuable {
     Integer obtenerPuntajeEnFaceta(TipoFaceta tipoFaceta) {
         puntaje.obtenerPuntajeEnFaceta(tipoFaceta)
     }
+
 }

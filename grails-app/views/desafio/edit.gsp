@@ -34,13 +34,13 @@
                         Título:
                         <span class="required-indicator">*</span>
                     </label>
-                    <g:textField name="titulo" value="${params?.titulo ?: desafio.titulo}"/>
+                    <g:textField name="titulo" value="${params.titulo != null ? params.titulo : desafio.titulo}"/>
 
                     <label for="descripcion">
                         Descripción:
                         <span class="required-indicator">*</span>
                     </label>
-                    <g:textArea name="descripcion" value="${params?.descripcion ?: desafio.descripcion}"/>
+                    <g:textArea name="descripcion" value="${params.descripcion != null ? params.descripcion : desafio.descripcion}"/>
                     <br/>
                 %{--TODO: Add vigencia--}%
 
