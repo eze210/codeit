@@ -9,7 +9,13 @@ import spock.lang.Specification
 @Rollback
 class TrabajarEnEquipoTestSpec extends Specification {
 
+    boolean seLlamoAValidar
+
     def setup() {
+        seLlamoAValidar = false
+        Invitacion.metaClass.validar = {
+            seLlamoAValidar = true
+        }
     }
 
     def cleanup() {
@@ -71,7 +77,7 @@ class TrabajarEnEquipoTestSpec extends Specification {
         equipo.programadoresInvolucrados().contains(nuevoProgramador)
 
         and:"se vuelven a validar todas las invitaciones que haya recibido"
-        // TODO: Hacer un mock de invitacion para confirmar la invocación de validar()
+        seLlamoAValidar
     }
 
     void logrosConjuntos() {

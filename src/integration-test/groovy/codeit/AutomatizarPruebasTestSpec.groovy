@@ -72,12 +72,23 @@ class AutomatizarPruebasTestSpec extends Specification {
 
 
     void agregadoDeSolucion() {
+        /* mock para corroborar la invocacion del metodo */
+        boolean seLlamoAValidarResolucion = false
+        Prueba.metaClass.validarResolucion = {
+            Resolucion resolucion ->
+                seLlamoAValidarResolucion = true
+        }
+
         given:"Un desafío en el sistema"
         Programador creador = new Programador("Creador")
         Desafio desafio = creador.proponerDesafio("Título", "Descripción", new LinkedHashSet<Insignia>([
                 TipoFaceta.Creativo.insigniasAutomaticasPosibles[0]
         ]))
         assert desafio != null
+
+        and:"que tiene pruebas"
+        Ejercicio ejercicio = creador.proponerEjercicioPara(desafio, "Un ejercicio")
+        ejercicio.agregarPrueba("x = 2", "2")
 
         and:"sus insignias requeridas cierto programador posee"
         Programador solucionador = new Programador("Solucionador")
@@ -86,11 +97,13 @@ class AutomatizarPruebasTestSpec extends Specification {
 
         when:"ese programador sube una solución"
         Solucion solucion = solucionador.proponerSolucionPara(desafio, "Mi solución")
+        Resolucion resolucion = new Resolucion(ejercicio, "def foo = { x -> x }")
+        solucion.agregarResolucion(resolucion)
 
         then:"se corren las pruebas"
         desafio.obtenerResultadoActualDeSolucion(solucion) != null
-        // TODO: hacer un mock de Prueba para verificar la invocación del método
-        true
+        desafio.revalidarSoluciones()
+        seLlamoAValidarResolucion
     }
 
 }
