@@ -15,29 +15,30 @@ class BootStrap {
 
             // Programadores
             Programador prog1 = new Programador("Esio Trot")
-            prog1.save flush: true, failOnError: true
             Programador prog2 = new Programador("Halle Luyah")
-            prog2.save flush: true, failOnError: true
             Programador prog3 = new Programador("Armando Esteban Quito")
-            prog3.save flush: true, failOnError: true
             Programador prog4 = new Programador("Susana Horia")
-            prog4.save flush: true, failOnError: true
             Programador prog5 = new Programador("Oompa Loompa")
-            prog5.save flush: true, failOnError: true
 
             // Equipos
             Equipo eq1 = new Equipo("Los mejores !")
             eq1.agregarMiembro(prog1).agregarMiembro(prog2)
-            eq1.save flush: true, failOnError: true
+            assert eq1.programadores.contains(prog1)
 
             Equipo eq2 = new Equipo("Los segundos mejores !")
             eq2.agregarMiembro(prog3).agregarMiembro(prog4)
+
+            prog1.save flush: true, failOnError: true
+            prog2.save flush: true, failOnError: true
+            prog3.save flush: true, failOnError: true
+            prog4.save flush: true, failOnError: true
+            prog5.save flush: true, failOnError: true
+            eq1.save flush: true, failOnError: true
             eq2.save flush: true, failOnError: true
 
             // Desafíos
             Desafio des1 = prog1.proponerDesafio("EL desafío", "Sólo tenés que hacer la mejor función del mundo", null, DateTime.now().plusDays(5))
             Ejercicio ej1_1 = prog1.proponerEjercicioPara(des1, "Para hacer la mejor función del mundo, tiene que aprobarnos con 10")
-            des1.save flush: true, failOnError: true
 
             Desafio des2 = prog4.proponerDesafio("Mi primer desafío", "Sólo tenés que hacer la UI para que le puedan proponer soluciones a esto")
             Ejercicio ej2_1 = prog4.proponerEjercicioPara(des2, "Primero tenés que hacer que se puedan listar los desafíos")
@@ -46,7 +47,6 @@ class BootStrap {
             Ejercicio ej2_2 = prog4.proponerEjercicioPara(des2, "Después entrar a ver el detalle de un desafío")
             Prueba pr2_2_1 = ej2_2.agregarPrueba("", "")
             Ejercicio ej2_3 = prog4.proponerEjercicioPara(des2, "Finalmente proponer una solución a él")
-            des2.save flush: true, failOnError: true
 
             Solucion sol2_1 = prog1.proponerSolucionPara(des2, "Esto no fue nada fácil. Pero de a poquito pude ir pasando todos los ejercicios. Obviamente el más difícil fue el último.")
             Resolucion sol2_1_1 = new Resolucion(ej2_1, "")
@@ -64,7 +64,17 @@ class BootStrap {
             Resolucion sol2_2_3 = new Resolucion(ej2_3, "def scaffold = true")
             sol2_2.agregarResolucion(sol2_2_3)
 
+            des1.save flush: true, failOnError: true
             des2.save flush: true, failOnError: true
+
+            prog1.save flush: true, failOnError: true
+            prog2.save flush: true, failOnError: true
+            prog3.save flush: true, failOnError: true
+            prog4.save flush: true, failOnError: true
+            prog5.save flush: true, failOnError: true
+            eq1.save flush: true, failOnError: true
+            eq2.save flush: true, failOnError: true
+
             Validador.obtenerInstancia().start()
         }
     }

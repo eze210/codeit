@@ -47,10 +47,10 @@ class Programador extends Participante implements Creador, Puntuable {
         this.invitaciones = new HashSet<>()
         this.desafiosCreados = new HashSet<>()
         this.puntaje = new Puntaje([new Faceta(TipoFaceta.Ganador),
-                               new Faceta(TipoFaceta.Desafiante),
-                               new Faceta(TipoFaceta.Solucionador),
-                               new Faceta(TipoFaceta.Creativo),
-                               new Faceta(TipoFaceta.Prolijo)])
+                                    new Faceta(TipoFaceta.Desafiante),
+                                    new Faceta(TipoFaceta.Solucionador),
+                                    new Faceta(TipoFaceta.Creativo),
+                                    new Faceta(TipoFaceta.Prolijo)])
     }
 
     /** Asigna un punto al desafío.

@@ -28,6 +28,7 @@ abstract class Participante implements Puntuable {
     Participante(String nombre) {
         this.nombre = nombre
         this.soluciones = new HashSet<>()
+        this.desafios = new HashSet<>()
     }
 
     /** Devuelve los programadores involucrados con el participante.
@@ -55,6 +56,7 @@ abstract class Participante implements Puntuable {
      */
     Solucion proponerSolucionPara(Desafio desafio, String descripcionDeLaSolucion) {
         desafio.validarParticipacion(this)
+        desafios.add(desafio)
         new Solucion(this, descripcionDeLaSolucion, desafio)
     }
 

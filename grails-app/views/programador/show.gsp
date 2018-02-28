@@ -31,7 +31,7 @@
                     </g:each>
                 </g:if>
                 <g:else>
-                    <p>No tiene equpos aún</p>
+                    <p>No tiene equipos aún</p>
                 </g:else>
 
                 <h2>Desafíos propuestos</h2>
