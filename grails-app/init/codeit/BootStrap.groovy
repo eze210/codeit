@@ -27,13 +27,11 @@ class BootStrap {
 
             // Equipos
             Equipo eq1 = new Equipo("Los mejores !")
-            eq1.agregarMiembro(prog1)
-            eq1.agregarMiembro(prog2)
+            eq1.agregarMiembro(prog1).agregarMiembro(prog2)
             eq1.save flush: true, failOnError: true
 
             Equipo eq2 = new Equipo("Los segundos mejores !")
-            eq2.agregarMiembro(prog3)
-            eq2.agregarMiembro(prog4)
+            eq2.agregarMiembro(prog3).agregarMiembro(prog4)
             eq2.save flush: true, failOnError: true
 
             // Desafíos

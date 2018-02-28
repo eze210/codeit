@@ -1,9 +1,12 @@
 package codeit
 
+import javax.persistence.Embedded
+
 /** Clase faceta. */
 class Faceta {
 
     /** Tipo de la faceta. */
+    @Embedded
     TipoFaceta tipo
 
     /** Puntos acumulados en la faceta. */

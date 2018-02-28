@@ -30,27 +30,26 @@
 
                 <h2>Soluciones</h2>
                 <p>
-                    <%-- TODO: AGREGAR LINKS CUANDO SE PUEDAN VER LAS SOLUCIONES DE UN DESAFÍO --%>
-                            <g:link controller="solucion" action="index" params="[to: desafio.id]"><g:quantityOf number="${desafio.resultados.size()}" word="solución" plural="soluciones" /></g:link> por ahora,
-                            <g:quantityOf number="${desafio.resultados.findAll { it.correcto }.size()}" word="correcta" />,
-                            <g:quantityOf number="${desafio.resultados.findAll { it.valido }.size()}" word="valida" />
+                    <g:link controller="solucion" action="index" params="[to: desafio.id]"><g:quantityOf number="${desafio.resultados.size()}" word="solución" plural="soluciones" /></g:link> por ahora,
+                    <g:quantityOf number="${desafio.resultados.findAll { it.correcto }.size()}" word="correcta" />,
+                    <g:quantityOf number="${desafio.resultados.findAll { it.valido }.size()}" word="valida" />
 
-                        </p>
-                        <div class="nav" role="navigation">
-                            <ul>
-                                <li><g:link class="create" action="create" controller="solucion" params="[to: desafio.id]">Proponer Solución</g:link></li>
-                            </ul>
-                        </div>
-                    </div>
+                </p>
+                <div class="nav" role="navigation">
+                    <ul>
+                        <li><g:link class="create" action="create" controller="solucion" params="[to: desafio.id]">Proponer Solución</g:link></li>
+                    </ul>
+                </div>
+            </div>
 
-                    <%-- TODO: CUANDO AGREGUEMOS EDICIÓN PARA QUIEN SEA EL CREADOR
-                    <g:form resource="${this.desafio}" method="DELETE">
-                        <fieldset class="buttons">
-                            <g:link class="edit" action="edit" resource="${this.desafio}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-                            <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                        </fieldset>
-                    </g:form>
-                    --%>
+            <%-- TODO: CUANDO AGREGUEMOS EDICIÓN PARA QUIEN SEA EL CREADOR
+            <g:form resource="${this.desafio}" method="DELETE">
+                <fieldset class="buttons">
+                    <g:link class="edit" action="edit" resource="${this.desafio}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                    <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                </fieldset>
+            </g:form>
+            --%>
         </div>
     </body>
 </html>

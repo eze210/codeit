@@ -41,12 +41,12 @@ class Programador extends Participante implements Creador, Puntuable {
     Programador(String nombre) {
         super(nombre)
 
-        usuario = Seguridad.crearUsuario(nombre, '1234')
+        this.usuario = Seguridad.crearUsuario(nombre, '1234')
 
         this.equipos = new HashSet<>()
         this.invitaciones = new HashSet<>()
         this.desafiosCreados = new HashSet<>()
-        puntaje = new Puntaje([new Faceta(TipoFaceta.Ganador),
+        this.puntaje = new Puntaje([new Faceta(TipoFaceta.Ganador),
                                new Faceta(TipoFaceta.Desafiante),
                                new Faceta(TipoFaceta.Solucionador),
                                new Faceta(TipoFaceta.Creativo),

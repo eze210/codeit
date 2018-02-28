@@ -44,6 +44,10 @@ class Prueba {
      * @return \c true si la salida esperada coincide, o \c false sino.
      */
     Boolean validarResolucion(Resolucion resolucion) {
-        resolucion.ejecutar(entrada) == salidaEsperada
+        try {
+            resolucion.ejecutar(entrada) == salidaEsperada
+        } catch (Exception e) {
+            false
+        }
     }
 }

@@ -5,13 +5,14 @@ class Puntaje implements Puntuable {
     /** Insignias conseguidas por un puntaje. */
     Set<Insignia> insignias
 
-    /** Insignias conseguidas por un puntaje. */
+    /** Insignias otorgadas por un puntaje. */
     Set<Insignia> insigniasRetiradas
 
     /** Facetas en las que puede ser puntuado un puntaje. */
     Set<Faceta> facetas
 
     /** Declaraciones necesarias para el mapeo relacional. */
+    static belongsTo = [Faceta, Insignia]
     static hasMany = [facetas           : Faceta,
                       insignias         : Insignia,
                       insigniasRetiradas: Insignia]
@@ -19,6 +20,7 @@ class Puntaje implements Puntuable {
     Puntaje(Collection<? extends Faceta> facetas) {
         this.facetas = new LinkedHashSet<>(facetas)
         this.insignias = new LinkedHashSet<>()
+        this.insigniasRetiradas = new LinkedHashSet<>()
     }
 
     /* ****************************************************************** *
