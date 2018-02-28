@@ -26,9 +26,18 @@
 
             <g:form name="atributos_solucion" controller="solucion" action="save">
                 <fieldset class="form">
+                    <g:loggedInProgramador>
+                        <g:set var="participantesDisponibles" value="${[programador] + programador.equipos.findAll { solucion.desafio.puedeParticipar(it) }}" />
+                        <g:if test="${participantesDisponibles.size() > 1}">
+                            <label>Participar como</label> <label class="wrong_color">*</label>
+                            <g:select name="participante_id" from="${participantesDisponibles}" optionKey="id" optionValue="nombre" value="${programador.nombre}"/>
+                        </g:if>
+                        <g:else>
+                            <label>Participando como ${participantesDisponibles.first().nombre}</label>
+                        </g:else>
+                        <br/>
+                    </g:loggedInProgramador>
                     <label>Descripción</label> <label class="wrong_color">*</label> <br/>
-                    %{--TODO: Add login and use participante from there--}%
-                    <g:hiddenField name="participante_id" value="5" />
                     <g:hiddenField name="desafio_id" value="${desafio.id}" />
                     <g:textArea name="descripcion"/>
                     <g:each var="ejercicio" status="i" in="${desafio.ejercicios.toSorted()}">

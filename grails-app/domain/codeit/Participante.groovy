@@ -48,6 +48,11 @@ abstract class Participante implements Puntuable {
         programadoresInvolucrados().intersect(otros)
     }
 
+    Boolean contieneA(Participante participante) {
+        Set<Programador> otros = participante.programadoresInvolucrados()
+        programadoresInvolucrados().intersect(otros).size() == otros.size()
+    }
+
     /** Propone una solución en el desafío indicado.
      *
      * @param desafio El desafío que intentará resolver la solución.

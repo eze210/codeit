@@ -5,14 +5,15 @@
         <title>Editar Solución a ${solucion.desafio.titulo}</title>
     </head>
     <body>
+        <g:loggedInProgramador>
         <div class="breadcrumble">
-            %{--TODO: Use logged user--}%
             <g:link controller="desafio" action="index">Desafíos</g:link>
             > <g:link controller="desafio" action="show" id="${solucion.desafio.id}">${solucion.desafio.titulo}</g:link>
             > Editar <g:link action="show" id="${solucion.id}">mi solución</g:link>
         </div>
         <div id="edit-solucion" class="content scaffold-edit" role="main">
             <h1>Editar mi Solución a ${solucion.desafio.titulo}</h1>
+            <p>Participando como ${solucion.desafio.obtenerSolucionDe(programador).participante.nombre}</p>
 
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
@@ -45,5 +46,6 @@
                 </fieldset>
             </g:form>
         </div>
+        </g:loggedInProgramador>
     </body>
 </html>

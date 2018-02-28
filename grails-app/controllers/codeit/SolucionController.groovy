@@ -7,6 +7,8 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured('ROLE_USER')
 class SolucionController {
 
+    def springSecurityService
+
     static allowedMethods = [save: "POST", update: "PUT"]
 
     def index(Integer max) {
@@ -19,8 +21,12 @@ class SolucionController {
             List<Solucion> soluciones = fin > 0 ? (desafio.resultados*.solucion as List)[inicio..fin] : []
             respond solucionList: soluciones, solucionCount: count, desafio: desafio
         } else {
-            // TODO: Filter solucions from current user
-            respond solucionList: Solucion.list(params), solucionCount: Solucion.count()
+            Programador prog = Programador.findByNombre(springSecurityService.principal.username)
+            Integer inicio = (params.containsKey("offset") ? params.offset : 0) * params.max
+            Integer count = programador.soluciones.size()
+            Integer fin = Math.min(inicio + params.max, count - 1)
+            List<Solucion> soluciones = fin > 0 ? (desafio.soluciones as List)[inicio..fin] : []
+            respond solucionList: soluciones, solucionCount: count, programador: prog
         }
     }
 
