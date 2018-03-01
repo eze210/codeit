@@ -15,15 +15,15 @@
             <ul>
                 <g:if test="${desafio != null}">
                     <g:loggedInProgramador>
-                        <g:if test="${desafio.puedeParticipar(programador)}">
-                            <g:set var="solucion" value="${desafio.obtenerSolucionDe(programador)}" />
-                            <g:if test="${solucion}">
-                                <li><g:link class="edit" action="edit" controller="solucion" id="${solucion.id}">Editar Solución</g:link></li>
-                            </g:if>
-                            <g:else>
-                                <li><g:link class="create" action="create" controller="solucion" params="[to: desafio.id]">Proponer Solución</g:link></li>
-                            </g:else>
+                        <g:set var="solucion" value="${desafio.obtenerSolucionDe(programador)}" />
+                        <g:if test="${solucion}">
+                            <li><g:link class="edit" action="edit" controller="solucion" id="${solucion.id}">Editar Solución</g:link></li>
                         </g:if>
+                        <g:else>
+                            <g:if test="${desafio.puedeParticipar(programador)}">
+                                <li><g:link class="create" action="create" controller="solucion" params="[to: desafio.id]">Proponer Solución</g:link></li>
+                            </g:if>
+                        </g:else>
                     </g:loggedInProgramador>
                 </g:if>
             </ul>

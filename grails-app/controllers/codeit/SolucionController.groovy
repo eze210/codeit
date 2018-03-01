@@ -64,6 +64,7 @@ class SolucionController {
             return
         }
 
+        solucion.validar()
         // Actualiza las soluciones en el desafío y los resultados y resoluciones creados
         desafio.save flush: true, failOnError: true
         solucion.save flush: true, failOnError: true
@@ -110,6 +111,7 @@ class SolucionController {
             }
         }
 
+        solucion.validar()
         // Actualiza las soluciones en el desafío y los resultados y resoluciones creadas
         solucion.desafio.save flush: true, failOnError: true
         solucion.save flush: true, failOnError: true

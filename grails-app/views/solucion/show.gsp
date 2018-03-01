@@ -20,6 +20,11 @@
                         <g:if test="${solucion.desafio.puedeParticipar(programador)}">
                             <li><g:link class="create" action="create">Crear mi solución</g:link></li>
                         </g:if>
+                        <g:else>
+                            <g:if test="${solucion.desafio.obtenerSolucionDe(programador)}">
+                                <li><g:link method="GET" resource="${solucion}">Ver mi solución</g:link></li>
+                            </g:if>
+                        </g:else>
                     </g:else>
                 </g:loggedInProgramador>
             </ul>

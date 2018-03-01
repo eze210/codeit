@@ -1,8 +1,8 @@
 <div>
     <g:if test="${style == 'short'}">
-        <div class="circle ${resultado.valido == null ? "processing_background" : (resultado.valido ? "valid_background" : "wrong_background")}" />
+        <div class="circle ${resultado.valido == null ? "processing_background" : (resultado.valido ? "valid_background" : "wrong_background")}" style="display: inline-block;" />
         <g:if test="${style == "short" && resultado.valido}">
-            <label>resultado.puntaje</label>
+            <label style="display: inline-block;">${resultado.puntaje}</label>
         </g:if>
     </g:if>
     <g:else>

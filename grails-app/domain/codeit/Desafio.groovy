@@ -184,7 +184,7 @@ class Desafio implements Puntuable {
             return new YaEstaParticipando()
 
         /* no está participando pero comparte miembros con algún participante */
-        if (resultados*.solucion*.participante*.programadoresInvolucrados()*.contains(participante))
+        if (resultados*.solucion*.participante*.programadoresInvolucrados().flatten().contains(participante))
             throw new ComparteMiembrosConParticipante()
 
         if (!participante.obtenerInsignias().containsAll(insigniasRequeridas))

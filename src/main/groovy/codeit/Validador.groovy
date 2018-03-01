@@ -44,8 +44,6 @@ class Validador extends Thread {
     Validador leftShift(Desafio elemento) {
         if (tipo == TipoValidador.Asincronico) {
             desafiosConCambios << elemento
-        } else {
-            elemento.revalidarSoluciones()
         }
         this
     }
