@@ -9,11 +9,17 @@
         <div class="breadcrumble"><g:link action="index">Desafios</g:link> > ${desafio.titulo}</div>
         <div class="nav" role="navigation">
             <ul>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="create" action="create">Crear desafío</g:link></li>
                 <g:loggedInProgramador>
                     <g:if test="${programador.id == desafio.creador.id}">
                         <li><g:link class="edit" action="edit" resource="${desafio}">Editar</g:link></li>
                     </g:if>
+                    <g:else>
+                        %{--Sino le dio un punto ya--}%
+                        %{--<g:if test="">--}%
+                        <li><g:link action="puntuar" id="${desafio.id}">Dar punto</g:link></li>
+                        %{--</g:if>--}%
+                    </g:else>
                 </g:loggedInProgramador>
             </ul>
         </div>
@@ -24,6 +30,8 @@
             </g:if>
             <div class="padded_container">
                 <tmpl:vigenciaDisplay vigencia="${desafio.vigencia}" />
+                <br/>
+                <tmpl:/shared/displayPuntaje puntaje="${desafio.puntaje}" />
                 <br/>
                 <p><em>${desafio.descripcion}</em></p>
 

@@ -162,4 +162,10 @@ class DesafioController {
         redirect action: "edit", id: desafio.id
     }
 
+    def puntuar(Desafio desafio) {
+        desafio.otorgarPuntoEnFaceta(TipoFaceta.Desafio)
+        desafio.save flush: true, failOnError: true
+        redirect action: "show", id: desafio.id
+    }
+
 }
