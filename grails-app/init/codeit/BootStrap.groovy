@@ -20,6 +20,7 @@ class BootStrap {
             Programador prog4 = new Programador("Susana Horia")
             Programador prog5 = new Programador("Oompa Loompa")
             Programador prog6 = new Programador("Cindy Nero")
+            Programador prog7 = new Programador("10 101")
 
             prog1.save flush: true, failOnError: true
             prog2.save flush: true, failOnError: true
@@ -27,6 +28,7 @@ class BootStrap {
             prog4.save flush: true, failOnError: true
             prog5.save flush: true, failOnError: true
             prog6.save flush: true, failOnError: true
+            prog7.save flush: true, failOnError: true
 
             prog1.otorgarPuntoEnFaceta(TipoFaceta.Creativo)
             prog1.otorgarInsignia(
@@ -40,12 +42,18 @@ class BootStrap {
             Equipo eq2 = new Equipo("Los segundos mejores !")
             eq2.agregarMiembro(prog3).agregarMiembro(prog4)
 
+            Equipo eq3 = new Equipo("Los terceros mejores !")
+            eq2.agregarMiembro(prog6).agregarMiembro(prog7)
+
             prog1.save flush: true, failOnError: true
             prog2.save flush: true, failOnError: true
             prog3.save flush: true, failOnError: true
             prog4.save flush: true, failOnError: true
+            prog6.save flush: true, failOnError: true
+            prog7.save flush: true, failOnError: true
             eq1.save flush: true, failOnError: true
             eq2.save flush: true, failOnError: true
+            eq3.save flush: true, failOnError: true
 
             // Desafíos
             Desafio des1 = prog1.proponerDesafio("EL desafío", "Sólo tenés que hacer la mejor función del mundo", null, DateTime.now().plusDays(5))
