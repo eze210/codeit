@@ -181,7 +181,7 @@ class Programador extends Participante implements Creador, Puntuable {
      * Nota: el desafío debe haber sido creado por el programador.
      */
     Ejercicio proponerEjercicioPara(@NotNull Desafio desafio, String enunciado) {
-        assert desafio.creador.id == this.id
+        assert desafio.creador == this
 
         Ejercicio nuevoEjercicio = new Ejercicio(desafio, enunciado)
         desafio.agregarEjercicio(nuevoEjercicio)

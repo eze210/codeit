@@ -10,9 +10,4 @@ class AuthenticationTagLibSpec extends Specification implements TagLibUnitTest<A
 
     def cleanup() {
     }
-
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
 }

@@ -102,7 +102,7 @@ class Desafio implements Puntuable {
      */
     void proponerSolucion(Solucion solucion) throws ComparteMiembrosConCreador, YaParticipaDelDesafio, DesafioNoVigente {
         // TODO: tirar las excepciones que dice la doc.
-        int index = resultados.findIndexOf { it.solucion.participante.id == solucion.participante.id }
+        int index = resultados.findIndexOf { it.solucion.participante == solucion.participante }
         if (~index) {
             resultados[index].invalidar()
         } else {
@@ -135,7 +135,7 @@ class Desafio implements Puntuable {
     }
 
     Solucion obtenerSolucionDe(Participante participante) {
-        Resultado resultado = resultados.find { it.solucion.participante.id == participante.id }
+        Resultado resultado = resultados.find { it.solucion.participante == participante }
         if (resultado != null) return resultado.solucion
         resultado = resultados.find { it.solucion.participante.contieneA(participante) }
         if (resultado != null) return resultado.solucion
@@ -179,16 +179,12 @@ class Desafio implements Puntuable {
         if (participante.comparteAlgunEquipoCon(creador))
             throw new ComparteEquipoConCreador()
 
-        /* si ya es participante puede seguir participando */
-        if (propusoAlgunaSolucion(participante))
-            return true
-
         /* Está participante como parte de otro equipo */
-        if (estaParticipando(participante)) {
-            return true
-        }
+        if (estaParticipando(participante))
+            return new YaEstaParticipando()
+
         /* no está participando pero comparte miembros con algún participante */
-        if (resultados.find { it.solucion.participante.comparteMiembrosCon(participante) })
+        if (resultados*.solucion*.participante*.programadoresInvolucrados()*.contains(participante))
             throw new ComparteMiembrosConParticipante()
 
         if (!participante.obtenerInsignias().containsAll(insigniasRequeridas))
@@ -203,7 +199,7 @@ class Desafio implements Puntuable {
      * @return \c true si el participante participa del desafío, o \c false en otro caso.
      */
     Boolean propusoAlgunaSolucion(Participante participante) {
-        resultados.find { it.solucion.participante.id == participante.id } != null
+        resultados.find { it.solucion.participante == participante } != null
     }
 
     Boolean estaParticipando(Participante participante) {
@@ -244,7 +240,7 @@ class Desafio implements Puntuable {
     }
 
     void invalidarSolucion(Solucion solucion) {
-        resultados.find { it.solucion.id == solucion.id }?.invalidar()
+        resultados.find { it.solucion == solucion }?.invalidar()
     }
 
     /** Vuelve a calcular los resultados para las soluciones propuestas.
@@ -260,7 +256,7 @@ class Desafio implements Puntuable {
      *
      * @return Las insignias requeridas para que un participante pueda proponer una solución.
      */
-    Set<Insignia> obtenerInsigniasRequeridas() {
+    Set<String> obtenerInsigniasRequeridas() {
         insigniasRequeridas
     }
 

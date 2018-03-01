@@ -1,6 +1,9 @@
 package codeit
 
+import groovy.transform.EqualsAndHashCode
+
 /** Clase Solución. */
+@EqualsAndHashCode(includes = ['descripcion'])
 class Solucion implements Puntuable {
 
     /** Participante que propuso la solución. */
@@ -25,7 +28,7 @@ class Solucion implements Puntuable {
     /** Reglas para el mapeo relacional. */
     static constraints = {
         participante nullable: false, blank: false
-        descripcion nullable: false, blank: false
+        descripcion nullable: false, blank: false, unique: true
         desafio nullable: false, blank: false
         resoluciones nullable: false
         resultado nullable: false
@@ -52,7 +55,7 @@ class Solucion implements Puntuable {
      */
     void agregarResolucion(Resolucion resolucion) {
         /* no puede haber dos resoluciones para el mismo ejercicio */
-        resoluciones.removeIf({res -> res.ejercicio.id == resolucion.ejercicio.id})
+        resoluciones.removeIf({res -> res.ejercicio == resolucion.ejercicio})
         resoluciones.add(resolucion)
         resolucion.solucion = this
 

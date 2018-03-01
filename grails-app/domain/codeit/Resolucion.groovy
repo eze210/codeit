@@ -1,8 +1,10 @@
 package codeit
 
+import groovy.transform.EqualsAndHashCode
 import groovy.transform.Sortable
 
 @Sortable(includes = ['ejercicio'])
+@EqualsAndHashCode(includes = ['codigo', 'ejercicio', 'solucion'])
 class Resolucion {
 
     /** Código de la resolución como cadena de caracteres. */

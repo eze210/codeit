@@ -1,8 +1,10 @@
 package codeit
 
+import groovy.transform.EqualsAndHashCode
 import groovy.transform.Sortable
 
 @Sortable(includes = ['id'])
+@EqualsAndHashCode(includes = ['enunciado'])
 class Ejercicio {
 
     /** Enunciado del ejercicio. */
@@ -21,7 +23,7 @@ class Ejercicio {
     /** Reglas para el mapeo relacional. */
     static constraints = {
         desafio nullable: false, blank: false
-        enunciado nullable: false, blank: false
+        enunciado nullable: false, blank: false, unique: true
     }
 
     /** Constructor de un ejercicio.

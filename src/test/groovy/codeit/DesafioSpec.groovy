@@ -167,7 +167,6 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
                 ahora,
                 maniana)
         Ejercicio ejercicio1 = programador.proponerEjercicioPara(desafio, "Ejercicio viejo")
-        desafio.agregarEjercicio(ejercicio1)
 
         and:"que era resuelto por una solución"
         Programador resolvedor = new Programador("Otro nombre")
@@ -180,8 +179,6 @@ class DesafioSpec extends Specification implements DomainUnitTest<Desafio> {
         when:"se agrega un ejercicio"
         Ejercicio ejercicio2 = programador.proponerEjercicioPara(desafio, "Ejercicio nuevo")
         desafio.agregarEjercicio(ejercicio2)
-
-        desafio.save flush: true
 
         then:"la solución ya no resuelve el desafío"
         !desafio.obtenerResultadoActualDeSolucion(solucion).estaProcesado()
