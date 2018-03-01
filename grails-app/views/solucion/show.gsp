@@ -8,7 +8,7 @@
         <div class="breadcrumble">
             <g:link controller="desafio" action="index">Desafios</g:link>
             > <g:link controller="desafio" action="show" id="${solucion.desafio.id}">${solucion.desafio.titulo}</g:link>
-            > Solución de <g:link controller="participante" action="show" id="${solucion.desafio.creador.id}">${solucion.participante.nombre}</g:link></div>
+            > Solución de <g:link method="GET" resource="${solucion.participante}">${solucion.participante.nombre}</g:link></div>
         <div class="nav" role="navigation">
             <ul>
                 <li><g:link class="list" action="index">Ver mis soluciones</g:link></li>
@@ -28,7 +28,7 @@
         <div id="show-solucion" class="content scaffold-show" role="main">
             <h1>${solucion.desafio.titulo}</h1>
             <div class="padded_container">
-                <em>por <g:link controller="participante" action="show" id="${solucion.participante.id}">${solucion.participante.nombre}</g:link></em>
+                <em>por <g:link method="GET" resource="${solucion.participante}">${solucion.participante.nombre}</g:link></em>
                 <br/><br/>
                 <tmpl:/shared/estadoSolucionDisplay resultado="${solucion.resultado}" style="${'long'}" />
                 <br/><br/>

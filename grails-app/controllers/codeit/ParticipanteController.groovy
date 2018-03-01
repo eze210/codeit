@@ -9,6 +9,15 @@ class ParticipanteController {
 
     static allowedMethods = [listadoProgramadores: 'POST', listadoEquipos: 'POST']
 
+    def show() {
+        Participante participante = Participante.findById(params.id)
+        if (participante instanceof Programador) {
+            redirect controller: "programador", action: "show", id: params.id
+        } else {
+            redirect controller: "equipo", action: "show", id: params.id
+        }
+    }
+
     def index() {
         params.max = Math.min(params.max ? params.int('max') : 1, 100)
         params.offset = params.offset ? params.int('offset') : 0

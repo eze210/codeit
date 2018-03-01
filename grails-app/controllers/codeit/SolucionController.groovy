@@ -113,7 +113,8 @@ class SolucionController {
         // Actualiza las soluciones en el desafío y los resultados y resoluciones creadas
         solucion.desafio.save flush: true, failOnError: true
         solucion.save flush: true, failOnError: true
-        participante.save flush: true, failOnError: true
+        solucion.participante.save flush: true, failOnError: true
+
         flash.message = "Los cambios han sido guardados"
         redirect action: "edit", id: solucion.id
     }
