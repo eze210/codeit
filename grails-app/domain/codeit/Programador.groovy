@@ -88,7 +88,7 @@ class Programador extends Participante implements Creador, Puntuable {
      * @param solucion Solución que se quiere premiar.
      * @return
      */
-    def otorgarInsigniaASolucion(Insignia insignia, Solucion solucion) {
+    def otorgarInsigniaASolucion(String insignia, Solucion solucion) {
         assert solucion.desafio.creador == this
         solucion.otorgarInsignia(insignia)
     }
@@ -144,17 +144,17 @@ class Programador extends Participante implements Creador, Puntuable {
      * ****************************************************************** */
 
     @Override
-    Set<Insignia> otorgarInsignia(Insignia insignia) {
+    Set<String> otorgarInsignia(String insignia) {
         puntaje.otorgarInsignia(insignia)
     }
 
     @Override
-    Set<Insignia> obtenerInsignias() {
+    Set<String> obtenerInsignias() {
         puntaje.obtenerInsignias()
     }
 
     @Override
-    Insignia retirarInsignia(Insignia insignia) {
+    String retirarInsignia(String insignia) {
         puntaje.retirarInsignia(insignia)
     }
 

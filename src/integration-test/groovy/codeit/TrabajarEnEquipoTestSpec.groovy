@@ -90,11 +90,15 @@ class TrabajarEnEquipoTestSpec extends Specification {
         Solucion laSolucion = equipo.proponerSolucionPara(elDesafio, "La mejor solución")
 
         creadorDelDesafio.elegirMejorSolucion(laSolucion)
-        laSolucion.otorgarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
+        laSolucion.otorgarInsignia(
+                TipoFaceta.Creativo.insigniasAutomaticasPosibles[0].nombre
+        )
 
         given:"Un equipo ya ha conseguido logros en un desafío"
         assert resolvedor1.obtenerPuntajeEnFaceta(TipoFaceta.Ganador) == 1
-        assert resolvedor1.obtenerInsignias().contains(TipoFaceta.Creativo.insigniasAutomaticasPosibles[0])
+        assert resolvedor1.obtenerInsignias().contains(
+                TipoFaceta.Creativo.insigniasAutomaticasPosibles[0].nombre
+        )
 
         when:"un programador nuevo se suma al equipo"
         equipo.agregarMiembro(resolvedor2)
@@ -106,8 +110,12 @@ class TrabajarEnEquipoTestSpec extends Specification {
         resolvedor2.obtenerPuntajeEnFaceta(TipoFaceta.Ganador) == 0
 
         and:"sí gana la habilidad de conseguirlos para toda acción del equipo"
-        laSolucion.otorgarInsignia(TipoFaceta.Creativo.insigniasAutomaticasPosibles[1])
-        resolvedor2.obtenerInsignias().contains(TipoFaceta.Creativo.insigniasAutomaticasPosibles[1])
+        laSolucion.otorgarInsignia(
+                TipoFaceta.Creativo.insigniasAutomaticasPosibles[1].nombre
+        )
+        resolvedor2.obtenerInsignias().contains(
+                TipoFaceta.Creativo.insigniasAutomaticasPosibles[1].nombre
+        )
     }
 
     void desintegracionDeEquipos() {
@@ -120,7 +128,9 @@ class TrabajarEnEquipoTestSpec extends Specification {
         assert Equipo.formanEquipoValido(equipo.programadoresInvolucrados() - programador1)
 
         and:"el equipo tiene alguna insignia"
-        equipo.otorgarInsignia(TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0])
+        equipo.otorgarInsignia(
+                TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0].nombre
+        )
 
         when:"ese programador decide irse del equipo"
         programador1.abandonarEquipo(equipo)

@@ -78,14 +78,14 @@ class Equipo extends Participante implements Puntuable {
      * ****************************************************************** */
 
     @Override
-    Set<Insignia> obtenerInsignias() {
-        Set<Insignia> todasLasInsignias = (programadores*.obtenerInsignias()).flatten()
+    Set<String> obtenerInsignias() {
+        Set<String> todasLasInsignias = (programadores*.obtenerInsignias()).flatten()
         todasLasInsignias
     }
 
     @Override
-    Insignia retirarInsignia(Insignia insignia) {
-        Set<Insignia> todasLasInsignias = (programadores*.retirarInsignia(insignia)).flatten()
+    String retirarInsignia(String insignia) {
+        Set<String> todasLasInsignias = (programadores*.retirarInsignia(insignia)).flatten()
         insignia
     }
 
@@ -102,7 +102,7 @@ class Equipo extends Participante implements Puntuable {
     }
 
     @Override
-    Set<Insignia> otorgarInsignia(Insignia insignia) {
+    Set<String> otorgarInsignia(String insignia) {
         programadores*.otorgarInsignia(insignia)
         obtenerInsignias()
     }

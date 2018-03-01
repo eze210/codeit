@@ -20,6 +20,11 @@ class BootStrap {
             Programador prog4 = new Programador("Susana Horia")
             Programador prog5 = new Programador("Oompa Loompa")
 
+            prog1.otorgarPuntoEnFaceta(TipoFaceta.Creativo)
+            prog1.otorgarInsignia(
+                    TipoFaceta.Prolijo.insigniasAutomaticasPosibles[0].nombre
+            )
+
             // Equipos
             Equipo eq1 = new Equipo("Los mejores !")
             eq1.agregarMiembro(prog1).agregarMiembro(prog2)

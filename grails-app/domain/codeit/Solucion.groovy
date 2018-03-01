@@ -78,17 +78,17 @@ class Solucion implements Puntuable {
      * ****************************************************************** */
 
     @Override
-    Set<Insignia> otorgarInsignia(Insignia insignia) {
+    Set<String> otorgarInsignia(String insignia) {
         participante.otorgarInsignia(insignia)
     }
 
     @Override
-    Set<Insignia> obtenerInsignias() {
+    Set<String> obtenerInsignias() {
         participante.obtenerInsignias()
     }
 
     @Override
-    Insignia retirarInsignia(Insignia insignia) {
+    String retirarInsignia(String insignia) {
         participante.retirarInsignia(insignia)
     }
 

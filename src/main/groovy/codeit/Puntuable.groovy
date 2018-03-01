@@ -8,20 +8,20 @@ interface Puntuable {
      * @param insignia La insignia que debe ser otorgada.
      * @return El conjunto de las insignias del Puntuable luego de otorgar.
      */
-    Set<Insignia> otorgarInsignia(Insignia insignia)
+    Set<String> otorgarInsignia(String insignia)
 
     /** Devuelve todas las insignias que tiene el Puntuable.
      *
      * @return El conjunto de las insignias del Puntuable.
      */
-    Set<Insignia> obtenerInsignias()
+    Set<String> obtenerInsignias()
 
     /** Quita una insignia del Puntuable.
      *
      * @param insignia La insignia que debe ser retirada.
      * @return La insignia que se quitó.
      */
-    Insignia retirarInsignia(Insignia insignia)
+    String retirarInsignia(String insignia)
 
     /** Agrega un punto al Puntuable en la faceta especificada.
      *

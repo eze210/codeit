@@ -3,10 +3,10 @@ package codeit
 class Puntaje implements Puntuable {
 
     /** Insignias conseguidas por un puntaje. */
-    Set<Insignia> insignias
+    Set<String> insignias
 
     /** Insignias otorgadas por un puntaje. */
-    Set<Insignia> insigniasRetiradas
+    Set<String> insigniasRetiradas
 
     /** Facetas en las que puede ser puntuado un puntaje. */
     Set<Faceta> facetas
@@ -14,8 +14,8 @@ class Puntaje implements Puntuable {
     /** Declaraciones necesarias para el mapeo relacional. */
     static belongsTo = [Faceta, Insignia]
     static hasMany = [facetas           : Faceta,
-                      insignias         : Insignia,
-                      insigniasRetiradas: Insignia]
+                      insignias         : String,
+                      insigniasRetiradas: String]
 
     Puntaje(Collection<? extends Faceta> facetas) {
         this.facetas = new LinkedHashSet<>(facetas)
@@ -28,18 +28,18 @@ class Puntaje implements Puntuable {
      * ****************************************************************** */
 
     @Override
-    Set<Insignia> otorgarInsignia(Insignia insignia) {
+    Set<String> otorgarInsignia(String insignia) {
         insignias.add(insignia)
         insignias
     }
 
     @Override
-    Set<Insignia> obtenerInsignias() {
+    Set<String> obtenerInsignias() {
         insignias - insigniasRetiradas
     }
 
     @Override
-    Insignia retirarInsignia(Insignia insignia) {
+    String retirarInsignia(String insignia) {
         if (!insignias.contains(insignias))
             throw new NoTieneInsignia()
 
@@ -53,7 +53,7 @@ class Puntaje implements Puntuable {
         if (!faceta)
             throw new NoTieneFaceta()
 
-        insignias.addAll(faceta.asignarPuntos(1))
+        insignias.addAll(faceta.asignarPuntos(1)*.nombre)
         faceta.puntosAcumulados
     }
 

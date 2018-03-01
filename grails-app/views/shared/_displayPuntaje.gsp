@@ -7,7 +7,7 @@
 <h2>Insignias conseguidas</h2>
 <g:each var="insignia" in="${puntaje.insignias}">
     <div class="card_wrapper"><div class="card">
-        <strong>${insignia.nombre}</strong><br/>
-        <em>${insignia.origen}</em>
+        <strong>${insignia}</strong><br/>
+        <!--em>${insignia}</em-->
     </div></div>
 </g:each>

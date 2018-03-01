@@ -24,7 +24,7 @@ class Desafio implements Puntuable {
     Set<Resultado> resultados
 
     /** Insignias que debe tener un participante para participar del desafío. */
-    Set<Insignia> insigniasRequeridas
+    Set<String> insigniasRequeridas
 
     /** Puntaje del desafío. */
     Puntaje puntaje
@@ -33,7 +33,7 @@ class Desafio implements Puntuable {
     static belongsTo = [creador: Programador]
     static hasMany = [ejercicios          : Ejercicio,
                       resultados          : Resultado,
-                      insigniasRequeridas : Insignia]
+                      insigniasRequeridas : String]
 
     /** Reglas para el mapeo relacional. */
     static constraints = {
@@ -87,7 +87,7 @@ class Desafio implements Puntuable {
         this.titulo = titulo
         this.descripcion = descripcion
         this.creador = creador
-        this.insigniasRequeridas = insigniasRequeridas
+        this.insigniasRequeridas = insigniasRequeridas*.nombre
         this.ejercicios = new LinkedHashSet<>()
         this.resultados = new LinkedHashSet<>()
         this.puntaje = new Puntaje([new Faceta(TipoFaceta.Desafio)])
@@ -253,17 +253,17 @@ class Desafio implements Puntuable {
      * ****************************************************************** */
 
     @Override
-    Set<Insignia> otorgarInsignia(Insignia insignia) {
+    Set<String> otorgarInsignia(String insignia) {
         puntaje.otorgarInsignia(insignia)
     }
 
     @Override
-    Set<Insignia> obtenerInsignias() {
+    Set<String> obtenerInsignias() {
         puntaje.obtenerInsignias()
     }
 
     @Override
-    Insignia retirarInsignia(Insignia insignia) {
+    String retirarInsignia(String insignia) {
         puntaje.retirarInsignia(insignia)
     }
 

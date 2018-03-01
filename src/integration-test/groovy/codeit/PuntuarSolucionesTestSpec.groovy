@@ -30,7 +30,7 @@ class PuntuarSolucionesTestSpec extends Specification {
         Solucion solucion = programadorResolvedor.proponerSolucionPara(desafio, "Una solución")
 
         when:"el creador del desafío intenta asignar una insignia E habilitada a una solución"
-        Insignia E = desafio.obtenerInsignias()[0]
+        String E = desafio.obtenerInsignias()[0]
         programadorCreador.otorgarInsigniaASolucion(E, solucion)
 
         then:"la insignia será otorgada a cada programador involucrado en el participante que creó la solución"
@@ -80,7 +80,7 @@ class PuntuarSolucionesTestSpec extends Specification {
         assert nuevoPuntaje == umbral
 
         then:"la insignia es otorgada al programador que recibió el punto"
-        elProgramador.obtenerInsignias().contains(insigniaAutomatica)
+        elProgramador.obtenerInsignias().contains(insigniaAutomatica.nombre)
     }
 
 }
