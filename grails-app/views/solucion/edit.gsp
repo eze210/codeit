@@ -5,7 +5,6 @@
         <title>Editar Solución a ${solucion.desafio.titulo}</title>
     </head>
     <body>
-        <g:loggedInProgramador>
         <div class="breadcrumble">
             <g:link controller="desafio" action="index">Desafíos</g:link>
             > <g:link controller="desafio" action="show" id="${solucion.desafio.id}">${solucion.desafio.titulo}</g:link>
@@ -13,7 +12,9 @@
         </div>
         <div id="edit-solucion" class="content scaffold-edit" role="main">
             <h1>Editar mi Solución a ${solucion.desafio.titulo}</h1>
-            <p>Participando como ${solucion.desafio.obtenerSolucionDe(programador).participante.nombre}</p>
+            <div class="padded_container">
+                <p>Participando como ${solucion.participante.nombre}</p>
+            </div>
 
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
@@ -29,7 +30,6 @@
             <g:form name="atributos_solucion" controller="solucion" action="update" method="PUT">
                 <fieldset class="form">
                     <label>Descripción</label> <label class="wrong_color">*</label> <br/>
-                %{--TODO: Add login and use participante from there--}%
                     <g:hiddenField name="solucion_id" value="${solucion.id}" />
                     <g:textArea name="descripcion" value="${params.descripcion != null ? params.descripcion : solucion.descripcion}"/>
                     <g:each var="ejercicio" status="i" in="${solucion.desafio.ejercicios.toSorted()}">
@@ -46,6 +46,5 @@
                 </fieldset>
             </g:form>
         </div>
-        </g:loggedInProgramador>
     </body>
 </html>

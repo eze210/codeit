@@ -7,8 +7,7 @@ class AuthenticationTagLib {
     }
 
     def loggedInProgramador = { attrs, body ->
-        def var = "programador"
-        out << body((var):Programador.findByNombre(currentLoggedInUsername()))
+        out << body(programador: Programador.findByNombre(currentLoggedInUsername()))
     }
 
     String currentLoggedInUsername() {

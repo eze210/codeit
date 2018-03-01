@@ -102,7 +102,7 @@ class Desafio implements Puntuable {
      */
     void proponerSolucion(Solucion solucion) throws ComparteMiembrosConCreador, YaParticipaDelDesafio, DesafioNoVigente {
         // TODO: tirar las excepciones que dice la doc.
-        int index = resultados.findIndexOf { it.solucion == solucion }
+        int index = resultados.findIndexOf { it.solucion.participante.id == solucion.participante.id }
         if (~index) {
             resultados[index].invalidar()
         } else {
@@ -135,10 +135,10 @@ class Desafio implements Puntuable {
     }
 
     Solucion obtenerSolucionDe(Participante participante) {
-        Resultado resultado = resultados.find { it.solucion.participante == participante }
-        if (resultado) return resultado.solucion
+        Resultado resultado = resultados.find { it.solucion.participante.id == participante.id }
+        if (resultado != null) return resultado.solucion
         resultado = resultados.find { it.solucion.participante.contieneA(participante) }
-        if (resultado) return resultado.solucion
+        if (resultado != null) return resultado.solucion
         return null
     }
 
@@ -203,7 +203,7 @@ class Desafio implements Puntuable {
      * @return \c true si el participante participa del desafío, o \c false en otro caso.
      */
     Boolean propusoAlgunaSolucion(Participante participante) {
-        resultados.find { it.solucion.participante == participante } != null
+        resultados.find { it.solucion.participante.id == participante.id } != null
     }
 
     Boolean estaParticipando(Participante participante) {

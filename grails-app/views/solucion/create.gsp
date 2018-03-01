@@ -34,6 +34,7 @@
                         </g:if>
                         <g:else>
                             <label>Participando como ${participantesDisponibles.first().nombre}</label>
+                            <g:hiddenField name="participante_id" value="${participantesDisponibles.first().id}" />
                         </g:else>
                         <br/>
                     </g:loggedInProgramador>

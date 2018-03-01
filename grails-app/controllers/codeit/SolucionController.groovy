@@ -18,14 +18,14 @@ class SolucionController {
             Integer inicio = (params.containsKey("offset") ? params.offset : 0) * params.max
             Integer count = desafio.resultados.size()
             Integer fin = Math.min(inicio + params.max, count - 1)
-            List<Solucion> soluciones = fin > 0 ? (desafio.resultados*.solucion as List)[inicio..fin] : []
+            List<Solucion> soluciones = count == 0 ? [] : (desafio.resultados*.solucion as List)[inicio..fin]
             respond solucionList: soluciones, solucionCount: count, desafio: desafio
         } else {
             Programador prog = Programador.findByNombre(springSecurityService.principal.username)
             Integer inicio = (params.containsKey("offset") ? params.offset : 0) * params.max
-            Integer count = programador.soluciones.size()
+            Integer count = prog.soluciones.size()
             Integer fin = Math.min(inicio + params.max, count - 1)
-            List<Solucion> soluciones = fin > 0 ? (desafio.soluciones as List)[inicio..fin] : []
+            List<Solucion> soluciones = count == 0 ? [] : (prog.soluciones as List)[inicio..fin]
             respond solucionList: soluciones, solucionCount: count, programador: prog
         }
     }
@@ -66,6 +66,8 @@ class SolucionController {
 
         // Actualiza las soluciones en el desafío y los resultados y resoluciones creados
         desafio.save flush: true, failOnError: true
+        solucion.save flush: true, failOnError: true
+        participante.save flush: true, failOnError: true
 
         redirect action: "show", id: solucion.id
     }
@@ -110,6 +112,8 @@ class SolucionController {
 
         // Actualiza las soluciones en el desafío y los resultados y resoluciones creadas
         solucion.desafio.save flush: true, failOnError: true
+        solucion.save flush: true, failOnError: true
+        participante.save flush: true, failOnError: true
         flash.message = "Los cambios han sido guardados"
         redirect action: "edit", id: solucion.id
     }

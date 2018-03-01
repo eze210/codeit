@@ -19,7 +19,7 @@ class DesafioController {
             Integer inicio = (params.containsKey("offset") ? params.offset : 0) * params.max
             Integer count = participante.desafios.size()
             Integer fin = Math.min(inicio + params.max, count - 1)
-            List<Desafio> desafios = fin > 0 ? (participante.desafios as List)[inicio..fin] : []
+            List<Desafio> desafios = count == 0 ? [] : (participante.desafios as List)[inicio..fin]
             respond desafioList: desafios, desafioCount: count, participante: participante
         } else {
             respond desafioList: Desafio.list(params), desafioCount: Desafio.count()
