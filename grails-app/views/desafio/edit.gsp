@@ -7,13 +7,15 @@
     </head>
     <body>
         <div class="breadcrumble">
-            %{--TODO: Use logged user--}%
-            <g:link controller="desafio" action="index" params="[from: codeit.Programador.findById(4).id]">Mis desafíos</g:link>
+            <g:loggedInProgramador>
+                <g:link controller="desafio" action="index" params="[from: programador.id]">Mis desafíos</g:link>
+            </g:loggedInProgramador>
             > <g:link controller="desafio" action="show" id="${desafio.id}">${desafio.titulo}</g:link>
             > Editar</div>
         </div>
         <div id="edit-desafio" class="content scaffold-edit" role="main">
             <h1>Editar ${desafio.titulo}</h1>
+            <tmpl:vigenciaDisplay vigencia="${desafio.vigencia}" />
 
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
@@ -28,7 +30,6 @@
 
             <g:form name="atributos_desafio" controller="desafio" action="update" method="PUT">
                 <fieldset class="form">
-            %{--TODO: Add login and use participante from there--}%
                     <g:hiddenField name="desafio_id" value="${desafio.id}" />
                     <label for="titulo">
                         Título:
@@ -42,7 +43,6 @@
                     </label>
                     <g:textArea name="descripcion" value="${params.descripcion != null ? params.descripcion : desafio.descripcion}"/>
                     <br/>
-                %{--TODO: Add vigencia--}%
 
                     <label>
                         Ejercicios:

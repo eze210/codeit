@@ -19,6 +19,14 @@ class BootStrap {
             Programador prog3 = new Programador("Armando Esteban Quito")
             Programador prog4 = new Programador("Susana Horia")
             Programador prog5 = new Programador("Oompa Loompa")
+            Programador prog6 = new Programador("Cindy Nero")
+
+            prog1.save flush: true, failOnError: true
+            prog2.save flush: true, failOnError: true
+            prog3.save flush: true, failOnError: true
+            prog4.save flush: true, failOnError: true
+            prog5.save flush: true, failOnError: true
+            prog6.save flush: true, failOnError: true
 
             prog1.otorgarPuntoEnFaceta(TipoFaceta.Creativo)
             prog1.otorgarInsignia(
@@ -28,7 +36,6 @@ class BootStrap {
             // Equipos
             Equipo eq1 = new Equipo("Los mejores !")
             eq1.agregarMiembro(prog1).agregarMiembro(prog2)
-            assert eq1.programadores.contains(prog1)
 
             Equipo eq2 = new Equipo("Los segundos mejores !")
             eq2.agregarMiembro(prog3).agregarMiembro(prog4)
@@ -37,7 +44,6 @@ class BootStrap {
             prog2.save flush: true, failOnError: true
             prog3.save flush: true, failOnError: true
             prog4.save flush: true, failOnError: true
-            prog5.save flush: true, failOnError: true
             eq1.save flush: true, failOnError: true
             eq2.save flush: true, failOnError: true
 
@@ -53,7 +59,12 @@ class BootStrap {
             Prueba pr2_2_1 = ej2_2.agregarPrueba("", "")
             Ejercicio ej2_3 = prog4.proponerEjercicioPara(des2, "Finalmente proponer una solución a él")
 
-            Solucion sol2_1 = prog1.proponerSolucionPara(des2, "Esto no fue nada fácil. Pero de a poquito pude ir pasando todos los ejercicios. Obviamente el más difícil fue el último.")
+            prog1.save flush: true, failOnError: true
+            prog4.save flush: true, failOnError: true
+            des1.save flush: true, failOnError: true
+            des2.save flush: true, failOnError: true
+
+            Solucion sol2_1 = prog5.proponerSolucionPara(des2, "Esto no fue nada fácil. Pero de a poquito pude ir pasando todos los ejercicios. Obviamente el más difícil fue el último.")
             Resolucion sol2_1_1 = new Resolucion(ej2_1, "")
             sol2_1.agregarResolucion(sol2_1_1)
             Resolucion sol2_1_2 = new Resolucion(ej2_2, "return \"\"")
@@ -61,7 +72,7 @@ class BootStrap {
             Resolucion sol2_1_3 = new Resolucion(ej2_3, "x + 2")
             sol2_1.agregarResolucion(sol2_1_3)
 
-            Solucion sol2_2 = prog2.proponerSolucionPara(des2, "Esto fue super fácil, soy súper crack de Groovy y más de Grails y su magia.")
+            Solucion sol2_2 = eq1.proponerSolucionPara(des2, "Esto fue super fácil, soy súper crack de Groovy y más de Grails y su magia.")
             Resolucion sol2_2_1 = new Resolucion(ej2_1, "\"lala\"")
             sol2_2.agregarResolucion(sol2_2_1)
             Resolucion sol2_2_2 = new Resolucion(ej2_2, "x + y")

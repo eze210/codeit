@@ -44,8 +44,13 @@ abstract class Participante implements Puntuable {
      * @return \c true si hay programadores compartidos, o \c false en otro caso.
      */
     Boolean comparteMiembrosCon(Participante participante) {
-        Set<Programador> otros = participante.programadoresInvolucrados()
-        programadoresInvolucrados().intersect(otros)
+        Set otros = participante.programadoresInvolucrados()*.id
+        programadoresInvolucrados()*.id.intersect(otros)
+    }
+
+    Boolean contieneA(Participante participante) {
+        Set otros = participante.programadoresInvolucrados()*.id
+        programadoresInvolucrados()*.id.intersect(otros).size() == otros.size()
     }
 
     /** Propone una solución en el desafío indicado.

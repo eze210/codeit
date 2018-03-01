@@ -19,7 +19,7 @@ class DesafioController {
             Integer inicio = (params.containsKey("offset") ? params.offset : 0) * params.max
             Integer count = participante.desafios.size()
             Integer fin = Math.min(inicio + params.max, count - 1)
-            List<Desafio> desafios = fin > 0 ? (participante.desafios as List)[inicio..fin] : []
+            List<Desafio> desafios = count == 0 ? [] : (participante.desafios as List)[inicio..fin]
             respond desafioList: desafios, desafioCount: count, participante: participante
         } else {
             respond desafioList: Desafio.list(params), desafioCount: Desafio.count()
@@ -88,8 +88,6 @@ class DesafioController {
         Desafio desafio = Desafio.findById(params.desafio_id)
         String titulo = params.titulo
         String descripcion = params.descripcion
-        DateTime desde = null //TODO: Get from params
-        DateTime hasta = null //TODO: Get from params
 
         List<String> enunciados = params.list("enunciado")
 
@@ -123,8 +121,6 @@ class DesafioController {
 
         desafio.titulo = params.titulo
         desafio.descripcion = params.descripcion
-
-        desafio.vigencia = new Vigencia(desde, hasta)
 
         List<Ejercicio> ejercicios = desafio.ejercicios.toSorted()
         enunciados.withIndex().forEach { enunciado, index ->

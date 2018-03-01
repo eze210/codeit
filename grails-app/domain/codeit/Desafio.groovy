@@ -102,7 +102,7 @@ class Desafio implements Puntuable {
      */
     void proponerSolucion(Solucion solucion) throws ComparteMiembrosConCreador, YaParticipaDelDesafio, DesafioNoVigente {
         // TODO: tirar las excepciones que dice la doc.
-        int index = resultados.findIndexOf { it.solucion == solucion }
+        int index = resultados.findIndexOf { it.solucion.participante.id == solucion.participante.id }
         if (~index) {
             resultados[index].invalidar()
         } else {
@@ -134,6 +134,14 @@ class Desafio implements Puntuable {
         resultados.find { it.solucion == solucion }
     }
 
+    Solucion obtenerSolucionDe(Participante participante) {
+        Resultado resultado = resultados.find { it.solucion.participante.id == participante.id }
+        if (resultado != null) return resultado.solucion
+        resultado = resultados.find { it.solucion.participante.contieneA(participante) }
+        if (resultado != null) return resultado.solucion
+        return null
+    }
+
     /** Verifica las reglas de negocio para que un participante pueda participar de unn desafío.
      *
      * @param participante Participante que quiere participar del desafío.
@@ -145,7 +153,7 @@ class Desafio implements Puntuable {
         } catch (Exception) {
             return false
         }
-        return true;
+        return true
     }
 
     /** Verifica las reglas de negocio para que un participante pueda participar de unn desafío.
@@ -173,16 +181,20 @@ class Desafio implements Puntuable {
 
         /* si ya es participante puede seguir participando */
         if (propusoAlgunaSolucion(participante))
-            return true;
+            return true
 
-        /* todavía no participa pero comparte miembros con algún participante */
-        if (resultados.findAll { it.solucion.participante.comparteMiembrosCon(participante) })
+        /* Está participante como parte de otro equipo */
+        if (estaParticipando(participante)) {
+            return true
+        }
+        /* no está participando pero comparte miembros con algún participante */
+        if (resultados.find { it.solucion.participante.comparteMiembrosCon(participante) })
             throw new ComparteMiembrosConParticipante()
 
         if (!participante.obtenerInsignias().containsAll(insigniasRequeridas))
-            throw new NoPoseeInsignias();
+            throw new NoPoseeInsignias()
 
-        return true;
+        return true
     }
 
     /** Verifica si un participante ya propuso alguna solución al desafío.
@@ -191,7 +203,11 @@ class Desafio implements Puntuable {
      * @return \c true si el participante participa del desafío, o \c false en otro caso.
      */
     Boolean propusoAlgunaSolucion(Participante participante) {
-        resultados.find { it.solucion.participante == participante } != null
+        resultados.find { it.solucion.participante.id == participante.id } != null
+    }
+
+    Boolean estaParticipando(Participante participante) {
+        propusoAlgunaSolucion(participante) || resultados.find { it.solucion.participante.contieneA(participante) }
     }
 
     /** Corrobora que un desafío esté en vigencia.

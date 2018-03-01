@@ -21,8 +21,9 @@
 
             <g:form name="atributos_desafio" controller="desafio" action="save">
                 <fieldset class="form">
-                    %{--TODO: Add login and use participante from there--}%
-                    <g:hiddenField name="creador_id" value="5" />
+                    <g:loggedInProgramador>
+                        <g:hiddenField name="creador_id" value="${programador.id}" />
+                    </g:loggedInProgramador>
 
                     <label for="titulo">
                         Título:
