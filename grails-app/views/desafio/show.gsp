@@ -31,6 +31,7 @@
             <div class="padded_container">
                 <tmpl:vigenciaDisplay vigencia="${desafio.vigencia}" />
                 <br/>
+                por <g:link method="GET" resource="${desafio.creador}">${desafio.creador.nombre}</g:link>
                 <tmpl:/shared/displayPuntaje puntaje="${desafio.puntaje}" />
                 <br/>
                 <p><em>${desafio.descripcion}</em></p>

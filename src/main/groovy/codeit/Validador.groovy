@@ -35,14 +35,17 @@ class Validador extends Thread {
     void run() {
         while (mantenerVivo || !desafiosConCambios.isEmpty()) {
             Desafio desafio = desafiosConCambios.poll(100, TimeUnit.MILLISECONDS)
-            if (desafio != null)
+            if (desafio != null) {
                 desafio.revalidarSoluciones()
+            }
         }
     }
 
     Validador leftShift(Desafio elemento) {
         if (tipo == TipoValidador.Asincronico) {
             desafiosConCambios << elemento
+        } else {
+            elemento.revalidarSoluciones()
         }
         this
     }

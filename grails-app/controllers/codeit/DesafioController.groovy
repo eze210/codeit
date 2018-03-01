@@ -44,24 +44,24 @@ class DesafioController {
 
         List<String> enunciados = params.list("enunciado")
 
-//        if (titulo.isEmpty()) {
-//            flash.errors = ["El título no puede estar vacío"]
-//        }
-//        if (Desafio.findByTitulo(titulo)) {
-//            flash.errors = (flash.errors ?: []) + ["Ya existe un desafío con ese título"]
-//        }
-//        if (descripcion.isEmpty()) {
-//            flash.errors = (flash.errors ?: []) + ["La descripción no puede estar vacía"]
-//        }
-//        enunciados.withIndex().forEach { elem, index ->
-//            if (!elem) {
-//                flash.errors = (flash.errors ?: []) + ["El enunciado del ejercicio ${index + 1} no puede ser vacío."]
-//            }
-//        }
-//        if (flash.errors) {
-//            redirect action: "create", params: [titulo: params.titulo, descripcion: params.descripcion, enunciados: params.enunciado]
-//            return
-//        }
+        if (titulo.isEmpty()) {
+            flash.errors = ["El título no puede estar vacío"]
+        }
+        if (Desafio.findByTitulo(titulo)) {
+            flash.errors = (flash.errors ?: []) + ["Ya existe un desafío con ese título"]
+        }
+        if (descripcion.isEmpty()) {
+            flash.errors = (flash.errors ?: []) + ["La descripción no puede estar vacía"]
+        }
+        enunciados.withIndex().forEach { elem, index ->
+            if (!elem) {
+                flash.errors = (flash.errors ?: []) + ["El enunciado del ejercicio ${index + 1} no puede ser vacío."]
+            }
+        }
+        if (flash.errors) {
+            redirect action: "create", params: [titulo: params.titulo, descripcion: params.descripcion, enunciados: params.enunciado]
+            return
+        }
 
         Desafio desafio = creador.proponerDesafio(titulo, descripcion, desde, hasta)
 
@@ -164,6 +164,13 @@ class DesafioController {
 
     def puntuar(Desafio desafio) {
         desafio.otorgarPuntoEnFaceta(TipoFaceta.Desafio)
+//        desafio.puntaje.facetas.forEach {
+//            it.save flush: true, failOnError: true
+//        }
+//        desafio.puntaje.insignias.forEach {
+//            it.save flush: true, failOnError: true
+//        }
+        desafio.creador.save flush: true, failOnError: true
         desafio.save flush: true, failOnError: true
         redirect action: "show", id: desafio.id
     }

@@ -9,7 +9,6 @@
     <g:each var="insignia" in="${puntaje.insignias}">
         <div class="card_wrapper" style="display: inline-block;"><div class="card">
             <strong>${insignia}</strong><br/>
-            <!--em>${insignia.origen}</em-->
         </div></div>
     </g:each>
 </g:if>

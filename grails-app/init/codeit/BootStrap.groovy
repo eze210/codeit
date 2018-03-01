@@ -11,7 +11,7 @@ class BootStrap {
             assert Rol.count() == 1
             assert Rol.findAll().size() == 1
 
-            Validador.crearInstancia(Validador.TipoValidador.Asincronico)
+            Validador.crearInstancia(Validador.TipoValidador.Sincronico)
 
             // Programadores
             Programador prog1 = new Programador("Esio Trot")
@@ -21,6 +21,7 @@ class BootStrap {
             Programador prog5 = new Programador("Oompa Loompa")
             Programador prog6 = new Programador("Cindy Nero")
             Programador prog7 = new Programador("10 101")
+            Programador prog8 = new Programador("Pablo Cosso")
 
             prog1.save flush: true, failOnError: true
             prog2.save flush: true, failOnError: true
@@ -29,6 +30,7 @@ class BootStrap {
             prog5.save flush: true, failOnError: true
             prog6.save flush: true, failOnError: true
             prog7.save flush: true, failOnError: true
+            prog8.save flush: true, failOnError: true
 
             prog1.otorgarPuntoEnFaceta(TipoFaceta.Creativo)
             prog1.otorgarInsignia(
@@ -58,6 +60,7 @@ class BootStrap {
             // Desafíos
             Desafio des1 = prog1.proponerDesafio("EL desafío", "Sólo tenés que hacer la mejor función del mundo", null, DateTime.now().plusDays(5))
             Ejercicio ej1_1 = prog1.proponerEjercicioPara(des1, "Para hacer la mejor función del mundo, tiene que aprobarnos con 10")
+            Prueba pr1_1_1 = ej1_1.agregarPrueba("", "10")
 
             Desafio des2 = prog4.proponerDesafio("Mi primer desafío", "Sólo tenés que hacer la UI para que le puedan proponer soluciones a esto")
             Ejercicio ej2_1 = prog4.proponerEjercicioPara(des2, "Primero tenés que hacer que se puedan listar los desafíos")
