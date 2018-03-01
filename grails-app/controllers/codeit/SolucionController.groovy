@@ -69,6 +69,8 @@ class SolucionController {
         solucion.save flush: true, failOnError: true
         participante.save flush: true, failOnError: true
 
+        Validador.obtenerInstancia() << desafio
+
         redirect action: "show", id: solucion.id
     }
 
@@ -114,6 +116,8 @@ class SolucionController {
         solucion.desafio.save flush: true, failOnError: true
         solucion.save flush: true, failOnError: true
         solucion.participante.save flush: true, failOnError: true
+
+        Validador.obtenerInstancia() << solucion.desafio
 
         flash.message = "Los cambios han sido guardados"
         redirect action: "edit", id: solucion.id

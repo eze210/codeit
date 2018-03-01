@@ -46,7 +46,6 @@ class Ejercicio {
         Prueba prueba = new Prueba(this, entrada, salida)
         pruebas.add(prueba)
         desafio.invalidarSoluciones()
-        Validador.obtenerInstancia() << desafio
         prueba
     }
 

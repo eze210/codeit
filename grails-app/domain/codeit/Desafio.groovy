@@ -109,7 +109,6 @@ class Desafio implements Puntuable {
             Resultado resultado = new Resultado(solucion)
             resultados.add(resultado)
         }
-        Validador.obtenerInstancia() << this
     }
 
     /** Función para procesar la solución del usuario.
@@ -235,7 +234,6 @@ class Desafio implements Puntuable {
         ejercicios.add(ejercicio)
 
         invalidarSoluciones()
-        Validador.obtenerInstancia() << this
         resultados
     }
 

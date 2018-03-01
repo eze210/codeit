@@ -158,6 +158,8 @@ class DesafioController {
         // Actualiza desafío, ejercicios y pruebas
         desafio.save flush: true, failOnError: true
 
+        Validador.obtenerInstancia() << desafio
+
         flash.message = "Los cambios han sido guardados."
         redirect action: "edit", id: desafio.id
     }

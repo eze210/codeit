@@ -37,6 +37,7 @@ class Validador extends Thread {
             Desafio desafio = desafiosConCambios.poll(100, TimeUnit.MILLISECONDS)
             if (desafio != null)
                 desafio.revalidarSoluciones()
+            desafio.save flush: true, failOnError: true
         }
     }
 

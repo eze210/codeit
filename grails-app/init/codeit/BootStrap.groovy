@@ -87,6 +87,8 @@ class BootStrap {
             eq2.save flush: true, failOnError: true
 
             Validador.obtenerInstancia().start()
+            Validador.obtenerInstancia() << des1
+            Validador.obtenerInstancia() << des2
         }
     }
 
